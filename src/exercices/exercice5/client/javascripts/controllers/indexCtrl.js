@@ -31,7 +31,6 @@ function chargerTeamSuccess(data, text, jqXHR) {
  */
 function chargerPlayerSuccess(data, text, jqXHR) {
 	// Appelé lorsque la liste des joueurs est reçue
-
     
     var cmbJoueurs = document.getElementById("cmbJoueurs");
     cmbJoueurs.options.length = 0;
