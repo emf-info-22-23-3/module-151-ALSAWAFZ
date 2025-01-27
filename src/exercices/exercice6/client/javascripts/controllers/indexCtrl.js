@@ -36,7 +36,7 @@ function chargerPlayerSuccess(data, text, jqXHR) {
     cmbMembres.options.length = 0;
     $(data).find("membre").each(function() {
         var membre = new Joueur();
-        membre.setPoints($(this).find("age").text());
+        membre.setAge($(this).find("age").text());
         membre.setNom($(this).find("nom").text());
         cmbMembres.options[cmbMembres.options.length] = new Option(membre, JSON.stringify(membre));
     });
