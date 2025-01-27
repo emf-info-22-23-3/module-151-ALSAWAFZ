@@ -14,7 +14,6 @@
 function chargerTeamSuccess(data, text, jqXHR) {
     // appelé lorsque l'on reçoit les données de la part du PHP
 	var tblContent = $("#tableContent");
-    tblContent.getScript= "";
     var txt = '';
     
     $(data).find("equipe").each(function() {
