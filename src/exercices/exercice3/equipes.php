@@ -21,6 +21,7 @@
         echo"<td>" . $id. "</td>";
         echo"<td>" . $equip. "</td>";
         echo "</tr>";
+        $id++;
         }
       ?>
       </table>
