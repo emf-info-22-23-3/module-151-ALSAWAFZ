@@ -35,7 +35,7 @@ function chargerPlayers(teamid, successCallback, errorCallback) {
         type: "GET",
         dataType: "xml",
         url: BASE_URL,
-        data: 'action=joueur&equipeId=' + teamid,
+        data: 'action=membre&equipeId=' + teamid,
         success: successCallback,
         error: errorCallback
     });
