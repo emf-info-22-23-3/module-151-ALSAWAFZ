@@ -44,7 +44,7 @@ function chargerPlayerSuccess(data, text, jqXHR) {
         var option = new Option(joueur.toString(), JSON.stringify(joueur));
         cmbJoueurs.options[cmbJoueurs.options.length] = option;
     });
-	// cmbJoueurs.options[cmbJoueurs.options.length] = new Option(<ce qui sera affiché>, <la valeur de la cellule>));
+	cmbJoueurs.options[cmbJoueurs.options.length] = new Option(equipe, JSON.stringify(equipe));
 }
 
 /**
