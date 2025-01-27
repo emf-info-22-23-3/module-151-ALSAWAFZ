@@ -13,7 +13,15 @@
       </tr>
       <?php
         require('ctrl.php');
-        // A compléter....
+        $equipes = getEquipes();
+        $id = 1;
+
+        foreach ($equipes as $equip) {
+        echo "<tr>";
+        echo"<td>" . $id. "</td>";
+        echo"<td>" . $equip. "</td>";
+        echo "</tr>";
+        }
       ?>
       </table>
     </div>
