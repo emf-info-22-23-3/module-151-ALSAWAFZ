@@ -17,7 +17,7 @@
         foreach ($equipes as $equip) {
             echo "<tr>";
             echo "<td>" . $id . "</td>"; 
-            echo "<td>" . $equip. "</td>"; 
+            echo "<td>" . $equip . "</td>"; 
             echo "</tr>";
             $id++;
         }
