@@ -10,7 +10,7 @@ foreach ($equipes as $index => $equip) {
     echo 'ID: ' . ($index + 1) . ', Club: ' . $equip->getName() . '<br>';
 }
 
-include_once('Membre.php');
+include_once('beans/Membre.php');
 $membre = new Membre('Paul', 25);
 $nom = $membre->getNom();
 $numero = $membre->numero;
