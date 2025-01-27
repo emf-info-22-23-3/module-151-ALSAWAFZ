@@ -37,7 +37,7 @@ function chargerPlayerSuccess(data, text, jqXHR) {
     cmbJoueurs.options.length = 0;
     $(data).find("joueur").each(function() {
         var joueur = new Joueur();
-        joueur.setPk($(this).find("id").text());
+        joueur.setPoints($(this).find("points").text());
         joueur.setNom($(this).find("nom").text());
         cmbJoueurs.options[cmbJoueurs.options.length] = new Option(joueur, JSON.stringify(joueur));
     });
