@@ -29,7 +29,7 @@ if($_GET['action'] == "membre")
 	}
 	if ($_GET['equipeId'] == '7')
 	{
-		echo '<joueur><id>2</id><nom>Reto von Arx</nom></membre>';
+		echo '<membre><id>2</id><nom>Reto von Arx</nom></membre>';
 	}
 	echo '</membres>';
 }
