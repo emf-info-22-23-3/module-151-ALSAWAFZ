@@ -1,6 +1,6 @@
 <?php
-include_once('Wrk.php');
-include_once('Equipe.php');
+include_once('wrk/Wrk.php');
+include_once('beans/Equipe.php');
 
 $wrk = new Wrk();
 
