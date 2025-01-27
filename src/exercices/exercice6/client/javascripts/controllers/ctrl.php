@@ -1,7 +1,7 @@
 <?php
 
-include_once('wrk/Wrk.php');
-include_once('beans/Equipe.php');
+include_once('../services/wrk.php');
+include_once('../beans/Equipe.js');
 
 $wrk = new Wrk();
 
@@ -12,7 +12,7 @@ foreach ($equipes as $index => $equip) {
 }
 
 
-include_once('beans/Membre.php');
+include_once('../beans/Membre.js');
 $membre = new Membre('Paul', 25);
 $nom = $membre->getNom();
 $numero = $membre->numero;
