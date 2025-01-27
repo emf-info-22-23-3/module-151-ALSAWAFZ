@@ -1,7 +1,7 @@
 /*
  * Contrôleur de la vue "index.html"
  *
- * @author Olivier Neuhaus
+ * @author Zeina Alsawaf
  * @version 1.0 / 20-SEP-2013
  */
 
@@ -32,13 +32,13 @@ function chargerTeamSuccess(data, text, jqXHR) {
 function chargerPlayerSuccess(data, text, jqXHR) {
 	// Appelé lorsque la liste des joueurs est reçue
     
-    var cmbJoueurs = document.getElementById("cmbJoueurs");
-    cmbJoueurs.options.length = 0;
-    $(data).find("joueur").each(function() {
-        var joueur = new Joueur();
-        joueur.setPoints($(this).find("points").text());
-        joueur.setNom($(this).find("nom").text());
-        cmbJoueurs.options[cmbJoueurs.options.length] = new Option(joueur, JSON.stringify(joueur));
+    var cmbMembres = document.getElementById("cmbMembres");
+    cmbMembres.options.length = 0;
+    $(data).find("membre").each(function() {
+        var membre = new Joueur();
+        membre.setPoints($(this).find("age").text());
+        membre.setNom($(this).find("nom").text());
+        cmbMembres.options[cmbMembres.options.length] = new Option(membre, JSON.stringify(membre));
     });
 	
 }
@@ -69,13 +69,13 @@ function chargerPlayerError(request, status, error) {
 $(document).ready(function() {
     var butLoad = $("#displayTeams");
     var cmbEquipes = $("#cmbEquipes");
-    var cmbJoueurs = $("#cmbJoueurs");
+    var cmbMembres = $("#cmbMembres");
     var equipe = '';
-    var joueur = '';
+    var membre = '';
     $.getScript("javascripts/beans/equipe.js", function() {
         console.log("equipe.js chargé !");
     });
-    $.getScript("javascripts/beans/joueur.js", function() {
+    $.getScript("javascripts/beans/membre.js", function() {
         console.log("joueur.js chargé !");
     });
     $.getScript("javascripts/services/servicesHttp.js", function() {
@@ -91,8 +91,8 @@ $(document).ready(function() {
 	
 	// Ce qui se passe lorsque l'on sélectionne une joueur
     cmbJoueurs.change(function(event) {
-        joueur = this.options[this.selectedIndex].value;
-        alert(JSON.parse(joueur).nom + ": " + JSON.parse(joueur).points + " points");
+        membre = this.options[this.selectedIndex].value;
+        alert(JSON.parse(membre).nom + ": " + JSON.parse(membre).age + " age");
     });
 });
 
