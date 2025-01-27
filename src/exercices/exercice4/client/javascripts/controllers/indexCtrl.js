@@ -13,7 +13,8 @@
  */
 function chargerTeamSuccess(data, text, jqXHR) {
     // appelé lorsque l'on reçoit les données de la part du PHP
-	var tblContent = $("#tableContent");
+	var tblContent = "";
+    tblContent = $("#tableContent");
     var txt = '';
     
     $(data).find("equipe").each(function() {
@@ -43,6 +44,7 @@ $(document).ready(function() {
         console.log("servicesHttp.js chargé !");
     });
     butLoad.click(function(event) {    
+
         chargerTeam(chargerTeamSuccess, chargerTeamError);
     });
 });
