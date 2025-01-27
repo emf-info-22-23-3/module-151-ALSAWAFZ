@@ -31,8 +31,8 @@ function chargerTeamSuccess(data, text, jqXHR) {
  */
 function chargerPlayerSuccess(data, text, jqXHR) {
 	// Appelé lorsque la liste des joueurs est reçue
-    var cmbJoueurs = document.getElementById("cmbJoueurs");
-	cmbJoueurs.options[cmbJoueurs.options.length] = new Option(equipe.toString(), JSON.stringify(equipe));
+    //var cmbJoueurs = document.getElementById("cmbJoueurs");
+	//cmbJoueurs.options[cmbJoueurs.options.length] = new Option(equipe.toString(), JSON.stringify(equipe));
     cmbJoueurs.options.length = 0;
 
     $(data).find("joueur").each(function() {
