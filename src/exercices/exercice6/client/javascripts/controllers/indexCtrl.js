@@ -76,7 +76,7 @@ $(document).ready(function() {
         console.log("equipe.js chargé !");
     });
     $.getScript("javascripts/beans/membre.js", function() {
-        console.log("joueur.js chargé !");
+        console.log("membre.js chargé !");
     });
     $.getScript("javascripts/services/servicesHttp.js", function() {
         console.log("servicesHttp.js chargé !");
@@ -90,7 +90,7 @@ $(document).ready(function() {
     });
 	
 	// Ce qui se passe lorsque l'on sélectionne une joueur
-    cmbJoueurs.change(function(event) {
+    cmbMembres.change(function(event) {
         membre = this.options[this.selectedIndex].value;
         alert(JSON.parse(membre).nom + ": " + JSON.parse(membre).age + " age");
     });
