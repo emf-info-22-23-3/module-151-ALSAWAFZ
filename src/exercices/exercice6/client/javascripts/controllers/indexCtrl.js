@@ -24,18 +24,18 @@ function chargerTeamSuccess(data, text, jqXHR) {
 }
 
 /**
- * Méthode appelée lors du retour avec succès du résultat des joueurs
+ * Méthode appelée lors du retour avec succès du résultat des membres
  * @param {type} data
  * @param {type} text
  * @param {type} jqXHR
  */
 function chargerPlayerSuccess(data, text, jqXHR) {
-	// Appelé lorsque la liste des joueurs est reçue
+	// Appelé lorsque la liste des membres est reçue
     
     var cmbMembres = document.getElementById("cmbMembres");
     cmbMembres.options.length = 0;
     $(data).find("membre").each(function() {
-        var membre = new Joueur();
+        var membre = new Membre();
         membre.setAge($(this).find("age").text());
         membre.setNom($(this).find("nom").text());
         cmbMembres.options[cmbMembres.options.length] = new Option(membre, JSON.stringify(membre));
