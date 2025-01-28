@@ -1,68 +1,12 @@
-/*
- * Couche de services HTTP (worker).
- *
- * @author Olivier Neuhaus
- * @version 1.0 / 20-SEP-2013
- */
+var BASE_URL = "../server/server.php";
 
-var BASE_URL = "../joueurs.php";
-
-/**
- * Fonction permettant de charger les données d'équipe.
- * @param {type} Fonction de callback lors du retour avec succès de l'appel.
- * @param {type} Fonction de callback en cas d'erreur.
- */
 function chargerTeam(successCallback, errorCallback) {
     $.ajax({
         type: "GET",
-        dataType: "xml",
+        dataType: "json",
         url: BASE_URL,
         data: 'action=equipe',
         success: successCallback,
         error: errorCallback
     });
 }
-
-
-/**
- * Fonction permettant de charger les données d'équipe.
- * @param {type} teamid, id de l'équipe dans laquelle trouver les joueurs
- * @param {type} Fonction de callback lors du retour avec succès de l'appel.
- * @param {type} Fonction de callback en cas d'erreur.
- */
-function chargerPlayers(teamid, successCallback, errorCallback) {
-    $.ajax({
-        type: "GET",
-        dataType: "xml",
-        url: BASE_URL,
-        data: 'action=membre&equipeId=' + teamid,
-        success: successCallback,
-        error: errorCallback
-    });
-}
-
-
-/*
-<?php
-
-class Wrk
-{
-    public function getEquipesFromDB()
-    {
-        return array('Gotteron', 'SC Bern', 'Fribourg-Gottéron', 'HC Davos');
-    }
-
-    public function getEquipes()
-    {
-        $teamNames = $this->getEquipesFromDB();
-        $teams = [];
-
-        foreach ($teamNames as $name) {
-            $teams[] = new Equipe($name); 
-        }
-
-        return $teams;
-    }
-}
-?>
-*/
