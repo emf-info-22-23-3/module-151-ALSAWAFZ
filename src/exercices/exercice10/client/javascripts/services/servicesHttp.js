@@ -2,7 +2,7 @@
  * Couche de services HTTP (worker).
  *
  */
-var BASE_URL = "../server/";
+var BASE_URL = "../serveur/";
 
 /**
  * Fonction permettant de demander la liste des pays au serveur.
