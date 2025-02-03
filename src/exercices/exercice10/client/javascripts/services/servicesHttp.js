@@ -1,10 +1,9 @@
 /*
  * Couche de services HTTP (worker).
  *
- * @author Olivier Neuhaus
- * @version 1.0 / 13-SEP-2013
  */
 
+var BASE_URL = "http://localhost/server";
 var BASE_URL = "../server/";
 
 /**
