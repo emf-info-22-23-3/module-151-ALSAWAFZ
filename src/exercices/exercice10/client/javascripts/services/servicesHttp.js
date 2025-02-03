@@ -2,8 +2,6 @@
  * Couche de services HTTP (worker).
  *
  */
-
-var BASE_URL = "http://localhost/server";
 var BASE_URL = "../server/";
 
 /**
