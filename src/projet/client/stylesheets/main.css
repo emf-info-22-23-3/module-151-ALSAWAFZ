@@ -280,6 +280,47 @@ nav a::after {
   background: var(--secondary-color);
 }
 
+.schedule-table {
+            width: 100%;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .schedule-table th,
+        .schedule-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .schedule-table th {
+            background-color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .schedule-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .schedule-table {
+                font-size: 0.9rem;
+            }
+        }
+
 /* Player Grid Styles */
 .player-grid {
   display: grid;
