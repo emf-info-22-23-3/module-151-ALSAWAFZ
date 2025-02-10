@@ -4,7 +4,73 @@
   --border-color: #e0e0e0;
   --text-color: #333;
   --shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --circle-size: 300px;
+    --animation-duration: 20s;
 }
+
+body {
+  min-height: 100vh;
+  position: relative;
+  background: #f0f8ff;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    width: var(--circle-size);
+    height: var(--circle-size);
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.5;
+    z-index: -1;
+}
+
+body::before {
+    background: #87CEEB;
+    top: -100px;
+    left: -100px;
+    animation: moveBlob1 var(--animation-duration) infinite alternate;
+}
+
+body::after {
+    background: #B0E0E6;
+    bottom: -100px;
+    right: -100px;
+    animation: moveBlob2 var(--animation-duration) infinite alternate;
+}
+
+@keyframes moveBlob1 {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(100px, 100px) scale(1.5);
+    }
+    66% {
+        transform: translate(-50px, 200px) scale(0.8);
+    }
+    100% {
+        transform: translate(150px, 50px) scale(1.2);
+    }
+}
+
+@keyframes moveBlob2 {
+    0% {
+        transform: translate(0, 0) scale(1.2);
+    }
+    33% {
+        transform: translate(-100px, -100px) scale(0.8);
+    }
+    66% {
+        transform: translate(50px, -200px) scale(1.5);
+    }
+    100% {
+        transform: translate(-150px, -50px) scale(1);
+    }
+}
+
 .welcome-image{
   width: 100%;
     max-width: 8000px;
@@ -29,6 +95,10 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
 }
 
 header {
@@ -53,78 +123,78 @@ header {
 }
 
 nav {
-  display: flex;
-  justify-content: space-around;
-  background: var(--primary-color);
-  padding: 10px;
-  margin: 20px 0;
+    display: flex;
+    justify-content: space-around;
+    background: var(--primary-color);
+    padding: 10px;
+    margin: 20px 0;
 }
 
 .nav-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .nav-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 .nav-item:hover::before {
-  left: 0;
+    left: 0;
 }
 
 .nav-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-icon {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
-  background: black;
-  border-radius: 50%;
-  object-fit: contain;
-  transition: transform 0.3s ease;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: black;
+    border-radius: 50%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
 .nav-item:hover .nav-icon {
-  transform: rotate(360deg);
+    transform: rotate(360deg);
 }
 
 nav a {
-  color: white;
-  text-decoration: none;
-  position: relative;
-  padding: 5px 0;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    padding: 5px 0;
 }
 
 nav a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: width 0.3s ease;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
 }
 
 .nav-item:hover a::after {
-  width: 100%;
+    width: 100%;
 }
 
 .login-btn {
@@ -147,7 +217,7 @@ nav a::after {
   width: 100%;
   max-width: 400px;
   padding: 20px;
-  background: white;
+  background: #87CEEB;
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
@@ -170,8 +240,8 @@ nav a::after {
 
 /* Button Styles */
 .btn-primary {
-  background: var(--primary-color);
-  color: white;
+  background: var(--secondary-color);
+  color: var(--text-color);
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
