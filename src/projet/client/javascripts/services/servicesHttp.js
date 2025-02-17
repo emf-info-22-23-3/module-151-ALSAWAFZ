@@ -1,4 +1,4 @@
-var BASE_URL = "../server";
+var BASE_URL = "../../server/";
 
 function chargerMatchs(successCallback, errorCallback) {
   $.ajax({

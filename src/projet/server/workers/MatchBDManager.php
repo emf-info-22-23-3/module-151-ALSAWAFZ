@@ -1,6 +1,6 @@
 <?php 
 	include_once('Connexion.php');
-	include_once('../beans/Match.php');
+	include_once('beans/Match.php');
         
 	class MatachBDManager
 	{
