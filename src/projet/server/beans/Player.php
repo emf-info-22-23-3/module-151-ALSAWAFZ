@@ -12,13 +12,13 @@
     private $natel;
     private $email;
     private $geburstag;
-    private $LIZENZ;
-    private $Schreiber;
-    private $Schiri;
-    private $JS;
+    private $lizenz;
+    private $schreiber;
+    private $schiri;
+    private $js;
     private $fk_login;
 
-    public function __construct($pk_player, $spielerNr, $name, $familyName, $address, $fk_place, $natel, $email, $geburstag, $LIZENZ, $Schreiber)
+    public function __construct($pk_player, $spielerNr, $name, $familyName, $address, $fk_place, $natel, $email, $geburstag, $lizenz, $schreiber, $schiri, $js, $fk_login)
     {
       $this->pk_player = $pk_player;
       $this->spielerNr = $spielerNr;        
@@ -27,55 +27,86 @@
       $this->address = $address;
       $this->fk_place = $fk_place;
       $this->natel = $natel;
-      $this->natel = $natel;
-      $this->natel = $natel;
-      $this->natel = $natel;
-      $this->natel = $natel;
-      $this->natel = $natel;
-      $this->natel = $natel;
-      $this->natel = $natel;
+      $this->email = $email;
+      $this->geburstag = $geburstag;
+      $this->lizenz = $lizenz;
+      $this->schreiber = $schreiber;
+      $this->schiri = $schiri;
+      $this->js = $js;
+      $this->fk_login = $fk_login;
     }
     
-    public function getSpiel()
+    public function getPkPlayer()
     {
-      return $this->spiel;
+      return $this->pk_player;
+    }
+    public function getSpielerNr()
+    {
+      return $this->spielerNr;
     }
 
-    public function getPkMatchs()
+    public function getName()
     {
-      return $this->pk_matchs;
+      return $this->name;
     }
 
-    public function getWochentag()
+    public function getFamilyName()
     {
-        return $this->wochentag;
+        return $this->familyName;
     }
-    public function getDatum()
+    public function getAddress()
     {
-        return $this->datum;
+        return $this->address;
     }
-    public function getMatchZeit(){
-        return $this->matchZeit;
+    public function getFKPlace(){
+        return $this->fk_place;
     }
-    public function getFKEnemyTeam(){
-        return $this->fk_enemy_team;
+    public function getNatel(){
+        return $this->natel;
     }
 
-    public function getHalle(){
-        return $this->halle;
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function getGeburstag(){
+      return $this->geburstag;
+    }
+    public function getLIZENZ(){
+      return $this->lizenz;
+    }
+    public function getSchreiber(){
+      return $this->schreiber;
+    }
+    public function getSchiri(){
+      return $this->schiri;
+    }
+    public function getJS(){
+      return $this->js;
+    }
+    public function getFKLogin(){
+      return $this->fk_login;
     }
 
 
     public function toXML()
     {
       $result = '<matchs>';
-      $result = $result . '<pk_matchs>'.$this->getPkMatchs().'</pk_matchs>';
-      $result = $result . '<spiel>'.$this->getSpiel().'</spiel>';
-      $result = $result . '<wochentag>'.$this->getWochentag().'</wochentag>';
-      $result = $result . '<datum>'.$this->getDatum().'</datum>';
-      $result = $result . '<matchZeit>'.$this->getMatchZeit().'</matchZeit>';
-      $result = $result . '<fk_enemy_team>'.$this->getFKEnemyTeam().'</fk_enemy_team>';
-      $result = $result . '<halle>'.$this->getHalle().'</halle>';
+      $result = $result . '<pk_player>'.$this->getPkPlayer().'</pk_player>';
+      $result = $result . '<spielerNr>'.$this->getSpielerNr().'</spielerNr>';
+      $result = $result . '<name>'.$this->getName().'</name>';
+      $result = $result . '<familyName>'.$this->getFamilyName().'</familyName>';
+      $result = $result . '<matchZeit>'.$this->getAddress().'</matchZeit>';
+      $result = $result . '<fk_place>'.$this->getFKPlace().'</fk_place>';
+      $result = $result . '<natel>'.$this->getNatel().'</natel>';
+      $result = $result . '<email>'.$this->getEmail().'</email>';
+      $result = $result . '<geburstag>'.$this->getGeburstag().'</geburstag>';
+      $result = $result . '<lizenz>'.$this->getLIZENZ().'</lizenz>';
+      $result = $result . '<schreiber>'.$this->getSchreiber().'</schreiber>';
+      $result = $result . '<schiri>'.$this->getSchiri().'</schiri>';
+      $result = $result . '<js>'.$this->getJS().'</js>';
+      $result = $result . '<fk_login>'.$this->getFKLogin().'</fl_login>';
+
       $result = $result . '</matchs>';
       return $result;
     }
