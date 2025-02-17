@@ -8,6 +8,7 @@
   --animation-duration: 20s;
 }
 
+
 body {
   min-height: 100vh;
   position: relative;
@@ -56,7 +57,68 @@ body::after {
   100% { transform: translate(-150px, -50px) scale(1); }
 }
 
-/* Remove the .wrapper container, it's no longer needed */
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh; /* Adjust height as needed */
+  background-color: var(--secondary-color);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.content-box {
+  text-align: center;
+  max-width: 900px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.content-box h2 {
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.content-box p {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-top: 10px;
+}
+
+.image-container {
+  margin-top: 20px;
+}
+
+.welcome-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .content-box {
+      padding: 15px;
+  }
+
+  .content-box h2 {
+      font-size: 20px;
+  }
+
+  .content-box p {
+      font-size: 14px;
+  }
+}
+
+
+
+
+
 header {
   display: flex;
   justify-content: space-between;
