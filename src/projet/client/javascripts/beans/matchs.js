@@ -9,6 +9,10 @@ Matchs.prototype.setSpiel = function(spiel) {
     this.spiel = spiel;
 };
 
+Matchs.prototype.getSpiel = function() {
+    return this.spiel;
+};
+
 Matchs.prototype.setWochentag = function(wochentag){
     this.wochentag = wochentag;
 }
@@ -30,6 +34,6 @@ Matchs.prototype.setHalle = function(halle){
 }
 
 Matchs.prototype.toString = function () {
-  return this.spiel;
+  return this.datum;
 };
 
