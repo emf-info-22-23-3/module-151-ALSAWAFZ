@@ -19,10 +19,17 @@ function chargerPlayersSuccess(data, text, jqXHR){
     players.setFk_login($(this).find("fk_login").text());
 
 
-    txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td></tr>";
+    txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td><td>" + players.getEmail() +"</td><td>" + players.getGeburstag() + "</td><td>" + players.getLizenz() + "</td><td>" + players.getSchreiber() +"</td><td>" + players.getSchiri() +"</td><td>" + players.getJS() +"</td></tr>";
   });  
-  document.getElementById("tableContentPlayers").innerHTML = txtplayer;
+
+  var tableContentPlayers = document.getElementById("tableContentPlayers");
+    if (tableContentPlayers) {
+      tableContentPlayers.innerHTML = txtplayer;
+    } else {
+        console.error("tableContentPlayers element not found");
+    }
 }
+
 
   function chargerPlayersError(request, status, error) {
   alert("Erreur lors de la lecture des players: " + error);
@@ -45,7 +52,13 @@ function chargerMatchsSuccess(data, text, jqXHR){
       console.log($(this).find("fk_enemy_team").text());
       txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>" + matchs.toString() + "</td></tr>";
     });  
-    document.getElementById("tableContentMatches").innerHTML = txtmatches;
+
+    var tableContentMatches = document.getElementById("tableContentMatches");
+    if (tableContentMatches) {
+        tableContentMatches.innerHTML = txtmatches;
+    } else {
+        console.error("tableContentMatches element not found");
+    }
 }
 
 function chargerMatchsError(request, status, error) {
@@ -70,7 +83,6 @@ $(document).ready(function() {
     console.log("servicesHttp.js chargé !");
     chargerPlayers(chargerPlayersSuccess, chargerPlayersError);
     chargerMatchs(chargerMatchsSuccess, chargerMatchsError);
-    
   });
   
 });

@@ -1,13 +1,13 @@
 <?php 
 
-  class Matchs
+  class Players
   {
 
     private $pk_player;
     private $spielerNr;
     private $name;
     private $familyName;
-    private $address;
+    private $adresse;
     private $fk_place;
     private $natel;
     private $email;
@@ -18,13 +18,13 @@
     private $js;
     private $fk_login;
 
-    public function __construct($pk_player, $spielerNr, $name, $familyName, $address, $fk_place, $natel, $email, $geburstag, $lizenz, $schreiber, $schiri, $js, $fk_login)
+    public function __construct($pk_player, $spielerNr, $name, $familyName, $adresse, $fk_place, $natel, $email, $geburstag, $lizenz, $schreiber, $schiri, $js, $fk_login)
     {
       $this->pk_player = $pk_player;
       $this->spielerNr = $spielerNr;        
       $this->name = $name;
       $this->familyName = $familyName;
-      $this->address = $address;
+      $this->adresse = $adresse;
       $this->fk_place = $fk_place;
       $this->natel = $natel;
       $this->email = $email;
@@ -54,9 +54,9 @@
     {
         return $this->familyName;
     }
-    public function getAddress()
+    public function getAdresse()
     {
-        return $this->address;
+        return $this->adresse;
     }
     public function getFKPlace(){
         return $this->fk_place;
@@ -91,12 +91,12 @@
 
     public function toXML()
     {
-      $result = '<matchs>';
+      $result = '<players>';
       $result = $result . '<pk_player>'.$this->getPkPlayer().'</pk_player>';
       $result = $result . '<spielerNr>'.$this->getSpielerNr().'</spielerNr>';
       $result = $result . '<name>'.$this->getName().'</name>';
       $result = $result . '<familyName>'.$this->getFamilyName().'</familyName>';
-      $result = $result . '<matchZeit>'.$this->getAddress().'</matchZeit>';
+      $result = $result . '<adresse>'.$this->getAdresse().'</adresse>';
       $result = $result . '<fk_place>'.$this->getFKPlace().'</fk_place>';
       $result = $result . '<natel>'.$this->getNatel().'</natel>';
       $result = $result . '<email>'.$this->getEmail().'</email>';
@@ -105,9 +105,9 @@
       $result = $result . '<schreiber>'.$this->getSchreiber().'</schreiber>';
       $result = $result . '<schiri>'.$this->getSchiri().'</schiri>';
       $result = $result . '<js>'.$this->getJS().'</js>';
-      $result = $result . '<fk_login>'.$this->getFKLogin().'</fl_login>';
+      $result = $result . '<fk_login>'.$this->getFKLogin().'</fk_login>';
 
-      $result = $result . '</matchs>';
+      $result = $result . '</players>';
       return $result;
     }
   }

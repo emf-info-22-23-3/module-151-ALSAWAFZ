@@ -2,7 +2,7 @@
 	include_once('Connexion.php');
 	include_once('beans/Player.php');
         
-	class MatachBDManager
+	class PlayerBDManager
 	{
 		
 		public function readPlayers()
@@ -10,9 +10,9 @@
 			$count = 0;
 			$liste = array();
 			$connection = Connexion::getInstance();
-			$query = $connection->selectQuery("select * from t_Player order by PK_Player", array());
+			$query = $connection->selectQuery("select * from t_Player", array());
 			foreach($query as $data){
-				$players = new Players($data['PK_PLayer'], $data['SpielerNr'], $data['Name'], $data['FamilyName'], $data['Adresse'], $data['FK_Place'], $data['Natel'], $data['Email'], $data['Geburstag'], $data['LIZENZ'], $data['Schreiber'], $data['Schiri'], $data['JS'], $data['FK_Login']);
+				$players = new Players($data['PK_Player'], $data['SpielerNr'], $data['Name'], $data['FamilyName'], $data['Adresse'], $data['FK_Place'], $data['Natel'], $data['Email'], $data['Geburstag'], $data['LIZENZ'], $data['Schreiber'], $data['Schiri'], $data['JS'], $data['FK_Login']);
 				$liste[$count++] = $players;
 			}	
 			return $liste;	
