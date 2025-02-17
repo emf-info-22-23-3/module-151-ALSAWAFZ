@@ -8,69 +8,74 @@
     --animation-duration: 20s;
 }
 
-
 body {
-  margin: 0;
   min-height: 100vh;
-  background-color: #f0f0f0;
   position: relative;
+  background: #f0f8ff;
   overflow-x: hidden;
 }
 
 body::before,
 body::after {
-    content: '';
-    position: fixed;
-    width: var(--circle-size);
-    height: var(--circle-size);
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.5;
-    z-index: -1;
+  content: '';
+  position: fixed;
+  width: var(--circle-size);
+  height: var(--circle-size);
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.5;
+  z-index: -1;
 }
 
 body::before {
-    background: #87CEEB;
-    top: -100px;
-    left: -100px;
-    animation: moveBlob1 var(--animation-duration) infinite alternate;
+  background: #87CEEB;
+  top: -100px;
+  left: -100px;
+  animation: moveBlob1 var(--animation-duration) infinite alternate;
 }
 
 body::after {
-    background: #B0E0E6;
-    bottom: -100px;
-    right: -100px;
-    animation: moveBlob2 var(--animation-duration) infinite alternate;
+  background: #B0E0E6;
+  bottom: -100px;
+  right: -100px;
+  animation: moveBlob2 var(--animation-duration) infinite alternate;
 }
 
 @keyframes moveBlob1 {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    33% {
-        transform: translate(100px, 100px) scale(1.5);
-    }
-    66% {
-        transform: translate(-50px, 200px) scale(0.8);
-    }
-    100% {
-        transform: translate(150px, 50px) scale(1.2);
-    }
+  0% {
+      transform: translate(0, 0) scale(1);
+  }
+  33% {
+      transform: translate(100px, 100px) scale(1.5);
+  }
+  66% {
+      transform: translate(-50px, 200px) scale(0.8);
+  }
+  100% {
+      transform: translate(150px, 50px) scale(1.2);
+  }
 }
 
 @keyframes moveBlob2 {
-    0% {
-        transform: translate(0, 0) scale(1.2);
-    }
-    33% {
-        transform: translate(-100px, -100px) scale(0.8);
-    }
-    66% {
-        transform: translate(50px, -200px) scale(1.5);
-    }
-    100% {
-        transform: translate(-150px, -50px) scale(1);
-    }
+  0% {
+      transform: translate(0, 0) scale(1.2);
+  }
+  33% {
+      transform: translate(-100px, -100px) scale(0.8);
+  }
+  66% {
+      transform: translate(50px, -200px) scale(1.5);
+  }
+  100% {
+      transform: translate(-150px, -50px) scale(1);
+  }
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
 }
 
 .welcome-image{
@@ -91,16 +96,6 @@ body::after {
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
-}
-
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  position: relative;
-    z-index: 1;
-    background: rgba(131, 82, 82, 0.7);
-    backdrop-filter: blur(10px);
 }
 
 header {
