@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TV-Murten 1.Liga / D1 - Login</title>
     <link rel="stylesheet" href="../stylesheets/main.css">
+    <script type="text/javascript" src="../javascripts/helpers/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../javascripts/controllers/indexCtrl.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -35,12 +37,26 @@
             </div>
         </nav>
 
+
         <div class="centered-container">
             <div class="content-box">
-
+                <section class="schedule-section">
+                    <table class="schedule-table" id="players-info">
+                        <thead>
+                            <tr>
+                                <th>SpielerNr.</th>
+                                <th>Name</th>
+                                <th>FamilyName</th>
+                                <th>Adresse</th>
+                                <th>Ort</th>
+                                <th>Natel</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableContentPlayers"></tbody>
+                    </table>
+                </section>
             </div>
         </div>
     </div>
-    
 </body>
 </html>

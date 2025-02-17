@@ -10,3 +10,14 @@ function chargerMatchs(successCallback, errorCallback) {
   });
 }
 
+
+function chargerPlayers(successCallback, errorCallback) {
+  $.ajax({
+    type: "GET",
+    dataType: "xml",
+    url: BASE_URL + "playerManager.php",
+    success: successCallback,
+    error: errorCallback
+  });
+}
+

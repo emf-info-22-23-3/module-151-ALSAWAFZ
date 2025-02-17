@@ -2,7 +2,7 @@
 	include_once('Connexion.php');
 	include_once('beans/Match.php');
         
-	class MatachBDManager
+	class MatchBDManager
 	{
 		
 		public function readMatchs()
