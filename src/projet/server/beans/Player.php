@@ -3,24 +3,37 @@
   class Matchs
   {
 
-    private $pk_matchs;
-    private $spiel;
-    private $wochentag;
-    private $datum;
-    private $matchZeit;
-    private $fk_enemy_team;
-    private $halle;
-    
+    private $pk_player;
+    private $spielerNr;
+    private $name;
+    private $familyName;
+    private $address;
+    private $fk_place;
+    private $natel;
+    private $email;
+    private $geburstag;
+    private $LIZENZ;
+    private $Schreiber;
+    private $Schiri;
+    private $JS;
+    private $fk_login;
 
-    public function __construct($pk_matchs, $spiel, $wochentag, $datum, $matchZeit, $fk_enemy_team, $halle)
+    public function __construct($pk_player, $spielerNr, $name, $familyName, $address, $fk_place, $natel, $email, $geburstag, $LIZENZ, $Schreiber)
     {
-      $this->pk_matchs = $pk_matchs;
-      $this->spiel = $spiel;        
-      $this->wochentag = $wochentag;
-      $this->datum = $datum;
-      $this->matchZeit = $matchZeit;
-      $this->fk_enemy_team = $fk_enemy_team;
-      $this->halle = $halle;
+      $this->pk_player = $pk_player;
+      $this->spielerNr = $spielerNr;        
+      $this->name = $name;
+      $this->familyName = $familyName;
+      $this->address = $address;
+      $this->fk_place = $fk_place;
+      $this->natel = $natel;
+      $this->natel = $natel;
+      $this->natel = $natel;
+      $this->natel = $natel;
+      $this->natel = $natel;
+      $this->natel = $natel;
+      $this->natel = $natel;
+      $this->natel = $natel;
     }
     
     public function getSpiel()
