@@ -5,7 +5,7 @@
   --text-color: #333;
   --shadow: 0 2px 4px rgba(0,0,0,0.1);
   --circle-size: 300px;
-    --animation-duration: 20s;
+  --animation-duration: 20s;
 }
 
 body {
@@ -13,6 +13,7 @@ body {
   position: relative;
   background: #f0f8ff;
   overflow-x: hidden;
+  margin: 0;
 }
 
 body::before,
@@ -42,62 +43,20 @@ body::after {
 }
 
 @keyframes moveBlob1 {
-  0% {
-      transform: translate(0, 0) scale(1);
-  }
-  33% {
-      transform: translate(100px, 100px) scale(1.5);
-  }
-  66% {
-      transform: translate(-50px, 200px) scale(0.8);
-  }
-  100% {
-      transform: translate(150px, 50px) scale(1.2);
-  }
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(100px, 100px) scale(1.5); }
+  66% { transform: translate(-50px, 200px) scale(0.8); }
+  100% { transform: translate(150px, 50px) scale(1.2); }
 }
 
 @keyframes moveBlob2 {
-  0% {
-      transform: translate(0, 0) scale(1.2);
-  }
-  33% {
-      transform: translate(-100px, -100px) scale(0.8);
-  }
-  66% {
-      transform: translate(50px, -200px) scale(1.5);
-  }
-  100% {
-      transform: translate(-150px, -50px) scale(1);
-  }
+  0% { transform: translate(0, 0) scale(1.2); }
+  33% { transform: translate(-100px, -100px) scale(0.8); }
+  66% { transform: translate(50px, -200px) scale(1.5); }
+  100% { transform: translate(-150px, -50px) scale(1); }
 }
 
-.wrapper {
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-}
-
-.welcome-image{
-  width: 100%;
-    max-width: 8000px;
-    height: auto;
-    margin: 20px auto;
-    background: var(--secondary-color);
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    
-    align-items: center;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
+/* Remove the .wrapper container, it's no longer needed */
 header {
   display: flex;
   justify-content: space-between;
@@ -105,6 +64,7 @@ header {
   padding: 10px;
   background: white;
   border-bottom: 1px solid var(--border-color);
+  width: 100%;
 }
 
 .logo-container {
@@ -120,78 +80,80 @@ header {
 }
 
 nav {
-    display: flex;
-    justify-content: space-around;
-    background: var(--primary-color);
-    padding: 10px;
-    margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+  background: var(--primary-color);
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .nav-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 }
 
 .nav-item:hover::before {
-    left: 0;
+  left: 0;
 }
 
 .nav-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-icon {
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    background: black;
-    border-radius: 50%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  background: black;
+  border-radius: 50%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
 .nav-item:hover .nav-icon {
-    transform: rotate(360deg);
+  transform: rotate(360deg);
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
-    position: relative;
-    padding: 5px 0;
+  color: white;
+  text-decoration: none;
+  position: relative;
+  padding: 5px 0;
 }
 
 nav a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: white;
-    transition: width 0.3s ease;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s ease;
 }
 
 .nav-item:hover a::after {
-    width: 100%;
+  width: 100%;
 }
 
 .login-btn {
@@ -201,6 +163,9 @@ nav a::after {
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Add any other styles you might need */
+
 
 /* Login Form Styles */
 .login-container {
