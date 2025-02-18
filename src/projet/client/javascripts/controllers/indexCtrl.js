@@ -31,7 +31,7 @@ function chargerPlayersSuccess(data, text, jqXHR){
                     <img src="${playerImage}" alt="${players.getName()}">
                 </div>
                 <h3>${players.getName()} ${players.getFamilyName()}</h3>
-                <button class="btn-stats">View Stats</button>
+                <button class="btn-stats"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
             </div>
         `;
         $(".players-grid").append(playerCardHTML);

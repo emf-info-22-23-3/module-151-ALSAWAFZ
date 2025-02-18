@@ -226,6 +226,58 @@ nav a::after {
   cursor: pointer;
 }
 
+/* Match Selection Box */
+.match-selection select {
+  padding: 10px 15px;
+  background-color: #ffffff;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--text-color);
+  cursor: pointer;
+  width: 200px;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  appearance: none; /* Removes default dropdown arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+/* Custom arrow style */
+.match-selection select::after {
+  content: '\25BC'; /* Unicode for downward arrow */
+  font-size: 16px;
+  color: var(--text-color);
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Hover effect */
+.match-selection select:hover {
+  border-color: var(--primary-color);
+  background-color: #f0f8ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus effect */
+.match-selection select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #f0f8ff;
+  box-shadow: 0 0 8px rgba(135, 206, 235, 0.5);
+}
+
+/* Disable style */
+.match-selection select:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 
 
 
