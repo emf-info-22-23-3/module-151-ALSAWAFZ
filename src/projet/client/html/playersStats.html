@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TV-Murten 1.Liga / D1 - Login</title>
     <link rel="stylesheet" href="../stylesheets/main.css">
+    <script type="text/javascript" src="../javascripts/helpers/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../javascripts/controllers/indexCtrl.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -34,21 +36,18 @@
                 <a href="playersStats.html">Spielerstatistik</a>
             </div>
         </nav>
+
+
         <div class="centered-container">
             <div class="content-box">
-                <div class="players-grid">
-            <!-- Repeat for 8 players -->
-                    <div class="player-card">
-                        <div class="player-avatar">
-                        <img src="../images/Team_individual_image/Spielerkarten_2410_Vorlage-1_page-0001.jpg" alt="Player 1">
-                    </div>
-                    <h3>Player 1</h3>
-                    <button class="btn-stats">View Stats</button>
-                    </div>
+                <div class="players-grid" id="players-grid">
+                    <!-- Player cards will be dynamically inserted here -->
                 </div>
             </div>
         </div>
          
+
+
     </div>
 </body>
 </html>

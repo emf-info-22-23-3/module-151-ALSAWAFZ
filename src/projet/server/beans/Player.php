@@ -17,8 +17,9 @@
     private $schiri;
     private $js;
     private $fk_login;
+    private $spielerKarte;
 
-    public function __construct($pk_player, $spielerNr, $name, $familyName, $adresse, $fk_place, $natel, $email, $geburstag, $lizenz, $schreiber, $schiri, $js, $fk_login)
+    public function __construct($pk_player, $spielerNr, $name, $familyName, $adresse, $fk_place, $natel, $email, $geburstag, $lizenz, $schreiber, $schiri, $js, $fk_login, $spielerKarte)
     {
       $this->pk_player = $pk_player;
       $this->spielerNr = $spielerNr;        
@@ -34,6 +35,7 @@
       $this->schiri = $schiri;
       $this->js = $js;
       $this->fk_login = $fk_login;
+      $this->spielerKarte = $spielerKarte;
     }
     
     public function getPkPlayer()
@@ -87,6 +89,10 @@
     public function getFKLogin(){
       return $this->fk_login;
     }
+    public function getSpielerKarte(){
+      return $this->spielerKarte;
+    }
+
 
 
     public function toXML()
@@ -106,6 +112,7 @@
       $result = $result . '<schiri>'.$this->getSchiri().'</schiri>';
       $result = $result . '<js>'.$this->getJS().'</js>';
       $result = $result . '<fk_login>'.$this->getFKLogin().'</fk_login>';
+      $result = $result . '<spielerKarte>'.$this->getSpielerKarte().'</spielerKarte>';
 
       $result = $result . '</players>';
       return $result;

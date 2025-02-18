@@ -17,6 +17,7 @@ function chargerPlayersSuccess(data, text, jqXHR){
     players.setSchiri($(this).find("schiri").text());
     players.setJS($(this).find("js").text());
     players.setFk_login($(this).find("fk_login").text());
+    players.setSpielerKarte($(this).find("spielerKarte").text());
 
 
     txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td><td>" + players.getEmail() +"</td><td>" + players.getGeburstag() + "</td><td>" + players.getLizenz() + "</td><td>" + players.getSchreiber() +"</td><td>" + players.getSchiri() +"</td><td>" + players.getJS() +"</td></tr>";

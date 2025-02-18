@@ -117,6 +117,14 @@ Players.prototype.getFk_login = function() {
     return this.fk_login;
 };
 
+Players.prototype.setSpielerKarte = function(spielerKarte) {
+    this.spielerKarte = spielerKarte;
+};
+
+Players.prototype.getSpielerKarte = function() {
+    return this.spielerKarte;
+};
+
 Players.prototype.toString = function () {
   return "idk";
 };
