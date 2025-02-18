@@ -307,11 +307,6 @@ nav a::after {
 }
 
 
-
-
-
-
-
 /* Table container styling */
 .schedule-table-wrapper {
   overflow: hidden;
@@ -404,9 +399,6 @@ nav a::after {
 .schedule-table tbody::-webkit-scrollbar-thumb:hover {
   background-color: #888;
 }
-
-
-
 
 
 /* Player Grid Styles */
