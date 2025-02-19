@@ -140,6 +140,7 @@ $(document).ready(function() {
     chargerMatchs(chargerMatchsSuccess, chargerMatchsError);
   });
 
+  /*
   $btnChosePlayer.click(function () {
     var match = ;
     var player =; 
@@ -150,6 +151,7 @@ $(document).ready(function() {
         alert("error rece");
     }
   });
+  */
   
 });
 
