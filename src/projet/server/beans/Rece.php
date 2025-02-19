@@ -1,6 +1,6 @@
 <?php 
 
-  class Reces
+  class Rece
   {
 
     private $pk_rece;

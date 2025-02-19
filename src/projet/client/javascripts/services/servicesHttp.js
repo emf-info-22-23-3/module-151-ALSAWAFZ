@@ -21,3 +21,14 @@ function chargerPlayers(successCallback, errorCallback) {
   });
 }
 
+function chargerReces(matchid, playerid, successCallback, errorCallback) {
+  $.ajax({
+    type: "GET",
+    dataType: "xml",
+    url: BASE_URL + "receManager.php",
+    data:'matchid=' + matchid,
+    data:'playerid='+ playerid,
+    success: successCallback,
+    error: errorCallback
+  });
+}

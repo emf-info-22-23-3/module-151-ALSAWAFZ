@@ -31,7 +31,7 @@ function chargerPlayersSuccess(data, text, jqXHR){
                     <img src="${playerImage}" alt="${players.getName()}">
                 </div>
                 <h3>${players.getName()} ${players.getFamilyName()}</h3>
-                <button class="login-btn"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
+                <button class="login-btn" id="btnChosePlayer"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
             </div>
         `;
         $(".players-grid").append(playerCardHTML);
@@ -51,8 +51,6 @@ function chargerPlayersSuccess(data, text, jqXHR){
   function chargerPlayersError(request, status, error) {
   alert("Erreur lors de la lecture des players: " + error);
 }
-
-
 
 
 
@@ -89,7 +87,43 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 
 
+
+function chargerRecesSuccess(data, text, jqXHR){   
+  var txtReces = '';
+  $(data).find("reces").each(function() {
+    var reces = new Reces();
+    reces.setPk($(this).find("pk_rece").text());
+    reces.setFK_Match_Rece($(this).find("fk_match_rece").text());
+    reces.setFK_Player_Rece($(this).find("fk_player_rece").text());
+    reces.setPerfekt($(this).find("perfekt").text());
+    reces.setSuperInZone($(this).find("superInZone").text());
+    reces.setNeutral($(this).find("neutral").text());
+    reces.setSchlecht($(this).find("schlecht").text());
+    reces.setDirektFehler($(this).find("direktFehler").text());
+    reces.setFalscheEntscheidung($(this).find("falscheEntscheidung").text());
+
+    txtReces += "<tr><td>" + reces.getPerfekt() + "</td><td>" + reces.getSuperInZone() + "</td><td>" + reces.getNeutral() + "</td><td>" + reces.getSchlecht() + "</td><td>" + reces.getDirektFehler() + "</td><td>" + reces.getFalscheEntscheidung() + "</td></tr>";
+  });  
+
+  var tableContentMatches = document.getElementById("tableContentRece");
+  if (tableContentMatches) {
+      tableContentMatches.innerHTML = txtmatches;
+  } else {
+      console.error("tableContentRece element not found");
+  }
+}
+
+function chargerRecesError(request, status, error) {
+alert("Erreur lors de la lecture des reces: " + error);
+}
+
+
+
+
+
 $(document).ready(function() {
+  var btnChosePlayer = $("#btnChosePlayer");
+
 
   $.getScript("../javascripts/helpers/dateHelper.js", function() {
     console.log("dateHelper.js chargé !");
@@ -104,6 +138,17 @@ $(document).ready(function() {
     console.log("servicesHttp.js chargé !");
     chargerPlayers(chargerPlayersSuccess, chargerPlayersError);
     chargerMatchs(chargerMatchsSuccess, chargerMatchsError);
+  });
+
+  $btnChosePlayer.click(function () {
+    var match = ;
+    var player =; 
+    
+    if (player ) {
+      chargerReces(JSON.parse(match).pk, JSON.parse(player).pk, chargerRecesSuccess, chargerRecesError);
+    } else {
+        alert("error rece");
+    }
   });
   
 });
