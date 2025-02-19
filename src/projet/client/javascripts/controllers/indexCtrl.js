@@ -23,6 +23,7 @@ function chargerPlayersSuccess(data, text, jqXHR){
 
     txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td><td>" + players.getEmail() +"</td><td>" + players.getGeburstag() + "</td><td>" + players.getLizenz() + "</td><td>" + players.getSchreiber() +"</td><td>" + players.getSchiri() +"</td><td>" + players.getJS() +"</td></tr>";
   
+
     // Generate the HTML for each player card dynamically
     var playerImage = "../images/Team_individual_image/" + players.getSpielerKarte() + ".jpg";
         var playerCardHTML = `
@@ -31,11 +32,16 @@ function chargerPlayersSuccess(data, text, jqXHR){
                     <img src="${playerImage}" alt="${players.getName()}">
                 </div>
                 <h3>${players.getName()} ${players.getFamilyName()}</h3>
-                <button class="login-btn" id="btnChosePlayer"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
+                <button class="login-btn" id="btnChosePlayer" data-image="${playerImage}"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
             </div>
         `;
         $(".players-grid").append(playerCardHTML);
+
+
+    //============for playersafterSelection.html
+       
     //===================================================
+
   
   });  
 
