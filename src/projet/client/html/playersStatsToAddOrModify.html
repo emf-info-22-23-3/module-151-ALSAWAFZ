@@ -15,7 +15,10 @@
                 <img src="../images/TVMurten_Black.png" alt="Logo" class="logo">
             </div>
             <h1>TV-Murten 1.Liga / D1</h1>
-            <button class="login-btn"><a href="login.html">Login</a></button>
+            <button class="login-btn">
+                <img src="../images/login_icon.png" alt="Login" class="nav-icon">
+                <a href="login.html">Login</a>
+            </button> 
         </header>
         
         <nav>
@@ -41,7 +44,7 @@
         <div class="centered-container">
             <div class="content-box">
 
-
+                
                 <div class="match-selection">
                     <label for="match-selection">Match: </label>
                     <select id="match-selection" name="match-selection">
@@ -54,6 +57,8 @@
                     </select>
                 </div>
 
+
+                <h2>Rece</h2>
                 <section class="schedule-section">
                     <table class="schedule-table">
                         <thead>
@@ -68,6 +73,27 @@
                             </tr>
                         </thead>
                         <tbody id="tableContentRece"></tbody>
+                    </table>
+                </section>
+
+
+                <h2>Angriff</h2>
+                <section class="schedule-section">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Spieler/Punkt</th>
+                                <th>Bälle Erhalten</th>
+                                <th>Punkte</th>
+                                <th>Druckvoll</th>
+                                <th>Zu Easy</th>
+                                <th>Fehler</th>
+                                <th>Block Punkt</th>
+                                <th>Block</th>
+                                <th>Ass</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableContentAngriff"></tbody>
                     </table>
                 </section>
 

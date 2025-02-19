@@ -31,7 +31,7 @@ function chargerPlayersSuccess(data, text, jqXHR){
                     <img src="${playerImage}" alt="${players.getName()}">
                 </div>
                 <h3>${players.getName()} ${players.getFamilyName()}</h3>
-                <button class="btn-stats"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
+                <button class="login-btn"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
             </div>
         `;
         $(".players-grid").append(playerCardHTML);
@@ -51,6 +51,9 @@ function chargerPlayersSuccess(data, text, jqXHR){
   function chargerPlayersError(request, status, error) {
   alert("Erreur lors de la lecture des players: " + error);
 }
+
+
+
 
 
 
@@ -79,8 +82,9 @@ function chargerMatchsSuccess(data, text, jqXHR){
 }
 
 function chargerMatchsError(request, status, error) {
-  alert("Erreur lors de la lecture des matchs: " + error);
+alert("Erreur lors de la lecture des matchs: " + error);
 }
+
 
 
 
