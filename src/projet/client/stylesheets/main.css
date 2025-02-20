@@ -582,13 +582,9 @@ nav a::after {
 /* After Selection Table container styling */
 
 .schedule-table-AfterSelection {
-  width: 100%;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  table-layout: fixed;
-  border-spacing: 0;
+  display: flex;
+  flex-direction: column; /* Stack rece and angriff tables */
+  gap: 10px; /* Space between tables */
 }
 
 .schedule-table-AfterSelection thead {
@@ -607,6 +603,8 @@ nav a::after {
   width: 100%;
 }
 
+
+
 .schedule-table-AfterSelection tbody td,
 .schedule-table-AfterSelection tbody th {
   width: 200px;
@@ -619,11 +617,13 @@ nav a::after {
 }
 
 .schedule-table-AfterSelection th, .schedule-table-AfterSelection td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-  box-sizing: border-box;
-  word-wrap: break-word;
+  border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: center;
+    word-wrap: break-word; /* Prevents overflow */
+    white-space: nowrap; /* Keeps content on one line */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds "..." for overflowed text */
 }
 
 .schedule-table-AfterSelection th {
@@ -666,6 +666,20 @@ nav a::after {
 
 .schedule-table-AfterSelection tbody::-webkit-scrollbar-thumb:hover {
   background-color: #888;
+}
+
+
+/* Player card style after Selection */
+.chosen-player-card-image {
+  flex: 0 0 auto;
+  max-width: 200px;
+  text-align: center;
+}
+
+.chosen-player-card-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 /* Player Grid Styles */

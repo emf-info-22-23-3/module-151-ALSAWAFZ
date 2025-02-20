@@ -39,7 +39,25 @@ function chargerPlayersSuccess(data, text, jqXHR){
 
 
     //============for playersafterSelection.html
-       
+    $(document).ready(function () {
+      $(document).on("click", ".login-btn", function (event) {
+          event.preventDefault(); // Prevent default action
+  
+          var playerImage = $(this).data("image");
+          localStorage.setItem("selectedPlayerImage", playerImage);
+  
+          window.location.href = "../html/playersStatsafterSelection.html";
+      });
+  
+      // On playersStatsafterSelection.html, load the stored image
+      if ($(".chosen-player-card-image").length > 0) {
+          var storedImage = localStorage.getItem("selectedPlayerImage");
+          if (storedImage) {
+              $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
+          }
+      }
+  });
+  
     //===================================================
 
   
@@ -60,9 +78,8 @@ function chargerPlayersSuccess(data, text, jqXHR){
 
 
 
-
-
 function chargerMatchsSuccess(data, text, jqXHR){   
+  var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
     var txtmatches = '';
     $(data).find("matchs").each(function() {
       var matchs = new Matchs();
@@ -74,12 +91,14 @@ function chargerMatchsSuccess(data, text, jqXHR){
       matchs.setFK_Enemy_Team($(this).find("fk_enemy_team").text());
       matchs.setHalle($(this).find("halle").text());
       console.log($(this).find("fk_enemy_team").text());
+     
       txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>" + matchs.toString() + "</td></tr>";
+      //cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
     });  
 
     var tableContentMatches = document.getElementById("tableContentMatches");
     if (tableContentMatches) {
-        tableContentMatches.innerHTML = txtmatches;
+        tableContentMatches.innerHTML += txtmatches;
     } else {
         console.error("tableContentMatches element not found");
     }
@@ -111,9 +130,9 @@ function chargerRecesSuccess(data, text, jqXHR){
     txtReces += "<tr><td>" + reces.getPerfekt() + "</td><td>" + reces.getSuperInZone() + "</td><td>" + reces.getNeutral() + "</td><td>" + reces.getSchlecht() + "</td><td>" + reces.getDirektFehler() + "</td><td>" + reces.getFalscheEntscheidung() + "</td></tr>";
   });  
 
-  var tableContentMatches = document.getElementById("tableContentRece");
-  if (tableContentMatches) {
-      tableContentMatches.innerHTML = txtmatches;
+  var tableContentReces = document.getElementById("tableContentRece");
+  if (tableContentReces) {
+    tableContentReces.innerHTML = txtReces;
   } else {
       console.error("tableContentRece element not found");
   }
@@ -128,7 +147,7 @@ alert("Erreur lors de la lecture des reces: " + error);
 
 
 $(document).ready(function() {
-  var btnChosePlayer = $("#btnChosePlayer");
+  var cmbAfterSelectionMatches = $("#cmbAfterSelectionMatches");
 
 
   $.getScript("../javascripts/helpers/dateHelper.js", function() {
@@ -145,17 +164,11 @@ $(document).ready(function() {
     chargerPlayers(chargerPlayersSuccess, chargerPlayersError);
     chargerMatchs(chargerMatchsSuccess, chargerMatchsError);
   });
-
-  /*
-  $btnChosePlayer.click(function () {
-    var match = ;
-    var player =; 
-    
-    if (player ) {
-      chargerReces(JSON.parse(match).pk, JSON.parse(player).pk, chargerRecesSuccess, chargerRecesError);
-    } else {
-        alert("error rece");
-    }
+/*
+  cmbAfterSelectionMatches.change(function(event) {
+    afterSelectionMatches = this.options[this.selectedIndex].value;
+    chosenplayer =
+    chargerReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, chargerRecesSuccess, chargerRecesError);
   });
   */
   
