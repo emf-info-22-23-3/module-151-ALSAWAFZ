@@ -92,8 +92,11 @@ function chargerMatchsSuccess(data, text, jqXHR){
       matchs.setHalle($(this).find("halle").text());
       console.log($(this).find("fk_enemy_team").text());
      
-      txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>" + matchs.toString() + "</td></tr>";
+      txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>VS. " + matchs.getFK_Enemy_Team() + ", IN: " + matchs.getHalle() + "</td></tr>";
       //cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
+      
+    
+    
     });  
 
     var tableContentMatches = document.getElementById("tableContentMatches");
