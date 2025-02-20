@@ -40,7 +40,7 @@ function chargerPlayersSuccess(data, text, jqXHR){
 
     //============for playersafterSelection.html
     $(document).ready(function () {
-      $(document).on("click", ".login-btn", function (event) {
+      $(document).on("click", "#btnChosePlayer", function (event) {
           event.preventDefault(); // Prevent default action
   
           var playerImage = $(this).data("image");

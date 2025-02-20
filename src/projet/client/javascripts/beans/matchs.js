@@ -51,10 +51,6 @@ Matchs.prototype.setHalle = function(halle){
 
 Matchs.prototype.getHalle = function(){
     return this.halle;
-}
-
-Matchs.prototype.toString = function () {
-  return "VS. " + this.fk_Enemy_Team +', IN: ' + this.halle;
 };
 
 

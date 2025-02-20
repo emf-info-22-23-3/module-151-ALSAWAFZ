@@ -1,6 +1,6 @@
 <?php 
-	include_once('workers/PlayerBDManager.php');
-	include_once('beans/Player.php');
+	include_once('../workers/PlayerBDManager.php');
+	include_once('../beans/Player.php');
         
     if (isset($_SERVER['REQUEST_METHOD']))
 	{
