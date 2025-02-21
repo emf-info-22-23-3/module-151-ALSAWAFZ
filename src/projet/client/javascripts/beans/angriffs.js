@@ -1,95 +1,103 @@
-var Angriffs = function() {
-};
+class Angriffs {
+    constructor() {
+        this.pk = null;
+        this.fk_match_angriff = null;
+        this.fk_player_angriff = null;
+        this.balleErhalten = null;
+        this.punkte = null;
+        this.druckVoll = null;
+        this.zuEasy = null;
+        this.fehler = null;
+        this.blockPunkt = null;
+        this.block = null;
+        this.ass = null;
+    }
 
-Angriffs.prototype.setPk = function(pk) {
-    this.pk = pk;
-};
+    setPk(pk) {
+        this.pk = pk;
+    }
 
-Angriffs.prototype.getPk = function() {
-    return this.pk;
-};
+    getPk() {
+        return this.pk;
+    }
 
+    setFK_Match_Angriff(fk_match_angriff) {
+        this.fk_match_angriff = fk_match_angriff;
+    }
 
-Angriffs.prototype.setFK_Match_Angriff = function(fk_match_angriff) {
-    this.fk_match_angriff = fk_match_angriff;
-};
+    getFK_Match_Angriff() {
+        return this.fk_match_angriff;
+    }
 
-Angriffs.prototype.getFK_Match_Angriff = function() {
-    return this.fk_match_angriff;
-};
+    setFK_Player_Angriff(fk_player_angriff) {
+        this.fk_player_angriff = fk_player_angriff;
+    }
 
+    getFK_Player_Angriff() {
+        return this.fk_player_angriff;
+    }
 
-Angriffs.prototype.setFK_Player_Angriff = function(fk_player_angriff) {
-    this.fk_player_angriff = fk_player_angriff;
-};
+    setBalleErhalten(balleErhalten) {
+        this.balleErhalten = balleErhalten;
+    }
 
-Angriffs.prototype.getFK_player_Angriff = function() {
-    return this.fk_player_angriff;
-};
+    getBalleErhalten() {
+        return this.balleErhalten;
+    }
 
+    setPunkte(punkte) {
+        this.punkte = punkte;
+    }
 
-Angriffs.prototype.setBalleErhalten = function(balleErhalten){
-    this.balleErhalten = balleErhalten;
+    getPunkte() {
+        return this.punkte;
+    }
+
+    setDruckVoll(druckVoll) {
+        this.druckVoll = druckVoll;
+    }
+
+    getDruckVoll() {
+        return this.druckVoll;
+    }
+
+    setZuEasy(zuEasy) {
+        this.zuEasy = zuEasy;
+    }
+
+    getZuEasy() {
+        return this.zuEasy;
+    }
+
+    setFehler(fehler) {
+        this.fehler = fehler;
+    }
+
+    getFehler() {
+        return this.fehler;
+    }
+
+    setBlockPunkt(blockPunkt) {
+        this.blockPunkt = blockPunkt;
+    }
+
+    getBlockPunkt() {
+        return this.blockPunkt;
+    }
+
+    setBlock(block) {
+        this.block = block;
+    }
+
+    getBlock() {
+        return this.block;
+    }
+
+    setAss(ass) {
+        this.ass = ass;
+    }
+
+    getAss() {
+        return this.ass;
+    }
 }
-Angriffs.prototype.getBalleErhalten = function() {
-    return this.balleErhalten;
-};
-
-
-Angriffs.prototype.setpunkte = function(punkte){
-    this.punkte = punkte;
-}
-Angriffs.prototype.getpunkte = function() {
-    return this.punkte;
-};
-
-
-Angriffs.prototype.setDruckVoll = function(druckVoll){
-    this.druckVoll = druckVoll;
-}
-Angriffs.prototype.getDruckVoll = function() {
-    return this.druckVoll;
-};
-
-
-Angriffs.prototype.setZuEasy = function(zuEasy){
-    this.zuEasy = zuEasy;
-}
-Angriffs.prototype.getZuEasy = function() {
-    return this.zuEasy;
-};
-
-
-Angriffs.prototype.setFehler = function(fehler){
-    this.fehler = fehler;
-}
-Angriffs.prototype.getFehler = function() {
-    return this.fehler;
-};
-
-Angriffs.prototype.setBlockPunkt = function(blockPunkt){
-    this.blockPunkt = blockPunkt;
-}
-Angriffs.prototype.getBlockPunkt = function() {
-    return this.blockPunkt;
-};
-
-Angriffs.prototype.setBlock = function(block){
-    this.block = block;
-}
-Angriffs.prototype.getBlock = function() {
-    return this.block;
-};
-
-Angriffs.prototype.setAss = function(ass){
-    this.ass = ass;
-}
-Angriffs.prototype.getAss = function() {
-    return this.ass;
-};
-
-
-Angriffs.prototype.toString = function () {
-  return "idk angriff";
-};
-

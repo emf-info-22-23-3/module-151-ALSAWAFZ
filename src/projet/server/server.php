@@ -25,17 +25,35 @@ function sendXMLResponse($success, $message = '', $data = null) {
     echo "<?xml version='1.0' encoding='UTF-8'?>\n";
     echo "<response>\n";
     echo "  <success>" . ($success ? 'true' : 'false') . "</success>\n";
+
     if ($message) {
         echo "  <message>" . htmlspecialchars($message) . "</message>\n";
     }
+
     if ($data) {
+        echo "  <data>\n";
         foreach ($data as $key => $value) {
-            echo "  <" . htmlspecialchars($key) . ">" . htmlspecialchars($value) . "</" . htmlspecialchars($key) . ">\n";
+            if (is_array($value)) { // Handle arrays separately
+                echo "    <$key>\n";
+                foreach ($value as $item) {
+                    if (is_object($item) && method_exists($item, 'toXML')) {
+                        echo $item->toXML(); // Use toXML() if the object supports it
+                    } else {
+                        echo "      <item>" . htmlspecialchars(json_encode($item)) . "</item>\n"; // Convert to JSON if needed
+                    }
+                }
+                echo "    </$key>\n";
+            } else {
+                echo "    <$key>" . htmlspecialchars($value) . "</$key>\n";
+            }
         }
+        echo "  </data>\n";
     }
+
     echo "</response>";
     exit;
 }
+
 
 // Consistent session handling functions
 function isLoggedIn() {
@@ -43,7 +61,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-    return isset($_SESSION['login_id']) && isset($_SESSION['username']) && $_SESSION['role'] === 'Admin';
+    return isset($_SESSION['login_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'Admin';
 }
 
 function login($login) {

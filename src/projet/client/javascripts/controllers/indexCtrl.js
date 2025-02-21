@@ -157,7 +157,6 @@ chargerMatchsSuccess(data, text, jqXHR){
       matchs.setMatchZeit($(this).find("matchZeit").text());
       matchs.setFK_Enemy_Team($(this).find("fk_enemy_team").text());
       matchs.setHalle($(this).find("halle").text());
-      console.log($(this).find("fk_enemy_team").text());
      
       txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>VS. " + matchs.getFK_Enemy_Team() + ", IN: " + matchs.getHalle() + "</td></tr>";
       

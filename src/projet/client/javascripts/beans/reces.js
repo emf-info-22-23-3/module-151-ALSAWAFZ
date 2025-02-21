@@ -1,82 +1,85 @@
-var Reces = function() {
-};
+class Reces {
+    constructor() {
+        this.pk = null;
+        this.fk_match_rece = null;
+        this.fk_player_rece = null;
+        this.perfekt = null;
+        this.superInZone = null;
+        this.neutral = null;
+        this.schlecht = null;
+        this.direktFehler = null;
+        this.falscheEntscheidung = null;
+    }
 
-Reces.prototype.setPk = function(pk) {
-    this.pk = pk;
-};
+    setPk(pk) {
+        this.pk = pk;
+    }
 
-Reces.prototype.getPk = function() {
-    return this.pk;
-};
+    getPk() {
+        return this.pk;
+    }
 
+    setFK_Match_Rece(fk_match_rece) {
+        this.fk_match_rece = fk_match_rece;
+    }
 
-Reces.prototype.setFK_Match_Rece = function(fk_match_rece) {
-    this.fk_match_rece = fk_match_rece;
-};
+    getFK_Match_Rece() {
+        return this.fk_match_rece;
+    }
 
-Reces.prototype.getFK_Match_Rece = function() {
-    return this.fk_match_rece;
-};
+    setFK_Player_Rece(fk_player_rece) {
+        this.fk_player_rece = fk_player_rece;
+    }
 
+    getFK_Player_Rece() {
+        return this.fk_player_rece;
+    }
 
-Reces.prototype.setFK_Player_Rece = function(fk_player_rece) {
-    this.fk_player_rece = fk_player_rece;
-};
+    setPerfekt(perfekt) {
+        this.perfekt = perfekt;
+    }
 
-Reces.prototype.getFK_player_Rece = function() {
-    return this.fk_player_rece;
-};
+    getPerfekt() {
+        return this.perfekt;
+    }
 
+    setSuperInZone(superInZone) {
+        this.superInZone = superInZone;
+    }
 
-Reces.prototype.setPerfekt = function(perfekt){
-    this.perfekt = perfekt;
+    getSuperInZone() {
+        return this.superInZone;
+    }
+
+    setNeutral(neutral) {
+        this.neutral = neutral;
+    }
+
+    getNeutral() {
+        return this.neutral;
+    }
+
+    setSchlecht(schlecht) {
+        this.schlecht = schlecht;
+    }
+
+    getSchlecht() {
+        return this.schlecht;
+    }
+
+    setDirektFehler(direktFehler) {
+        this.direktFehler = direktFehler;
+    }
+
+    getDirektFehler() {
+        return this.direktFehler;
+    }
+
+    setFalscheEntscheidung(falscheEntscheidung) {
+        this.falscheEntscheidung = falscheEntscheidung;
+    }
+
+    getFalscheEntscheidung() {
+        return this.falscheEntscheidung;
+    }
 }
-Reces.prototype.getPerfekt = function() {
-    return this.perfekt;
-};
-
-
-Reces.prototype.setSuperInZone = function(superInZone){
-    this.superInZone = superInZone;
-}
-Reces.prototype.getSuperInZone = function() {
-    return this.superInZone;
-};
-
-
-Reces.prototype.setNeutral = function(neutral){
-    this.neutral = neutral;
-}
-Reces.prototype.getNeutral = function() {
-    return this.neutral;
-};
-
-
-Reces.prototype.setSchlecht = function(schlecht){
-    this.schlecht = schlecht;
-}
-Reces.prototype.getSchlecht = function() {
-    return this.schlecht;
-};
-
-
-Reces.prototype.setDirektFehler = function(direktFehler){
-    this.direktFehler = direktFehler;
-}
-Reces.prototype.getDirektFehler = function() {
-    return this.direktFehler;
-};
-
-Reces.prototype.setFalscheEntscheidung = function(falscheEntscheidung){
-    this.falscheEntscheidung = falscheEntscheidung;
-}
-Reces.prototype.getFalscheEntscheidung = function() {
-    return this.falscheEntscheidung;
-};
-
-
-
-Reces.prototype.toString = function () {
-  return "idk rece";
-};
-

@@ -1,131 +1,67 @@
-var Players = function() {
-};
+class Players {
+    constructor() {
+        this.pk = null;
+        this.spielerNr = null;
+        this.name = null;
+        this.familyName = null;
+        this.adresse = null;
+        this.matchZeit = null;
+        this.fk_place = null;
+        this.natel = null;
+        this.email = null;
+        this.geburstag = null;
+        this.lizenz = null;
+        this.schreiber = null;
+        this.schiri = null;
+        this.js = null;
+        this.fk_login = null;
+        this.spielerKarte = null;
+    }
 
-Players.prototype.setPk = function(pk) {
-  this.pk = pk;
-};
+    setPk(pk) { this.pk = pk; }
 
-Players.prototype.setSpielerNr = function(spielerNr) {
-    this.spielerNr = spielerNr;
-};
+    setSpielerNr(spielerNr) { this.spielerNr = spielerNr; }
+    getSpielerNr() { return this.spielerNr; }
 
-Players.prototype.getSpielerNr = function() {
-    return this.spielerNr;
-};
+    setName(name) { this.name = name; }
+    getName() { return this.name; }
 
-Players.prototype.setName = function(name) {
-    this.name = name;
-};
+    setFamilyName(familyName) { this.familyName = familyName; }
+    getFamilyName() { return this.familyName; }
 
-Players.prototype.getName = function() {
-    return this.name;
-};
+    setAdresse(adresse) { this.adresse = adresse; }
+    getAdresse() { return this.adresse; }
 
-Players.prototype.setFamilyName = function(familyName) {
-    this.familyName = familyName;
-};
+    setMatchZeit(matchZeit) { this.matchZeit = matchZeit; }
+    getMatchZeit() { return this.matchZeit; }
 
-Players.prototype.getFamilyName = function() {
-    return this.familyName;
-};
+    setFk_place(fk_place) { this.fk_place = fk_place; }
+    getFk_place() { return this.fk_place; }
 
-Players.prototype.setAdresse = function(adresse) {
-    this.adresse = adresse;
-};
+    setNatel(natel) { this.natel = natel; }
+    getNatel() { return this.natel; }
 
-Players.prototype.getAdresse = function() {
-    return this.adresse;
-};
+    setEmail(email) { this.email = email; }
+    getEmail() { return this.email; }
 
-Players.prototype.setMatchZeit = function(matchZeit) {
-    this.matchZeit = matchZeit;
-};
+    setGeburstag(geburstag) { this.geburstag = geburstag; }
+    getGeburstag() { return this.geburstag; }
 
-Players.prototype.getMatchZeit = function() {
-    return this.matchZeit;
-};
+    setLizenz(lizenz) { this.lizenz = lizenz; }
+    getLizenz() { return this.lizenz; }
 
-Players.prototype.setFk_place = function(fk_place) {
-    this.fk_place = fk_place;
-};
+    setSchreiber(schreiber) { this.schreiber = schreiber; }
+    getSchreiber() { return this.schreiber; }
 
-Players.prototype.getFk_place = function() {
-    return this.fk_place;
-};
+    setSchiri(schiri) { this.schiri = schiri; }
+    getSchiri() { return this.schiri; }
 
-Players.prototype.setNatel = function(natel) {
-    this.natel = natel;
-};
+    setJS(js) { this.js = js; }
+    getJS() { return this.js; }
 
-Players.prototype.getNatel = function() {
-    return this.natel;
-};
+    setFk_login(fk_login) { this.fk_login = fk_login; }
+    getFk_login() { return this.fk_login; }
 
-Players.prototype.setEmail = function(email) {
-    this.email = email;
-};
-
-Players.prototype.getEmail = function() {
-    return this.email;
-};
-
-Players.prototype.setGeburstag= function(geburstag) {
-    this.geburstag = geburstag;
-};
-
-Players.prototype.getGeburstag = function() {
-    return this.geburstag;
-};
-
-Players.prototype.setLizenz = function(lizenz) {
-    this.lizenz = lizenz;
-};
-
-Players.prototype.getLizenz = function() {
-    return this.lizenz;
-};
-
-Players.prototype.setSchreiber = function(schreiber) {
-    this.schreiber = schreiber;
-};
-
-Players.prototype.getSchreiber = function() {
-    return this.schreiber;
-};
-
-Players.prototype.setSchiri = function(schiri) {
-    this.schiri = schiri;
-};
-
-Players.prototype.getSchiri = function() {
-    return this.schiri;
-};
-
-Players.prototype.setJS = function(js) {
-    this.js = js;
-};
-
-Players.prototype.getJS = function() {
-    return this.js;
-};
-
-Players.prototype.setFk_login = function(fk_login) {
-    this.fk_login = fk_login;
-};
-
-Players.prototype.getFk_login = function() {
-    return this.fk_login;
-};
-
-Players.prototype.setSpielerKarte = function(spielerKarte) {
-    this.spielerKarte = spielerKarte;
-};
-
-Players.prototype.getSpielerKarte = function() {
-    return this.spielerKarte;
-};
-
-Players.prototype.toString = function () {
-  return "idk";
-};
-
+    setSpielerKarte(spielerKarte) { this.spielerKarte = spielerKarte; }
+    getSpielerKarte() { return this.spielerKarte; }
+}
