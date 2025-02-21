@@ -4,7 +4,7 @@ class servicesHttp {
       this.BASE_URL = "http://localhost:8080/projet/server/server.php";
   }
   
-  connect(username, password, successCallback, errorCallback) {
+  connect(username, password, successCallback, CallbackError) {
       console.log("Sending data to server:", { username: username, password: password });
       
       $.ajax({
@@ -17,13 +17,13 @@ class servicesHttp {
               password: password
           },
           success: successCallback,
-          error: errorCallback
+          error: CallbackError
       });
   }
   
 
 
-  disconnect(successCallback, errorCallback) {
+  disconnect(successCallback, CallbackError) {
       $.ajax({
           type: "POST",
           dataType: "xml",
@@ -32,29 +32,29 @@ class servicesHttp {
               action: 'disconnect',
           },
           success: successCallback,
-          error: errorCallback
+          error: CallbackError
       });
   }
 
-  getMatchs(successCallback, errorCallback) {
+  getMatchs(successCallback, CallbackError) {
       $.ajax({
           type: "GET",
           dataType: "xml",
           url: this.BASE_URL,
           data: 'action=getMatchs',
           success: successCallback,
-          error: errorCallback
+          error: CallbackError
       });
   }
 
-  getPlayers(successCallback, errorCallback) {
+  getPlayers(successCallback, CallbackError) {
     $.ajax({
         type: "GET",
         dataType: "xml",
         url: this.BASE_URL,
         data: 'action=getPlayers',
         success: successCallback,
-        error: errorCallback
+        error: CallbackError
     });
 }
 }

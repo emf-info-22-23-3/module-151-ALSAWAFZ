@@ -43,7 +43,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-    return isset($_SESSION['login_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'Admin';
+    return isset($_SESSION['login_id']) && isset($_SESSION['username']) && $_SESSION['role'] === 'Admin';
 }
 
 function login($login) {
