@@ -65,6 +65,8 @@ CallbackError(request, status, error) {
 
 chargerPlayersSuccess(data, text, jqXHR){   
   var txtplayer = '';
+  
+
   $(data).find("players").each(function() {
     var players = new Players();
 
@@ -163,7 +165,7 @@ chargerMatchsSuccess(data, text, jqXHR){
       //cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
 
     });  
-    var tableContentMatches = document.getElementById("tableContentMatches");
+    
     if (tableContentMatches) {
       tableContentMatches.innerHTML = txtmatches;
     }
