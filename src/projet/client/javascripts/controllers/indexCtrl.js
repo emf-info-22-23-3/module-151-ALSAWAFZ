@@ -15,7 +15,6 @@ class IndexCtrl {
 
   }
 
-
   connectSuccess(data) {
     console.log("connectSuccess called");
     if ($(data).find("success").text() === 'true') {
@@ -116,18 +115,18 @@ chargerPlayersSuccess(data, text, jqXHR){
         localStorage.setItem("selectedPlayerImage", playerImage);
         window.location.href = "../html/playersStatsafterSelection.html";
 
-        //var playerfk = $(this).data("fk_player_rece");
-        //localStorage.setItem("selectedPlayerFK", playerfk);
+        var playerfk = $(this).data("fk_player_rece");
+        localStorage.setItem("selectedPlayerFK", playerfk);
 
     });
   
     // On playersStatsafterSelection.html, load the stored image
     if ($(".chosen-player-card-image").length > 0) {
-      var storedImage = localStorage.getItem("selectedPlayerImage");
-      if (storedImage) {
-          $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
-      }
-  }
+        var storedImage = localStorage.getItem("selectedPlayerImage");
+        if (storedImage) {
+            $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
+        }
+    }
   });
 
 
@@ -197,7 +196,7 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 
 
-/*chargerRecesSuccess(data, text, jqXHR){   
+chargerRecesSuccess(data, text, jqXHR){   
   var txtReces = '';
   $(data).find("reces").each(function() {
     var reces = new Reces();
@@ -224,7 +223,7 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 chargerRecesError(request, status, error) {
 alert("Erreur lors de la lecture des reces: " + error);
-}*/
+}
 }
 
 
@@ -241,13 +240,15 @@ alert("Erreur lors de la lecture des reces: " + error);
       window.ctrl.http.getPlayers(window.ctrl.chargerPlayersSuccess, window.ctrl.chargerPlayersError);
       window.ctrl.http.getMatchs(window.ctrl.chargerMatchsForSelectionSuccess, window.ctrl.chargerMatchsForSelectionError);
 
-      /*cmbAfterSelectionMatches.change(function(event) {
+      cmbAfterSelectionMatches.change(function(event) {
         afterSelectionMatches = this.options[this.selectedIndex].value;
         chosenplayer = localStorage.getItem("selectedPlayerFK");
         if (chosenplayer) {
           window.ctrl.http.getReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, window.ctrl.chargerRecesSuccess, window.ctrl.chargerRecesError);    
         }
-      });*/
+      });
+
+
 
 
       $("#loginForm").on("submit", function(event) {

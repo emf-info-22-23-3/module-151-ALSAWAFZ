@@ -5,18 +5,18 @@ require_once 'workers/DBConnection.php';
 require_once 'workers/LoginBDManager.php';
 require_once 'workers/MatchBDManager.php';
 require_once 'workers/PlayerBDManager.php';
-//require_once 'workers/ReceBDManager.php';
+require_once 'workers/ReceBDManager.php';
 
 require_once 'loginManager.php';
 require_once 'matchManager.php';
 require_once 'playerManager.php';
-//require_once 'receManager.php';
+require_once 'receManager.php';
 
 //require_once 'beans/Angriff.php';
 require_once 'beans/Login.php';
 require_once 'beans/Match.php';
 require_once 'beans/Player.php';
-//require_once 'beans/Rece.php';
+require_once 'beans/Rece.php';
 
 session_start();
 
@@ -128,14 +128,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 sendXMLResponse(true, 'Players retrieved', ['players' => $players]); // Sending response
                 break;
 
-            /*case 'getReces':
+            case 'getReces':
                     if (!isLoggedIn()) {
                         sendXMLResponse(false, 'Please log in first');
                         break;
                     }
                     $receManager = $receManager->getReces($_GET['matchid'], $_GET['playerid']);
                     sendXMLResponse(true, 'Reces retrieved', ['reces' => $reces]); // Sending response
-                    break;*/
+                    break;
         }
 
     case 'PUT':
