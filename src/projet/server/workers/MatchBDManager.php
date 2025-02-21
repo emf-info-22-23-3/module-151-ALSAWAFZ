@@ -1,5 +1,5 @@
 <?php 
-	include_once('Connexion.php');
+	include_once('DBConnection.php');
 	include_once('beans/Match.php');
         
 	class MatchBDManager
@@ -9,7 +9,7 @@
 		{
 			$count = 0;
 			$liste = array();
-			$connection = Connexion::getInstance();
+			$connection = DBConnection::getInstance();
 			$query = $connection->selectQuery("
 			SELECT m.*, t.Name AS TeamName
         FROM DB_finalTVMurten.t_Match m

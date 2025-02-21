@@ -1,7 +1,6 @@
 class IndexCtrl {
   constructor() {
     this.http = new servicesHttp();
-      // Bind the methods to preserve 'this' context
       this.connectSuccess = this.connectSuccess.bind(this);
       this.disconnectSuccess = this.disconnectSuccess.bind(this);
 
@@ -15,8 +14,6 @@ class IndexCtrl {
       //this.chargerRecesError = this.chargerRecesError.bind(this);
 
   }
-
-
 
 connectSuccess(data, text, jqXHR) {
   console.log("connectSuccess called");
@@ -32,9 +29,9 @@ connectSuccess(data, text, jqXHR) {
       }).showToast();
 
       if($(data).find("Admin").text() === 'true'){
-          window.location.href = "../html/playersStatsafterSelection.html"; 
+          window.location.href = "../html/home.html"; 
       } else {
-          window.location.href = "../html/playersStatsafterSelection.html"; 
+          window.location.href = "../html/home.html"; 
       }
   } else {
         console.log($(data));
@@ -61,10 +58,16 @@ disconnectSuccess(data, text, jqXHR) {
   window.location.href = "../login.html";
 }
 
-
-
-
-
+CallbackError(request, status, error) {
+  console.log("Error login:", error);
+  Toastify({
+      text: "Error login: " + error,
+      duration: 3000,
+      gravity: "top",
+      position: "right",
+      backgroundColor: "#ff3333"
+  }).showToast();
+}
 
 
 chargerPlayersSuccess(data, text, jqXHR){   
@@ -91,7 +94,7 @@ chargerPlayersSuccess(data, text, jqXHR){
 
 
     txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td><td>" + players.getEmail() +"</td><td>" + players.getGeburstag() + "</td><td>" + players.getLizenz() + "</td><td>" + players.getSchreiber() +"</td><td>" + players.getSchiri() +"</td><td>" + players.getJS() +"</td></tr>";
-  
+    
 
     // Generate the HTML for each player card dynamically
     var playerImage = "../images/Team_individual_image/" + players.getSpielerKarte() + ".jpg";
@@ -108,36 +111,36 @@ chargerPlayersSuccess(data, text, jqXHR){
 
 
     //============for playersafterSelection.html
-    $(document).ready(function () {
-      $(document).on("click", "#btnChosePlayer", function (event) {
-          event.preventDefault(); // Prevent default action
+    
+  $(document).ready(function () {
+    $(document).on("click", "#btnChosePlayer", function (event) {
+        event.preventDefault(); // Prevent default action
   
-          var playerImage = $(this).data("image");
-          localStorage.setItem("selectedPlayerImage", playerImage);
+        var playerImage = $(this).data("image");
+        localStorage.setItem("selectedPlayerImage", playerImage);
   
-          window.location.href = "../html/playersStatsafterSelection.html";
-      });
+        window.location.href = "../html/playersStatsafterSelection.html";
+    });
   
-      // On playersStatsafterSelection.html, load the stored image
-      if ($(".chosen-player-card-image").length > 0) {
-          var storedImage = localStorage.getItem("selectedPlayerImage");
-          if (storedImage) {
-              $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
-          }
-      }
+    // On playersStatsafterSelection.html, load the stored image
+    if ($(".chosen-player-card-image").length > 0) {
+        var storedImage = localStorage.getItem("selectedPlayerImage");
+        if (storedImage) {
+            $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
+        }
+    }
   });
-  
     //===================================================
 
   
   });  
-
   var tableContentPlayers = document.getElementById("tableContentPlayers");
-    if (tableContentPlayers) {
-      tableContentPlayers.innerHTML = txtplayer;
-    } else {
-        console.error("tableContentPlayers element not found");
-    }
+if (tableContentPlayers) {
+    tableContentPlayers.innerHTML = txtplayer;
+    console.log("Player Data Received:", data);
+}
+
+  
 }
 
 
@@ -148,7 +151,9 @@ chargerPlayersError(request, status, error) {
 
 
 chargerMatchsSuccess(data, text, jqXHR){   
-  var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
+  //var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
+  var tableContentMatches = document.getElementById("tableContentMatches");
+  
     var txtmatches = '';
     $(data).find("matchs").each(function() {
       var matchs = new Matchs();
@@ -162,17 +167,13 @@ chargerMatchsSuccess(data, text, jqXHR){
       console.log($(this).find("fk_enemy_team").text());
      
       txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>VS. " + matchs.getFK_Enemy_Team() + ", IN: " + matchs.getHalle() + "</td></tr>";
-      //cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
       
-    
-    
-    });  
+      //cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
 
+    });  
     var tableContentMatches = document.getElementById("tableContentMatches");
     if (tableContentMatches) {
-        tableContentMatches.innerHTML += txtmatches;
-    } else {
-        console.error("tableContentMatches element not found");
+      tableContentMatches.innerHTML = txtmatches;
     }
 }
 
@@ -224,11 +225,10 @@ alert("Erreur lors de la lecture des reces: " + error);
     chargerReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, chargerRecesSuccess, chargerRecesError);
   });*/
   
-   //chargerPlayers(chargerPlayersSuccess, chargerPlayersError);
 
   $(document).ready(function() {
     $.when(
-        $.getScript("../javascripts/services/servicesHttp.js"), // Ensure this is loaded first
+        $.getScript("../javascripts/services/servicesHttp.js"),
         $.getScript("../javascripts/helpers/dateHelper.js"),
         $.getScript("../javascripts/beans/matchs.js"),
         $.getScript("../javascripts/beans/players.js")
@@ -248,7 +248,7 @@ alert("Erreur lors de la lecture des reces: " + error);
             console.log("Form submitted");
             console.log("Sending username:", username, "and password:", password);
 
-            indexCtrl.http.connect(username, password, indexCtrl.connectSuccess, CallbackError);
+            indexCtrl.http.connect(username, password, indexCtrl.connectSuccess, indexCtrl.CallbackError);
         });
 
     }).fail(function(jqxhr, settings, exception) {

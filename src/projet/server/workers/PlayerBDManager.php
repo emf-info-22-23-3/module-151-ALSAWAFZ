@@ -1,5 +1,5 @@
 <?php 
-	include_once('Connexion.php');
+	include_once('DBConnection.php');
 	include_once('beans/Player.php');
         
 	class PlayerBDManager
@@ -9,7 +9,7 @@
 		{
 			$count = 0;
 			$liste = array();
-			$connection = Connexion::getInstance();
+			$connection = DBConnection::getInstance();
 			$query = $connection->selectQuery("select p.*, t.Name AS PlaceName 
 			FROM DB_FinalTVMurten.t_Player p 
 			INNER JOIN t_Place t ON p.FK_Place = t.PK_Place

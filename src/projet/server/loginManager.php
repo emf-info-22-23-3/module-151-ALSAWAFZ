@@ -13,12 +13,10 @@ class LoginManager
     {
         $login = $this->dbManager->checkLogin($username);
         if ($login) {
-                //Used password_verify() for secure password checking.
-            if (password_verify($password, $login->getPassword())) { 
+            if ($password === $login->getPassword()) {
                 return $login;
             }
         }
         return false;
     }
 }
-?>

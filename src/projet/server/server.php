@@ -1,7 +1,7 @@
 <?php
 
-require_once 'workers/configConnexion.php';
-require_once 'workers/Connexion.php';
+require_once 'workers/connectionConfig.php';
+require_once 'workers/DBConnection.php';
 require_once 'workers/LoginBDManager.php';
 require_once 'workers/MatchBDManager.php';
 require_once 'workers/PlayerBDManager.php';
@@ -17,6 +17,8 @@ require_once 'beans/Login.php';
 require_once 'beans/Match.php';
 require_once 'beans/Player.php';
 //require_once 'beans/Rece.php';
+
+session_start();
 
 function sendXMLResponse($success, $message = '', $data = null) {
     header('Content-Type: text/xml');
@@ -72,7 +74,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $password = $_POST['password'] ?? '';
                 
                 $login = $loginManager->checkCredentials($username, $password);
-                if ($user) {
+                if ($login) {
                     login($login);
                     sendXMLResponse(true, 'Login successful', [
                         'isAdmin' => $login->getRole() === 'Admin' ? 'true' : 'false',
@@ -104,21 +106,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     sendXMLResponse(false, 'Please log in first');
                     break;
                 }
-
                 $matchs = $matchManager->getMatchs();
-                header('Content-Type: text/xml');
-                echo $matchManager->convertSetsToXML($matchs);
+                sendXMLResponse(true, 'Matches retrieved', ['matchs' => $matchs]); // Sending response
                 break;
-
+            
             case 'getPlayers':
                 if (!isLoggedIn()) {
                     sendXMLResponse(false, 'Please log in first');
                     break;
                 }
-    
                 $players = $playerManager->getPlayers();
-                header('Content-Type: text/xml');
-                echo $playerManager->convertSetsToXML($players);
+                sendXMLResponse(true, 'Players retrieved', ['players' => $players]); // Sending response
                 break;
             
         }
