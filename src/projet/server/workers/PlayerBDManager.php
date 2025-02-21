@@ -27,7 +27,7 @@
 
 		public function getInXML()
 		{
-			$listPlayers = $this->readPlayers();
+			$listPlayers = $this->getPlayers();
 			$result = '<listPlayers>';
 			for($i=0;$i<sizeof($listPlayers);$i++) 
 			{

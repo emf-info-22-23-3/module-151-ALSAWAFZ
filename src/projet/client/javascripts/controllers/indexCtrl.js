@@ -15,58 +15,51 @@ class IndexCtrl {
 
   }
 
-connectSuccess(data, text, jqXHR) {
-  console.log("connectSuccess called");
-  if ($(data).find("success").text() === 'true') {
+  connectSuccess(data) {
+    console.log("connectSuccess called");
+    if ($(data).find("success").text() === 'true') {
         console.log($(data));
-        console.log(data);
-      Toastify({
-          text: "Login successful",
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#33cc33"
-      }).showToast();
 
-      if($(data).find("Admin").text() === 'true'){
-          window.location.href = "../html/home.html"; 
-      } else {
-          window.location.href = "../html/home.html"; 
-      }
-  } else {
-        console.log($(data));
-        console.log(data);
-      Toastify({
-          text: "Login failed. Incorrect username or password.",
-          duration: 3000,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#ff3333"
-      }).showToast();
-  }
+        Toastify({
+            text: "Login successful",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#33cc33"
+        }).showToast();
+
+        window.location.href = "../html/home.html";
+    } else {
+        Toastify({
+            text: "Login failed. Incorrect username or password.",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#ff3333"
+        }).showToast();
+    }
 }
 
-disconnectSuccess(data, text, jqXHR) {
-  Toastify({
-      text: "User disconnected",
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      backgroundColor: "#33cc33"
-  }).showToast();
-  
-  window.location.href = "../login.html";
+disconnectSuccess() {
+    Toastify({
+        text: "User disconnected",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#33cc33"
+    }).showToast();
+    window.location.href = "../login.html";
 }
 
 CallbackError(request, status, error) {
-  console.log("Error login:", error);
-  Toastify({
-      text: "Error login: " + error,
-      duration: 3000,
-      gravity: "top",
-      position: "right",
-      backgroundColor: "#ff3333"
-  }).showToast();
+    console.error("Error:", error);
+    Toastify({
+        text: "Error: " + error,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#ff3333"
+    }).showToast();
 }
 
 
@@ -226,34 +219,23 @@ alert("Erreur lors de la lecture des reces: " + error);
   });*/
   
 
-  $(document).ready(function() {
-    $.when(
-        $.getScript("../javascripts/services/servicesHttp.js"),
-        $.getScript("../javascripts/helpers/dateHelper.js"),
-        $.getScript("../javascripts/beans/matchs.js"),
-        $.getScript("../javascripts/beans/players.js")
-    ).done(function() {
-        console.log("All scripts loaded!");
-        
-        var indexCtrl = new IndexCtrl();
-
-        indexCtrl.http.getMatchs(indexCtrl.chargerMatchsSuccess, indexCtrl.chargerMatchsError);
-        indexCtrl.http.getPlayers(indexCtrl.chargerPlayersSuccess, indexCtrl.chargerPlayersError);
 
 
-        $("#loginForm").on("submit", function(event) {
-            event.preventDefault();
-            var username = $("#username").val();
-            var password = $("#password").val();
-            console.log("Form submitted");
-            console.log("Sending username:", username, "and password:", password);
+    $(document).ready(function () {
+      window.ctrl = new IndexCtrl();
+  
+      window.ctrl.http.getMatchs(window.ctrl.chargerMatchsSuccess, window.ctrl.chargerMatchsError);
+      window.ctrl.http.getPlayers(window.ctrl.chargerPlayersSuccess, window.ctrl.chargerPlayersError);
 
-            indexCtrl.http.connect(username, password, indexCtrl.connectSuccess, indexCtrl.CallbackError);
-        });
 
-    }).fail(function(jqxhr, settings, exception) {
-        console.error("Failed to load scripts: ", exception);
-    });
-});
+      $("#loginForm").on("submit", function(event) {
+          event.preventDefault();
+          var username = $("#username").val();
+          var password = $("#password").val();
+          console.log("Form submitted");
+          console.log("Sending username:", username, "and password:", password);
+          window.ctrl.http.connect(username, password, window.ctrl.connectSuccess, window.ctrl.CallbackError);
+      });
+  });
 
 

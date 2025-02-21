@@ -4,36 +4,42 @@
         
 	class MatchBDManager
 	{
-		
 		public function getMatchs()
 		{
-			$count = 0;
-			$liste = array();
-			$connection = DBConnection::getInstance();
-			$query = $connection->selectQuery("
-			SELECT m.*, t.Name AS TeamName
-        FROM DB_finalTVMurten.t_Match m
-        INNER JOIN t_Team t ON m.FK_Team_Enemy = t.PK_Teams
-		ORDER BY m.Datum
-			", array());
-			foreach($query as $data){
-				$matchs = new Matchs($data['PK_Match'], $data['Spiel'], $data['Wochentag'], $data['Datum'],
-                 $data['MatchZeit'], $data['TeamName'], $data['Halle']);
-				$liste[$count++] = $matchs;
-			}	
-			return $liste;	
+			$db = DBConnection::getInstance();
+
+			$sql = "
+				SELECT m.*, t.Name AS TeamName
+				FROM DB_finalTVMurten.t_Match m
+				INNER JOIN t_Team t ON m.FK_Team_Enemy = t.PK_Teams
+				ORDER BY m.Datum
+			";
+
+			$result = $db->selectQuery($sql, array()); 
+
+			$matchs = array();
+			foreach ($result as $row) {
+				$matchs[] = new Matchs(
+					$row['PK_Match'],
+					$row['Spiel'],
+					$row['Wochentag'],
+					$row['Datum'],
+					$row['MatchZeit'],
+					$row['TeamName'],
+					$row['Halle']
+				);
+			}
+			return $matchs;
 		}
-		
 
 		public function getInXML()
 		{
-			$listMatchs = $this->readMatchs();
+			$matchs = $this->getMatchs();
 			$result = '<listMatchs>';
-			for($i=0;$i<sizeof($listMatchs);$i++) 
-			{
-				$result = $result .$listMatchs[$i]->toXML();
+			foreach ($matchs as $match) {
+				$result .= $match->toXML();
 			}
-			$result = $result . '</listMatchs>';
+			$result .= '</listMatchs>';
 			return $result;
 		}
 	}
