@@ -1,22 +1,23 @@
 <?php
 
-require_once 'workers/UserManager.php';
-require_once 'workers/ArticleManager.php';
-require_once 'helpers/DBArticleManager.php';
-require_once 'helpers/DBUserManager.php';
-require_once 'helpers/DBConfig.php';
-require_once 'helpers/DBConnection.php';
-require_once 'beans/Set.php';
-require_once 'beans/Source.php';
-require_once 'beans/User.php';
+require_once 'workers/configConnexion.php';
+require_once 'workers/Connexion.php';
+require_once 'workers/LoginBDManager.php';
+require_once 'workers/MatchBDManager.php';
+require_once 'workers/PlayerBDManager.php';
+//require_once 'workers/ReceBDManager.php';
 
-session_start();
+require_once 'loginManager.php';
+require_once 'matchManager.php';
+require_once 'playerManager.php';
+//require_once 'receManager.php';
 
-/**
- * @author Kaya
- */
+require_once 'beans/Angriff.php';
+require_once 'beans/Login.php';
+require_once 'beans/Match.php';
+require_once 'beans/Player.php';
+//require_once 'beans/Rece.php';
 
-// Helper function for consistent XML responses
 function sendXMLResponse($success, $message = '', $data = null) {
     header('Content-Type: text/xml');
     echo "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -36,17 +37,17 @@ function sendXMLResponse($success, $message = '', $data = null) {
 
 // Consistent session handling functions
 function isLoggedIn() {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['login_id']);
 }
 
 function isAdmin() {
-    return isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'Administrator';
+    return isset($_SESSION['login_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'Admin';
 }
 
-function login($user) {
-    $_SESSION['user_id'] = $user->getPK();
-    $_SESSION['email'] = $user->getEmail();
-    $_SESSION['role'] = $user->getRole();
+function login($login) {
+    $_SESSION['login_id'] = $login->getPkLogin();
+    $_SESSION['username'] = $login->getUsername();
+    $_SESSION['role'] = $login->getRole();
 }
 
 function logout() {
@@ -55,8 +56,10 @@ function logout() {
 }
 
 // Initialize managers
-$userManager = new UserManager();
-$articleManager = new ArticleManager();
+$loginManager = new LoginManager();
+$matchManager = new MatchManager();
+$playerManager = new PlayerManager();
+
 
 // Handle different HTTP methods
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -65,16 +68,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
         
         switch($action) {
             case 'login':
-                $email = $_POST['email'] ?? '';
+                $username = $_POST['username'] ?? '';
                 $password = $_POST['password'] ?? '';
                 
-                $user = $userManager->checkCredentials($email, $password);
+                $login = $loginManager->checkCredentials($username, $password);
                 if ($user) {
-                    login($user);
+                    login($login);
                     sendXMLResponse(true, 'Login successful', [
-                        'isAdmin' => $user->getRole() === 'Administrator' ? 'true' : 'false',
-                        'email' => $user->getEmail(),
-                        'role' => $user->getRole()
+                        'isAdmin' => $login->getRole() === 'Admin' ? 'true' : 'false',
+                        'username' => $login->getUsername(),
+                        'role' => $login->getRole()
                     ]);
                 } else {
                     sendXMLResponse(false, 'Invalid credentials');
@@ -84,35 +87,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
             case 'disconnect':
                 logout();
                 sendXMLResponse(true, 'Logout successful');
-                break;
-
-            case 'addSet':
-                if (!isLoggedIn()) {
-                    sendXMLResponse(false, 'Please log in first');
-                    break;
-                }
-
-                if (!isAdmin()) {
-                    sendXMLResponse(false, 'Administrator access required');
-                    break;
-                }
-
-                $set = new Set(
-                    null,
-                    $_SESSION['user_id'],
-                    $_POST['nom'] ?? '',
-                    $_POST['cap_nom'] ?? '',
-                    $_POST['tunic_nom'] ?? '',
-                    $_POST['trousers_nom'] ?? '',
-                    $_POST['description'] ?? '',
-                    $_POST['effet'] ?? '',
-                    $_POST['fk_cap_source'] ?? '',
-                    $_POST['fk_tunic_source'] ?? '',
-                    $_POST['fk_trousers_source'] ?? ''
-                );
-
-                $result = $articleManager->addSet($set);
-                sendXMLResponse($result !== false, $result ? 'Set added successfully' : 'Failed to add set');
                 break;
 
             default:
@@ -125,23 +99,28 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $action = $_GET['action'] ?? '';
         
         switch($action) {
-            case 'getAnnonces':
+            case 'getMatchs':
                 if (!isLoggedIn()) {
                     sendXMLResponse(false, 'Please log in first');
                     break;
                 }
 
-                $sets = $articleManager->getAllSets();
+                $matchs = $matchManager->getMatchs();
                 header('Content-Type: text/xml');
-                echo $articleManager->convertSetsToXML($sets);
+                echo $matchManager->convertSetsToXML($matchs);
                 break;
-            case 'getArmorNames':
+
+            case 'getPlayers':
                 if (!isLoggedIn()) {
                     sendXMLResponse(false, 'Please log in first');
                     break;
                 }
-
-                $sets = $articleManager->getAllSets();
+    
+                $players = $playerManager->getPlayers();
+                header('Content-Type: text/xml');
+                echo $playerManager->convertSetsToXML($players);
+                break;
+            
         }
 
     case 'PUT':
@@ -155,24 +134,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
             break;
         }
 
-        parse_str(file_get_contents("php://input"), $putData);
-        $set = new Set(
-            $putData['pk_set'] ?? null,
-            $_SESSION['user_id'],
-            $putData['nom'] ?? '',
-            $putData['cap_nom'] ?? '',
-            $putData['tunic_nom'] ?? '',
-            $putData['trousers_nom'] ?? '',
-            $putData['description'] ?? '',
-            $putData['effet'] ?? '',
-            $putData['fk_cap_source'] ?? '',
-            $putData['fk_tunic_source'] ?? '',
-            $putData['fk_trousers_source'] ?? ''
-        );
-
-        $result = $articleManager->updateSet($set);
-        sendXMLResponse($result, $result ? 'Set updated successfully' : 'Failed to update set');
-        break;
 
     case 'DELETE':
         if (!isLoggedIn()) {
@@ -184,15 +145,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
             sendXMLResponse(false, 'Administrator access required');
             break;
         }
-
-        $setId = $_GET['id'] ?? null;
-        if (!$setId) {
-            sendXMLResponse(false, 'Set ID is required');
-            break;
-        }
-
-        $result = $articleManager->deleteSet($setId);
-        sendXMLResponse($result, $result ? 'Set deleted successfully' : 'Failed to delete set');
         break;
 
     default:

@@ -1,34 +1,60 @@
-var BASE_URL = "../../server/";
+class servicesHttp {
 
-function chargerMatchs(successCallback, errorCallback) {
-  $.ajax({
-    type: "GET",
-    dataType: "xml",
-    url: BASE_URL + "matchManager.php",
-    success: successCallback,
-    error: errorCallback
-  });
+  constructor() {
+      this.BASE_URL = "http://localhost:8080/projet/server/server.php";
+  }
+  
+  connect(username, password, successCallback, errorCallback) {
+      console.log("Sending data to server:", { username: username, password: password });
+      
+      $.ajax({
+          type: "POST",
+          dataType: "xml",
+          url: this.BASE_URL,
+          data: {
+              action: 'login',
+              username: username,
+              password: password
+          },
+          success: successCallback,
+          error: errorCallback
+      });
+  }
+  
+
+
+  disconnect(successCallback, errorCallback) {
+      $.ajax({
+          type: "POST",
+          dataType: "xml",
+          url: this.BASE_URL,
+          data: {
+              action: 'disconnect',
+          },
+          success: successCallback,
+          error: errorCallback
+      });
+  }
+
+  getMatchs(successCallback, errorCallback) {
+      $.ajax({
+          type: "GET",
+          dataType: "xml",
+          url: this.BASE_URL,
+          data: 'action=getMatchs',
+          success: successCallback,
+          error: errorCallback
+      });
+  }
+
+  getPlayers(successCallback, errorCallback) {
+    $.ajax({
+        type: "GET",
+        dataType: "xml",
+        url: this.BASE_URL,
+        data: 'action=getPlayers',
+        success: successCallback,
+        error: errorCallback
+    });
 }
-
-
-function chargerPlayers(successCallback, errorCallback) {
-  $.ajax({
-    type: "GET",
-    dataType: "xml",
-    url: BASE_URL + "playerManager.php",
-    success: successCallback,
-    error: errorCallback
-  });
-}
-
-function chargerReces(matchid, playerid, successCallback, errorCallback) {
-  $.ajax({
-    type: "GET",
-    dataType: "xml",
-    url: BASE_URL + "receManager.php",
-    data:'matchid=' + matchid,
-    data:'playerid='+ playerid,
-    success: successCallback,
-    error: errorCallback
-  });
 }

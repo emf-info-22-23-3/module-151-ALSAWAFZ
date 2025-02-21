@@ -5,7 +5,7 @@
 	class MatchBDManager
 	{
 		
-		public function readMatchs()
+		public function getMatchs()
 		{
 			$count = 0;
 			$liste = array();

@@ -1,4 +1,73 @@
-function chargerPlayersSuccess(data, text, jqXHR){   
+class IndexCtrl {
+  constructor() {
+    this.http = new servicesHttp();
+      // Bind the methods to preserve 'this' context
+      this.connectSuccess = this.connectSuccess.bind(this);
+      this.disconnectSuccess = this.disconnectSuccess.bind(this);
+
+      this.chargerPlayersSuccess = this.chargerPlayersSuccess.bind(this);
+      this.chargerPlayersError = this.chargerPlayersError.bind(this);
+
+      this.chargerMatchsSuccess = this.chargerMatchsSuccess.bind(this);
+      this.chargerMatchsError = this.chargerMatchsError.bind(this);
+
+      //this.chargerRecesSuccess = this.chargerRecesSuccess.bind(this);
+      //this.chargerRecesError = this.chargerRecesError.bind(this);
+
+  }
+
+
+
+connectSuccess(data, text, jqXHR) {
+  console.log("connectSuccess called");
+  if ($(data).find("success").text() === 'true') {
+        console.log($(data));
+        console.log(data);
+      Toastify({
+          text: "Login successful",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#33cc33"
+      }).showToast();
+
+      if($(data).find("Admin").text() === 'true'){
+          window.location.href = "../html/playersStatsafterSelection.html"; 
+      } else {
+          window.location.href = "../html/playersStatsafterSelection.html"; 
+      }
+  } else {
+        console.log($(data));
+        console.log(data);
+      Toastify({
+          text: "Login failed. Incorrect username or password.",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          backgroundColor: "#ff3333"
+      }).showToast();
+  }
+}
+
+disconnectSuccess(data, text, jqXHR) {
+  Toastify({
+      text: "User disconnected",
+      duration: 3000,
+      gravity: "top",
+      position: "right",
+      backgroundColor: "#33cc33"
+  }).showToast();
+  
+  window.location.href = "../login.html";
+}
+
+
+
+
+
+
+
+chargerPlayersSuccess(data, text, jqXHR){   
   var txtplayer = '';
   $(data).find("players").each(function() {
     var players = new Players();
@@ -72,13 +141,13 @@ function chargerPlayersSuccess(data, text, jqXHR){
 }
 
 
-  function chargerPlayersError(request, status, error) {
+chargerPlayersError(request, status, error) {
   alert("Erreur lors de la lecture des players: " + error);
 }
 
 
 
-function chargerMatchsSuccess(data, text, jqXHR){   
+chargerMatchsSuccess(data, text, jqXHR){   
   var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
     var txtmatches = '';
     $(data).find("matchs").each(function() {
@@ -107,7 +176,7 @@ function chargerMatchsSuccess(data, text, jqXHR){
     }
 }
 
-function chargerMatchsError(request, status, error) {
+chargerMatchsError(request, status, error) {
 alert("Erreur lors de la lecture des matchs: " + error);
 }
 
@@ -116,7 +185,7 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 
 
-function chargerRecesSuccess(data, text, jqXHR){   
+/*chargerRecesSuccess(data, text, jqXHR){   
   var txtReces = '';
   $(data).find("reces").each(function() {
     var reces = new Reces();
@@ -141,39 +210,50 @@ function chargerRecesSuccess(data, text, jqXHR){
   }
 }
 
-function chargerRecesError(request, status, error) {
+chargerRecesError(request, status, error) {
 alert("Erreur lors de la lecture des reces: " + error);
+}
+*/
 }
 
 
 
-
-
-$(document).ready(function() {
-  var cmbAfterSelectionMatches = $("#cmbAfterSelectionMatches");
-
-
-  $.getScript("../javascripts/helpers/dateHelper.js", function() {
-    console.log("dateHelper.js chargé !");
-  });
-  $.getScript("../javascripts/beans/matchs.js", function() {
-    console.log("matchs.js chargé !");
-  });
-  $.getScript("../javascripts/beans/players.js", function() {
-    console.log("players.js chargé !");
-  });
-  $.getScript("../javascripts/services/servicesHttp.js", function() {
-    console.log("servicesHttp.js chargé !");
-    chargerPlayers(chargerPlayersSuccess, chargerPlayersError);
-    chargerMatchs(chargerMatchsSuccess, chargerMatchsError);
-  });
-/*
-  cmbAfterSelectionMatches.change(function(event) {
+  /*cmbAfterSelectionMatches.change(function(event) {
     afterSelectionMatches = this.options[this.selectedIndex].value;
     chosenplayer =
     chargerReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, chargerRecesSuccess, chargerRecesError);
-  });
-  */
+  });*/
   
+   //chargerPlayers(chargerPlayersSuccess, chargerPlayersError);
+
+  $(document).ready(function() {
+    $.when(
+        $.getScript("../javascripts/services/servicesHttp.js"), // Ensure this is loaded first
+        $.getScript("../javascripts/helpers/dateHelper.js"),
+        $.getScript("../javascripts/beans/matchs.js"),
+        $.getScript("../javascripts/beans/players.js")
+    ).done(function() {
+        console.log("All scripts loaded!");
+        
+        var indexCtrl = new IndexCtrl();
+
+        indexCtrl.http.getMatchs(indexCtrl.chargerMatchsSuccess, indexCtrl.chargerMatchsError);
+        indexCtrl.http.getPlayers(indexCtrl.chargerPlayersSuccess, indexCtrl.chargerPlayersError);
+
+
+        $("#loginForm").on("submit", function(event) {
+            event.preventDefault();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            console.log("Form submitted");
+            console.log("Sending username:", username, "and password:", password);
+
+            indexCtrl.http.connect(username, password, indexCtrl.connectSuccess, CallbackError);
+        });
+
+    }).fail(function(jqxhr, settings, exception) {
+        console.error("Failed to load scripts: ", exception);
+    });
 });
+
 

@@ -5,7 +5,7 @@
 	class PlayerBDManager
 	{
 		
-		public function readPlayers()
+		public function getPlayers()
 		{
 			$count = 0;
 			$liste = array();
