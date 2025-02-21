@@ -1,8 +1,6 @@
 <?php
-
 class MatchManager
 {
-
     private $dbMatchManager;
 
     public function __construct()

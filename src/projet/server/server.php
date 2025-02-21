@@ -12,7 +12,7 @@ require_once 'matchManager.php';
 require_once 'playerManager.php';
 //require_once 'receManager.php';
 
-require_once 'beans/Angriff.php';
+//require_once 'beans/Angriff.php';
 require_once 'beans/Login.php';
 require_once 'beans/Match.php';
 require_once 'beans/Player.php';
@@ -20,39 +20,29 @@ require_once 'beans/Player.php';
 
 session_start();
 
+
 function sendXMLResponse($success, $message = '', $data = null) {
-    header('Content-Type: text/xml');
+    header('Content-Type: text/xml; charset=UTF-8');
     echo "<?xml version='1.0' encoding='UTF-8'?>\n";
     echo "<response>\n";
     echo "  <success>" . ($success ? 'true' : 'false') . "</success>\n";
-
     if ($message) {
-        echo "  <message>" . htmlspecialchars($message) . "</message>\n";
+        echo "  <message>" . htmlspecialchars($message, ENT_XML1, 'UTF-8') . "</message>\n";
     }
-
     if ($data) {
-        echo "  <data>\n";
-        foreach ($data as $key => $value) {
-            if (is_array($value)) { // Handle arrays separately
-                echo "    <$key>\n";
-                foreach ($value as $item) {
-                    if (is_object($item) && method_exists($item, 'toXML')) {
-                        echo $item->toXML(); // Use toXML() if the object supports it
-                    } else {
-                        echo "      <item>" . htmlspecialchars(json_encode($item)) . "</item>\n"; // Convert to JSON if needed
-                    }
-                }
-                echo "    </$key>\n";
-            } else {
-                echo "    <$key>" . htmlspecialchars($value) . "</$key>\n";
+        foreach ($data as $key => $items) {
+            foreach ($items as $item) {
+                echo $item->toXML();
             }
         }
-        echo "  </data>\n";
     }
-
     echo "</response>";
     exit;
 }
+
+
+
+
 
 
 // Consistent session handling functions
@@ -79,6 +69,7 @@ function logout() {
 $loginManager = new LoginManager();
 $matchManager = new MatchManager();
 $playerManager = new PlayerManager();
+$receManager = new ReceManager();
 
 
 // Handle different HTTP methods
@@ -136,7 +127,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 $players = $playerManager->getPlayers();
                 sendXMLResponse(true, 'Players retrieved', ['players' => $players]); // Sending response
                 break;
-            
+
+            /*case 'getReces':
+                    if (!isLoggedIn()) {
+                        sendXMLResponse(false, 'Please log in first');
+                        break;
+                    }
+                    $receManager = $receManager->getReces($_GET['matchid'], $_GET['playerid']);
+                    sendXMLResponse(true, 'Reces retrieved', ['reces' => $reces]); // Sending response
+                    break;*/
         }
 
     case 'PUT':

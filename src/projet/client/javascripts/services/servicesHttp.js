@@ -52,5 +52,16 @@ class servicesHttp {
             error: errorCallback
         });
     }
+
+    getReces(successCallback, errorCallback) {
+        $.ajax({
+            type: "GET",
+            dataType: "xml",
+            url: this.BASE_URL,
+            data: { action: 'getReces' },
+            success: successCallback,
+            error: errorCallback
+        });
+    }
   }
   

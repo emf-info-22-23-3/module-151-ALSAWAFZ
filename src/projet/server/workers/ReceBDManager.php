@@ -5,7 +5,7 @@
 	class ReceBDManager
 	{
 		
-		public function readRece($fkMatch, $fkPlayer)
+		public function getReces($fkMatch, $fkPlayer)
 		{
 			$count = 0;
 			$liste = array();
@@ -21,7 +21,7 @@
 
 		public function getInXML($fkMatch, $fkPlayer)
 		{
-			$listReces = $this->readRece($fkMatch, $fkPlayer);
+			$listReces = $this->getReces($fkMatch, $fkPlayer);
 			$result = '<listReces>';
 			for($i=0;$i<sizeof($listReces);$i++) 
 			{

@@ -10,10 +10,11 @@ class IndexCtrl {
       this.chargerMatchsSuccess = this.chargerMatchsSuccess.bind(this);
       this.chargerMatchsError = this.chargerMatchsError.bind(this);
 
-      //this.chargerRecesSuccess = this.chargerRecesSuccess.bind(this);
-      //this.chargerRecesError = this.chargerRecesError.bind(this);
+      this.chargerRecesSuccess = this.chargerRecesSuccess.bind(this);
+      this.chargerRecesError = this.chargerRecesError.bind(this);
 
   }
+
 
   connectSuccess(data) {
     console.log("connectSuccess called");
@@ -65,6 +66,8 @@ CallbackError(request, status, error) {
 
 chargerPlayersSuccess(data, text, jqXHR){   
   var txtplayer = '';
+  
+
   $(data).find("players").each(function() {
     var players = new Players();
 
@@ -111,40 +114,44 @@ chargerPlayersSuccess(data, text, jqXHR){
   
         var playerImage = $(this).data("image");
         localStorage.setItem("selectedPlayerImage", playerImage);
-  
         window.location.href = "../html/playersStatsafterSelection.html";
+
+        //var playerfk = $(this).data("fk_player_rece");
+        //localStorage.setItem("selectedPlayerFK", playerfk);
+
     });
   
     // On playersStatsafterSelection.html, load the stored image
     if ($(".chosen-player-card-image").length > 0) {
-        var storedImage = localStorage.getItem("selectedPlayerImage");
-        if (storedImage) {
-            $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
-        }
-    }
+      var storedImage = localStorage.getItem("selectedPlayerImage");
+      if (storedImage) {
+          $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
+      }
+  }
   });
+
+
+
+
     //===================================================
 
   
   });  
   var tableContentPlayers = document.getElementById("tableContentPlayers");
-if (tableContentPlayers) {
+  if (tableContentPlayers) {
     tableContentPlayers.innerHTML = txtplayer;
     console.log("Player Data Received:", data);
+  }
 }
 
-  
-}
 
-
-chargerPlayersError(request, status, error) {
+chargerPlayersError(error) {
   alert("Erreur lors de la lecture des players: " + error);
 }
 
 
 
-chargerMatchsSuccess(data, text, jqXHR){   
-  //var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
+chargerMatchsSuccess(data){   
   var tableContentMatches = document.getElementById("tableContentMatches");
   
     var txtmatches = '';
@@ -159,22 +166,34 @@ chargerMatchsSuccess(data, text, jqXHR){
       matchs.setHalle($(this).find("halle").text());
      
       txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>VS. " + matchs.getFK_Enemy_Team() + ", IN: " + matchs.getHalle() + "</td></tr>";
-      
-      //cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
-
+      console.log(txtmatches);
     });  
-    var tableContentMatches = document.getElementById("tableContentMatches");
+    
     if (tableContentMatches) {
       tableContentMatches.innerHTML = txtmatches;
     }
 }
 
-chargerMatchsError(request, status, error) {
+chargerMatchsError(error) {
 alert("Erreur lors de la lecture des matchs: " + error);
 }
 
+chargerMatchsForSelectionSuccess(data){   
+  var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
+  
+    $(data).find("matchs").each(function() {
+      var matchs = new Matchs();
+      matchs.setPk($(this).find("pk_matchs").text());
+      matchs.setSpiel($(this).find("spiel").text());
+     
+      cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
 
+    });  
+}
 
+chargerMatchsForSelectionError(error) {
+alert("Erreur lors de la lecture des matchs: " + error);
+}
 
 
 
@@ -205,17 +224,12 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 chargerRecesError(request, status, error) {
 alert("Erreur lors de la lecture des reces: " + error);
+}*/
 }
-*/
-}
 
 
 
-  /*cmbAfterSelectionMatches.change(function(event) {
-    afterSelectionMatches = this.options[this.selectedIndex].value;
-    chosenplayer =
-    chargerReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, chargerRecesSuccess, chargerRecesError);
-  });*/
+ 
   
 
 
@@ -225,6 +239,15 @@ alert("Erreur lors de la lecture des reces: " + error);
   
       window.ctrl.http.getMatchs(window.ctrl.chargerMatchsSuccess, window.ctrl.chargerMatchsError);
       window.ctrl.http.getPlayers(window.ctrl.chargerPlayersSuccess, window.ctrl.chargerPlayersError);
+      window.ctrl.http.getMatchs(window.ctrl.chargerMatchsForSelectionSuccess, window.ctrl.chargerMatchsForSelectionError);
+
+      /*cmbAfterSelectionMatches.change(function(event) {
+        afterSelectionMatches = this.options[this.selectedIndex].value;
+        chosenplayer = localStorage.getItem("selectedPlayerFK");
+        if (chosenplayer) {
+          window.ctrl.http.getReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, window.ctrl.chargerRecesSuccess, window.ctrl.chargerRecesError);    
+        }
+      });*/
 
 
       $("#loginForm").on("submit", function(event) {
