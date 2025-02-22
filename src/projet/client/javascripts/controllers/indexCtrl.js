@@ -70,7 +70,7 @@ chargerPlayersSuccess(data, text, jqXHR){
   $(data).find("players").each(function() {
     var players = new Players();
 
-    players.setPk($(this).find("pk_players").text());
+    players.setPk($(this).find("pk_player").text());
     players.setSpielerNr($(this).find("spielerNr").text());
     players.setName($(this).find("name").text());
     players.setFamilyName($(this).find("familyName").text());
@@ -93,41 +93,24 @@ chargerPlayersSuccess(data, text, jqXHR){
 
     // Generate the HTML for each player card dynamically
     var playerImage = "../images/Team_individual_image/" + players.getSpielerKarte() + ".jpg";
-        var playerCardHTML = `
-            <div class="player-card">
-                <div class="player-avatar">
-                    <img src="${playerImage}" alt="${players.getName()}">
-                </div>
-                <h3>${players.getName()} ${players.getFamilyName()}</h3>
-                <button class="login-btn" id="btnChosePlayer" data-image="${playerImage}"><a href="../html/playersStatsafterSelection.html">View Stats</a></button>
-            </div>
-        `;
-        $(".players-grid").append(playerCardHTML);
+    var playerCardHTML = `
+    <div class="player-card">
+        <div class="player-avatar">
+            <img src="${playerImage}" alt="${players.getName()}">
+        </div>
+        <h3>${players.getName()} ${players.getFamilyName()}</h3>
+        <button class="login-btn btnChosePlayer" 
+                data-image="${playerImage}" 
+                data-pk="${players.getPk()}">
+            <a href="../html/playersStatsafterSelection.html">View Stats</a>
+        </button>
+    </div>
+`;
+$(".players-grid").append(playerCardHTML);
 
 
-    //============for playersafterSelection.html
-    
-  $(document).ready(function () {
-    $(document).on("click", "#btnChosePlayer", function (event) {
-        event.preventDefault(); // Prevent default action
-  
-        var playerImage = $(this).data("image");
-        localStorage.setItem("selectedPlayerImage", playerImage);
-        window.location.href = "../html/playersStatsafterSelection.html";
 
-        var playerfk = $(this).data("fk_player_rece");
-        localStorage.setItem("selectedPlayerFK", playerfk);
 
-    });
-  
-    // On playersStatsafterSelection.html, load the stored image
-    if ($(".chosen-player-card-image").length > 0) {
-        var storedImage = localStorage.getItem("selectedPlayerImage");
-        if (storedImage) {
-            $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card"  class="playersImageAfterSelection">`);
-        }
-    }
-  });
 
 
 
@@ -135,7 +118,9 @@ chargerPlayersSuccess(data, text, jqXHR){
     //===================================================
 
   
-  });  
+  });
+
+  
   var tableContentPlayers = document.getElementById("tableContentPlayers");
   if (tableContentPlayers) {
     tableContentPlayers.innerHTML = txtplayer;
@@ -153,7 +138,7 @@ chargerPlayersError(error) {
 chargerMatchsSuccess(data){   
   var tableContentMatches = document.getElementById("tableContentMatches");
   
-    var txtmatches = '';
+  var txtmatches = '';
     $(data).find("matchs").each(function() {
       var matchs = new Matchs();
       matchs.setPk($(this).find("pk_matchs").text());
@@ -165,7 +150,6 @@ chargerMatchsSuccess(data){
       matchs.setHalle($(this).find("halle").text());
      
       txtmatches += "<tr><td>" + matchs.getWochentag() + " " + matchs.getDatum() + " " + matchs.getMatchZeit() + "</td><td>VS. " + matchs.getFK_Enemy_Team() + ", IN: " + matchs.getHalle() + "</td></tr>";
-      console.log(txtmatches);
     });  
     
     if (tableContentMatches) {
@@ -179,15 +163,35 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 chargerMatchsForSelectionSuccess(data){   
   var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
+  var dateMatchAfterSelection = document.getElementById("dateMatchAfterSelection");
+  var teamMatchAfterSelection = document.getElementById("teamMatchAfterSelection");
+
+  
   
     $(data).find("matchs").each(function() {
       var matchs = new Matchs();
       matchs.setPk($(this).find("pk_matchs").text());
       matchs.setSpiel($(this).find("spiel").text());
+      matchs.setDatum($(this).find("datum").text());
+      matchs.setFK_Enemy_Team($(this).find("fk_enemy_team").text());
      
+      let matchOption = new Option(matchs.getSpiel(), JSON.stringify({
+        datum: matchs.getDatum(),
+        enemyTeam: matchs.getFK_Enemy_Team()
+      }));
+  
       cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
 
     });  
+
+    cmbAfterSelectionMatches.addEventListener("change", function () {
+      let selectedMatch = JSON.parse(this.value);
+  
+      if (selectedMatch) {
+        dateMatchAfterSelection.value = selectedMatch.datum;
+        teamMatchAfterSelection.value = selectedMatch.enemyTeam;
+      }
+    });
 }
 
 chargerMatchsForSelectionError(error) {
@@ -196,59 +200,123 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 
 
-chargerRecesSuccess(data, text, jqXHR){   
-  var txtReces = '';
+chargerRecesSuccess(data) {   
+  var tableContentRecePerMatchPerPlayer = document.getElementById("tableContentRece");
+
+  var txtRecesPerMatchAndPlayer = '';
+
   $(data).find("reces").each(function() {
-    var reces = new Reces();
-    reces.setPk($(this).find("pk_rece").text());
-    reces.setFK_Match_Rece($(this).find("fk_match_rece").text());
-    reces.setFK_Player_Rece($(this).find("fk_player_rece").text());
-    reces.setPerfekt($(this).find("perfekt").text());
-    reces.setSuperInZone($(this).find("superInZone").text());
-    reces.setNeutral($(this).find("neutral").text());
-    reces.setSchlecht($(this).find("schlecht").text());
-    reces.setDirektFehler($(this).find("direktFehler").text());
-    reces.setFalscheEntscheidung($(this).find("falscheEntscheidung").text());
+      var reces = new Reces();
+      reces.setPk($(this).find("pk_rece").text());
+      reces.setFK_Match_Rece($(this).find("fk_match_rece").text());
+      reces.setFK_Player_Rece($(this).find("fk_player_rece").text());
+      reces.setPerfekt($(this).find("perfekt").text());
+      reces.setSuperInZone($(this).find("superInZone").text());
+      reces.setNeutral($(this).find("neutral").text());
+      reces.setSchlecht($(this).find("schlecht").text());
+      reces.setDirektFehler($(this).find("direktFehler").text());
+      reces.setFalscheEntscheidung($(this).find("falscheEntscheidung").text());
 
-    txtReces += "<tr><td>" + reces.getPerfekt() + "</td><td>" + reces.getSuperInZone() + "</td><td>" + reces.getNeutral() + "</td><td>" + reces.getSchlecht() + "</td><td>" + reces.getDirektFehler() + "</td><td>" + reces.getFalscheEntscheidung() + "</td></tr>";
-  });  
+      txtRecesPerMatchAndPlayer += "<tr><td>" + reces.getPerfekt() + "</td><td>" + reces.getSuperInZone() + "</td><td>" + reces.getNeutral() + "</td><td>" + reces.getSchlecht() + "</td><td>" + reces.getDirektFehler() + "</td><td>" + reces.getFalscheEntscheidung() + "</td></tr>";
+    });
 
-  var tableContentReces = document.getElementById("tableContentRece");
-  if (tableContentReces) {
-    tableContentReces.innerHTML = txtReces;
-  } else {
-      console.error("tableContentRece element not found");
+  if (tableContentRecePerMatchPerPlayer) {
+    tableContentRecePerMatchPerPlayer.innerHTML = txtRecesPerMatchAndPlayer;
+    console.log("tableContentRecePerMatchPerPlayer found: " + txtRecesPerMatchAndPlayer);
+  }else{
+    console.log("tableContentRecePerMatchPerPlayer not found");
   }
+
 }
 
 chargerRecesError(request, status, error) {
-alert("Erreur lors de la lecture des reces: " + error);
+  alert("Erreur lors de la lecture des reces: " + error);
 }
+
+
+
+
+chargerAngriffsSuccess(data) {   
+  var tableContentAngriffPerMatchPerPlayer = document.getElementById("tableContentAngriff");
+  var txtAngriffsPerMatchAndPlayer = '';
+
+  $(data).find("angriffs").each(function() {
+      var angriffs = new Angriffs();
+      angriffs.setPk($(this).find("pk_angriff").text());
+      angriffs.setFK_Match_Angriff($(this).find("fk_match_angriff").text());
+      angriffs.setFK_Player_Angriff($(this).find("fk_player_angriff").text());
+      angriffs.setBalleErhalten($(this).find("balleErhalten").text());
+      angriffs.setPunkte($(this).find("punkte").text());
+      angriffs.setDruckvoll($(this).find("druckvoll").text());
+      angriffs.setZuEasy($(this).find("zuEasy").text());
+      angriffs.setFehler($(this).find("fehler").text());
+      angriffs.setBlockPunkt($(this).find("blockPunkt").text());
+      angriffs.setBlock($(this).find("block").text());
+      angriffs.setAss($(this).find("ass").text());
+
+      txtAngriffsPerMatchAndPlayer += "<tr><td>" + angriffs.getBalleErhalten() + "</td><td>" + angriffs.getPunkte() + "</td><td>" + angriffs.getDruckvoll() + "</td><td>" + angriffs.getZuEasy() + "</td><td>" + angriffs.getFehler() + "</td><td>" + angriffs.getBlockPunkt()+ "</td><td>" + angriffs.getBlock()+ "</td><td>" + angriffs.getAss() + "</td></tr>";
+    });
+
+  if (tableContentAngriffPerMatchPerPlayer) {
+    tableContentAngriffPerMatchPerPlayer.innerHTML = txtAngriffsPerMatchAndPlayer;
+    console.log("tableContentAngriffPerMatchPerPlayer found: " + txtAngriffsPerMatchAndPlayer);
+  }else{
+    console.log("tableContentAngriffPerMatchPerPlayer not found");
+  }
+
+}
+
+chargerAngriffsError(request, status, error) {
+  alert("Erreur lors de la lecture des angriff: " + error);
 }
 
 
 
- 
-  
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
 
 
 
     $(document).ready(function () {
       window.ctrl = new IndexCtrl();
-  
+      var cmbmatchs = $("#cmbAfterSelectionMatches");
+      var matchPk = '';
+      var playerPk = '';
+
       window.ctrl.http.getMatchs(window.ctrl.chargerMatchsSuccess, window.ctrl.chargerMatchsError);
       window.ctrl.http.getPlayers(window.ctrl.chargerPlayersSuccess, window.ctrl.chargerPlayersError);
       window.ctrl.http.getMatchs(window.ctrl.chargerMatchsForSelectionSuccess, window.ctrl.chargerMatchsForSelectionError);
 
-      cmbAfterSelectionMatches.change(function(event) {
-        afterSelectionMatches = this.options[this.selectedIndex].value;
-        chosenplayer = localStorage.getItem("selectedPlayerFK");
-        if (chosenplayer) {
-          window.ctrl.http.getReces(JSON.parse(afterSelectionMatches).pk, JSON.parse(chosenplayer).pk, window.ctrl.chargerRecesSuccess, window.ctrl.chargerRecesError);    
-        }
+
+      cmbmatchs.change(function(event) {
+        matchPk = JSON.parse(this.options[this.selectedIndex].value).pk;
+        playerPk = localStorage.getItem("selectedPlayerFK");
+        $("#dateMatchAfterSelection").val(JSON.parse(this.options[this.selectedIndex].value).date);
+        $("#enemyTeamMatchAfterSelection").val(JSON.parse(this.options[this.selectedIndex].value).fk_enemy_team);
+
+        console.log("Selected Match PK:", matchPk);
+        console.log("Retrieved Player PK from localStorage:", playerPk);
+
+        window.ctrl.http.getReces(matchPk, playerPk, window.ctrl.chargerRecesSuccess, window.ctrl.chargerRecesError);
+        window.ctrl.http.getAngriffs(matchPk, playerPk, window.ctrl.chargerAngriffsSuccess, window.ctrl.chargerAngriffsError);
+
       });
-
-
 
 
       $("#loginForm").on("submit", function(event) {
@@ -259,6 +327,34 @@ alert("Erreur lors de la lecture des reces: " + error);
           console.log("Sending username:", username, "and password:", password);
           window.ctrl.http.connect(username, password, window.ctrl.connectSuccess, window.ctrl.CallbackError);
       });
-  });
 
+
+      $(document).on("click", ".btnChosePlayer", function (event) {
+        event.preventDefault();
+    
+        var playerImage = $(this).data("image");
+        var playerFK = $(this).data("pk"); // Ensure correct retrieval
+    
+        localStorage.setItem("selectedPlayerImage", playerImage);
+        localStorage.setItem("selectedPlayerFK", playerFK);
+
+        window.location.href = "../html/playersStatsafterSelection.html";
+    });
+    
+    // Retrieve playerPK correctly when needed
+    $(document).ready(function () {
+        var storedPlayerPk = localStorage.getItem("selectedPlayerFK");
+        if (storedPlayerPk) {
+            console.log("Retrieved Player PK from localStorage:", storedPlayerPk);
+        }
+    });
+    
+
+    if ($(".chosen-player-card-image").length > 0) {
+      var storedImage = localStorage.getItem("selectedPlayerImage");
+      if (storedImage) {
+          $(".chosen-player-card-image").html(`<img src="${storedImage}" alt="Player Card" class="playersImageAfterSelection">`);
+      }
+  }
+    });
 

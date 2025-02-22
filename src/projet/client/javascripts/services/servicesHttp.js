@@ -53,15 +53,79 @@ class servicesHttp {
         });
     }
 
-    getReces(successCallback, errorCallback) {
+    getReces(matchPk, playerPk, successCallback, errorCallback) {
+        console.log("Sending getReces request with:", { matchPk, playerPk });
+    
         $.ajax({
             type: "GET",
             dataType: "xml",
             url: this.BASE_URL,
-            data: { action: 'getReces' },
+            data: { 
+                action: 'getRece',
+                matchPk: matchPk,
+                playerPk: playerPk
+            },
             success: successCallback,
             error: errorCallback
         });
     }
+
+    getAngriffs(matchPk, playerPk, successCallback, errorCallback) {
+        console.log("Sending getAngriffs request with:", { matchPk, playerPk });
+    
+        $.ajax({
+            type: "GET",
+            dataType: "xml",
+            url: this.BASE_URL,
+            data: { 
+                action: 'getAngriff',
+                matchPk: matchPk,
+                playerPk: playerPk
+            },
+            success: successCallback,
+            error: errorCallback
+        });
+    }
+
+
+    /*updateAngriffs(
+        fk_match_angriff,
+        fk_player_angriff, 
+        balleErhalten, 
+        punkte, 
+        druckvoll, 
+        zuEasy, 
+        fehler, 
+        blockPunkt, 
+        block, 
+        ass, 
+        pk_angriff, 
+        successCallback, 
+        errorCallback) {
+        $.ajax({
+            type: "PUT",
+            dataType: "xml",
+            url: this.BASE_URL,
+            data: {
+                action: 'updateAngriffs',
+                pk_joueur: pk_joueur,
+                fk_match_angriff: fk_match_angriff,
+                fk_player_angriff: fk_player_angriff,
+                balleErhalten:balleErhalten, 
+                punkte: punkte,
+                druckvoll: druckvoll,
+                zuEasy: zuEasy,
+                fehler: fehler,
+                blockPunkt: blockPunkt,
+                block: block,
+                ass: ass,
+                pk_angriff: pk_angriff,
+            },
+            success: successCallback,
+            error: errorCallback
+        });
+    }*/
+    
+    
   }
   

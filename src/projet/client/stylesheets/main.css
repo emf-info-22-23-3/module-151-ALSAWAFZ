@@ -474,6 +474,10 @@ nav a::after {
   background-color: #f8f9fa;
 }
 
+.schedule-table-matches tbody tr:hover {
+  background-color: #636b74;
+}
+
 .schedule-table-matches tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
@@ -590,8 +594,8 @@ nav a::after {
 
 .schedule-table-AfterSelection {
   display: flex;
-  flex-direction: column; /* Stack rece and angriff tables */
-  gap: 10px; /* Space between tables */
+  flex-direction: column;
+  gap: 10px;
 }
 
 .schedule-table-AfterSelection thead {

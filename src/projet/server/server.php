@@ -6,17 +6,20 @@ require_once 'workers/LoginBDManager.php';
 require_once 'workers/MatchBDManager.php';
 require_once 'workers/PlayerBDManager.php';
 require_once 'workers/ReceBDManager.php';
+require_once 'workers/AngriffBDManager.php';
 
 require_once 'loginManager.php';
 require_once 'matchManager.php';
 require_once 'playerManager.php';
 require_once 'receManager.php';
+require_once 'AngriffManager.php';
 
 //require_once 'beans/Angriff.php';
 require_once 'beans/Login.php';
 require_once 'beans/Match.php';
 require_once 'beans/Player.php';
 require_once 'beans/Rece.php';
+require_once 'beans/Angriff.php';
 
 session_start();
 
@@ -70,6 +73,7 @@ $loginManager = new LoginManager();
 $matchManager = new MatchManager();
 $playerManager = new PlayerManager();
 $receManager = new ReceManager();
+$angriffManager = new AngriffManager();
 
 
 // Handle different HTTP methods
@@ -128,14 +132,63 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 sendXMLResponse(true, 'Players retrieved', ['players' => $players]); // Sending response
                 break;
 
-            case 'getReces':
+                case 'getRece':
                     if (!isLoggedIn()) {
                         sendXMLResponse(false, 'Please log in first');
                         break;
                     }
-                    $receManager = $receManager->getReces($_GET['matchid'], $_GET['playerid']);
-                    sendXMLResponse(true, 'Reces retrieved', ['reces' => $reces]); // Sending response
+
+                $matchId = $_GET['matchPk'] ?? '';
+                $player = $_GET['playerPk'] ?? '';
+                    
+                
+                    // Call database function
+                    $rece = $receManager->getRece($matchId, $player);                
+                    
+                    if ($player == '' ) {
+                        sendXMLResponse(false, 'player ID  cannot be empty');
+                        break;
+                    }if ($matchId == '') {
+                        sendXMLResponse(false, 'match ID cannot be empty');
+                        break;
+                    }
+                    sendXMLResponse(true, 'Reces retrieved', ['reces' => $rece]);
+                    if (empty($rece)) {
+                        sendXMLResponse(false, 'No rece data found');
+                        break;
+                    }       
+                    
                     break;
+
+                    case 'getAngriff':
+                        if (!isLoggedIn()) {
+                            sendXMLResponse(false, 'Please log in first');
+                            break;
+                        }
+    
+                    $matchId = $_GET['matchPk'] ?? '';
+                    $player = $_GET['playerPk'] ?? '';
+                        
+                    
+                        // Call database function
+                        $angriff = $angriffManager->getAngriffs($matchId, $player);
+                        
+                        
+                        if ($player == '' ) {
+                            sendXMLResponse(false, 'player ID  cannot be empty');
+                            break;
+                        }else if ($matchId == '') {
+                            sendXMLResponse(false, 'match ID cannot be empty');
+                            break;
+                        }
+                        // Ensure there is data
+                        sendXMLResponse(true, 'Angriffs retrieved', ['angriffs' => $angriff]);
+    
+                        if (empty($angriff)) {
+                            sendXMLResponse(false, 'No rece data found');
+                            break;
+                        }    
+                        break;
         }
 
     case 'PUT':
@@ -148,6 +201,33 @@ switch ($_SERVER['REQUEST_METHOD']) {
             sendXMLResponse(false, 'Administrator access required');
             break;
         }
+
+
+        /*parse_str(file_get_contents("php://input"), $data);
+        if (
+            isset($data['pk_angriff']) && isset($data['fk_match_angriff']) && isset($data['fk_player_angriff']) &&
+            isset($data['balleerhalten']) && isset($data['punkte']) && isset($data['druckvoll']) &&
+            isset($data['zueasy']) && isset($data['fehler']) && isset($data['blockpunkt']) &&
+            isset($data['block']) && isset($data['ass'])
+        ) {
+            $result = $angriffManager->updateAngriffs(
+                $data['pk_angriff'],
+                $data['fk_match_angriff'],
+                $data['fk_player_angriff'],
+                $data['balleerhalten'],
+                $data['punkte'],
+                $data['druckvoll'],
+                $data['zueasy'],
+                $data['fehler'],
+                $data['blockpunkt'],
+                $data['block'],
+                $data['ass']
+            );
+            echo $result;
+        } else {
+            sendXMLResponse(false, 'Missing required parameters');
+        }
+        break;*/
 
 
     case 'DELETE':

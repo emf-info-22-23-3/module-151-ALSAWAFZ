@@ -10,6 +10,8 @@
     <script type="text/javascript" src="../javascripts/controllers/indexCtrl.js"></script>
     <script type="text/javascript" src="../javascripts/beans/Matchs.js"></script>
     <script type="text/javascript" src="../javascripts/beans/Players.js"></script>
+    <script type="text/javascript" src="../javascripts/beans/Reces.js"></script>
+    <script type="text/javascript" src="../javascripts/beans/Angriffs.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -50,20 +52,15 @@
                 
                 <div class="match-selection">
                     <label for="match-selection">Match: </label>
-                    <select id="match-selection" name="match-selection">
-                        <option value="1">Match 1</option>
-                        <option value="2">Match 2</option>
-                        <option value="3">Match 3</option>
-                        <option value="4">Match 4</option>
-                        <option value="5">Match 5</option>
-                        <option value="6">Match 6</option>
+                    <select id="cmbAfterSelectionMatches" name="match-selection">
+   
                     </select>
                 </div>
 
 
                 <h2>Rece</h2>
-                <section class="schedule-section">
-                    <table class="schedule-table">
+                <section class="schedule-section-team">
+                    <table class="schedule-table-team">
                         <thead>
                             <tr>
                                 <th>Spieler/Punkt</th>
@@ -75,14 +72,14 @@
                                 <th>Falsche Entscheidung</th>
                             </tr>
                         </thead>
-                        <tbody id="tableContentRece"></tbody>
+                        <tbody id="tableContentReceModify"></tbody>
                     </table>
                 </section>
 
 
                 <h2>Angriff</h2>
-                <section class="schedule-section">
-                    <table class="schedule-table">
+                <section class="schedule-section-team">
+                    <table class="schedule-table-team">
                         <thead>
                             <tr>
                                 <th>Spieler/Punkt</th>
@@ -96,10 +93,10 @@
                                 <th>Ass</th>
                             </tr>
                         </thead>
-                        <tbody id="tableContentAngriff"></tbody>
+                        <tbody id="tableContentAngriffModify"></tbody>
                     </table>
                 </section>
-
+                <button id="modifierstats">Speichern</button>
 
             </div>
         </div>

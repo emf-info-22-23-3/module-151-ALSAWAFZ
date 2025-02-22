@@ -10,9 +10,9 @@ class ReceManager
         $this->dbReceManager = new ReceBDManager();
     }
 
-    public function getReces()
+    public function getRece($fkMatch, $fkPlayer)
     {
-        return $this->dbReceManager->getReces($fkMatch, $fkPlayer);
+        return $this->dbReceManager->getRece($fkMatch, $fkPlayer);
     }
 }
 ?>

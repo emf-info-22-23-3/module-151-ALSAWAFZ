@@ -1,6 +1,6 @@
 class Players {
     constructor() {
-        this.pk = null;
+        this.pk_player = null;
         this.spielerNr = null;
         this.name = null;
         this.familyName = null;
@@ -18,7 +18,9 @@ class Players {
         this.spielerKarte = null;
     }
 
-    setPk(pk) { this.pk = pk; }
+    setPk(pk_player) { this.pk_player = pk_player; }
+    getPk() { return this.pk_player; }
+
 
     setSpielerNr(spielerNr) { this.spielerNr = spielerNr; }
     getSpielerNr() { return this.spielerNr; }

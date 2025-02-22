@@ -5,7 +5,7 @@ class Angriffs {
         this.fk_player_angriff = null;
         this.balleErhalten = null;
         this.punkte = null;
-        this.druckVoll = null;
+        this.druckvoll = null;
         this.zuEasy = null;
         this.fehler = null;
         this.blockPunkt = null;
@@ -53,12 +53,12 @@ class Angriffs {
         return this.punkte;
     }
 
-    setDruckVoll(druckVoll) {
-        this.druckVoll = druckVoll;
+    setDruckvoll(druckvoll) {
+        this.druckvoll = druckvoll;
     }
 
-    getDruckVoll() {
-        return this.druckVoll;
+    getDruckvoll() {
+        return this.druckvoll;
     }
 
     setZuEasy(zuEasy) {

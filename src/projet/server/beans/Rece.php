@@ -39,7 +39,7 @@
       return $this->fk_match_rece;
     }
 
-    public function geFKPlayerRece()
+    public function getFKPlayerRece()
     {
         return $this->fk_player_rece;
     }
@@ -71,8 +71,8 @@
     {
       $result = '<reces>';
       $result = $result . '<pk_rece>'.$this->getPKRece().'</pk_rece>';
+      $result = $result . '<fk_player_rece>'.$this->getFKPlayerRece().'</fk_player_rece>';
       $result = $result . '<fk_match_rece>'.$this->getFKMatchRece().'</fk_match_rece>';
-      $result = $result . '<fk_player_rece>'.$this->geFKPlayerRece().'</fk_player_rece>';
       $result = $result . '<perfekt>'.$this->getPerfekt().'</perfekt>';
       $result = $result . '<superInZone>'.$this->getSuperZone().'</superInZone>';
       $result = $result . '<neutral>'.$this->getNeutral().'</neutral>';
