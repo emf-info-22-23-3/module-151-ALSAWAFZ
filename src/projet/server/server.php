@@ -85,6 +85,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
             case 'login':
                 $username = $_POST['username'] ?? '';
                 $password = $_POST['password'] ?? '';
+
+                //$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 
                 $login = $loginManager->checkCredentials($username, $password);
                 if ($login) {
@@ -261,8 +263,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
 
         $pk_rece = $datarece['pk_rece'] ?? '';
-        $matchPkrece = $datarece['matchPk'] ?? '';
         $playerPkrece = $datarece['playerPk'] ?? '';
+        $matchPkrece = $datarece['matchPk'] ?? '';
         $perfekt = $datarece['perfekt'] ?? '';
         $superInZone = $datarece['superInZone'] ?? '';
         $neutral = $datarece['neutral'] ?? '';
@@ -277,7 +279,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     
         $resultrece = $receManager->updateReces(
             new Rece(
-                $pk_rece, $matchPkrece, $playerPkrece,
+                $pk_rece, $playerPkrece, $matchPkrece,
                 $perfekt, $superInZone,
                 $neutral, $schlecht, $direktFehler,
                 $falscheEntscheidung

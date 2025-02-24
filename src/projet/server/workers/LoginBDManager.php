@@ -22,5 +22,33 @@ class LoginBDManager
         }
         return false;
     }
+
+    public function verifyPassword($username, $inputPassword)
+    {
+        $user = $this->checkLogin($username);
+        if (!$user) {
+            return false;
+        }
+
+        $storedPassword = $user->getPassword();
+        $db = DBConnection::getInstance();
+
+        // If the stored password is hashed, verify it
+        if (password_verify($inputPassword, $storedPassword)) {
+            return $user;
+        }
+
+        // If stored password is NOT hashed, hash it now and update the database
+        if (!password_get_info($storedPassword)['algo']) { // Check if it's hashed
+            $hashedPassword = password_hash($inputPassword, PASSWORD_DEFAULT);
+
+            $updateSql = "UPDATE t_Login SET Password = ? WHERE Username = ?";
+            $db->ExecuteQuery($updateSql, array($hashedPassword, $username));
+            
+            return $user;
+        }
+
+        return false;
+    }
 }
 ?>

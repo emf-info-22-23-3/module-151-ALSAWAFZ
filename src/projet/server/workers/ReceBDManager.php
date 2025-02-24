@@ -46,19 +46,19 @@
    $query = $connection->executeQuery("
         UPDATE DB_finalTVMurten.t_Rece 
         SET 
-            FK_Match_Rece = :fk_match_rece,
             FK_Player_Rece = :fk_player_rece,
+            FK_Match_Rece = :fk_match_rece,
             Perfekt = :perfekt, 
-            `Super(Zone)` = :superInZone, 
+            `Super_Zone` = :superInZone, 
             Neutral = :neutral, 
             Schlecht = :schlecht, 
             DirektFehler = :direktFehler, 
             FalscheEntscheidung = :falscheEntscheidung
-        WHERE PK_Rece = :pk_Rece
+        WHERE PK_Rece = :pk_rece
     ", array(
-        'pk_Rece' => $data->getPKRece(),
-        'fk_match_rece' => $data->getFKMatchRece(),
+        'pk_rece' => $data->getPKRece(),
         'fk_player_rece' => $data->getFKPlayerRece(),
+        'fk_match_rece' => $data->getFKMatchRece(),
         'perfekt' => $data->getPerfekt(),
         'superInZone' => $data->getSuperZone(),
         'neutral' => $data->getNeutral(),

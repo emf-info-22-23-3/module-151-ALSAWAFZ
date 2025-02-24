@@ -18,9 +18,9 @@
 
     public function __construct($pk_rece, $fk_match_rece, $fk_player_rece, $perfekt, $superInZone, $neutral, $schlecht, $direktFehler, $falscheEntscheidung)
     {
-      $this->pk_rece = $pk_rece;
-      $this->fk_match_rece = $fk_match_rece;        
+      $this->pk_rece = $pk_rece;      
       $this->fk_player_rece = $fk_player_rece;
+      $this->fk_match_rece = $fk_match_rece;  
       $this->perfekt = $perfekt;
       $this->superInZone = $superInZone;
       $this->neutral = $neutral;
@@ -29,42 +29,15 @@
       $this->falscheEntscheidung = $falscheEntscheidung;
     }
     
-    public function getPKRece()
-    {
-      return $this->pk_rece;
-    }
-
-    public function getFKMatchRece()
-    {
-      return $this->fk_match_rece;
-    }
-
-    public function getFKPlayerRece()
-    {
-        return $this->fk_player_rece;
-    }
-    public function getPerfekt()
-    {
-        return $this->perfekt;
-    }
-    public function getSuperZone(){
-        return $this->superInZone;
-    }
-    public function getNeutral(){
-        return $this->neutral;
-    }
-
-    public function getSchlecht(){
-        return $this->schlecht;
-    }
-
-    public function getDirektFehler(){
-        return $this->direktFehler;
-    }
-
-    public function getFalscheEntscheidung(){
-        return $this->falscheEntscheidung;
-    }
+    public function getPKRece(){return $this->pk_rece;}
+    public function getFKMatchRece(){return $this->fk_match_rece;}
+    public function getFKPlayerRece(){return $this->fk_player_rece;}
+    public function getPerfekt(){return $this->perfekt;}
+    public function getSuperZone(){return $this->superInZone;}
+    public function getNeutral(){return $this->neutral;}
+    public function getSchlecht(){return $this->schlecht;}
+    public function getDirektFehler(){return $this->direktFehler;}
+    public function getFalscheEntscheidung(){return $this->falscheEntscheidung;}
 
 
     public function toXML()
@@ -78,7 +51,7 @@
       $result = $result . '<neutral>'.$this->getNeutral().'</neutral>';
       $result = $result . '<schlecht>'.$this->getSchlecht().'</schlecht>';
       $result = $result . '<direktFehler>'.$this->getDirektFehler().'</direktFehler>';
-      $result = $result . '<falscheEntscheidung>'.$this->getFalscheentscheidung().'</falscheEntscheidung>';
+      $result = $result . '<falscheEntscheidung>'.$this->getFalscheEntscheidung().'</falscheEntscheidung>';
       $result = $result . '</reces>';
       return $result;
     }

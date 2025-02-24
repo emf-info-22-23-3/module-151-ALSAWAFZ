@@ -385,8 +385,8 @@ class IndexCtrl {
     // Prepare the data for the request
     data = {
       pk_rece: pk_rece,
-      matchPk: matchPk,
       playerPk: playerPk,
+      matchPk: matchPk,
       perfekt: perfekt,
       superInZone: superInZone,
       neutral: neutral,

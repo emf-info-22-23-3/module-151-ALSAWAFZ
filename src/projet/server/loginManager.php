@@ -1,5 +1,4 @@
 <?php
-
 class LoginManager
 {
     private $dbManager;
@@ -11,12 +10,7 @@ class LoginManager
 
     public function checkCredentials($username, $password)
     {
-        $login = $this->dbManager->checkLogin($username);
-        if ($login) {
-            if ($password === $login->getPassword()) {
-                return $login;
-            }
-        }
-        return false;
+        return $this->dbManager->verifyPassword($username, $password);
     }
 }
+?>
