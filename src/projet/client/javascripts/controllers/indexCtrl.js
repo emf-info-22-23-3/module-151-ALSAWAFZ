@@ -19,10 +19,11 @@ class IndexCtrl {
 
         this.chargerAngriffsSuccess = this.chargerAngriffsSuccess.bind(this);
         this.chargerAngriffsError = this.chargerAngriffsError.bind(this);
+    
+        this.updateAngriffSuccess = this.updateAngriffSuccess.bind(this);
+        this.updateAngriffError = this.updateAngriffError.bind(this);
 
-        this.updateAngriffsSuccess = this.updateAngriffsSuccess.bind(this);
-        this.updateAngriffsError = this.updateAngriffsError.bind(this);
-    }
+      }
 
     connectSuccess(data) {
         console.log("connectSuccess called");
@@ -279,23 +280,24 @@ class IndexCtrl {
           angriffs.setBlock($(this).find("block").text());
           angriffs.setAss($(this).find("ass").text());
 
+          localStorage.setItem("selectedPkAngriff", angriffs.getPk());
+          
           txtAngriffsPerMatchAndPlayer += `
-              <tr data-id="${angriffs.getPk()}">
-                <td contenteditable="true">${angriffs.getBalleErhalten()}</td>
-                <td contenteditable="true">${angriffs.getPunkte()}</td>
-                <td contenteditable="true">${angriffs.getDruckvoll()}</td>
-                <td contenteditable="true">${angriffs.getZuEasy()}</td>
-                <td contenteditable="true">${angriffs.getFehler()}</td>
-                <td contenteditable="true">${angriffs.getBlockPunkt()}</td>
-                <td contenteditable="true">${angriffs.getBlock()}</td>
-                <td contenteditable="true">${angriffs.getAss()}</td>
+              <tr>
+                <td contenteditable="true" id="angriffBalleErhalten">${angriffs.getBalleErhalten()}</td>
+                <td contenteditable="true" id="angriffPunkte">${angriffs.getPunkte()}</td>
+                <td contenteditable="true" id="angriffDruckvoll">${angriffs.getDruckvoll()}</td>
+                <td contenteditable="true" id="angriffZuEasy">${angriffs.getZuEasy()}</td>
+                <td contenteditable="true" id="angriffFehler">${angriffs.getFehler()}</td>
+                <td contenteditable="true" id="angriffBlockPunkt">${angriffs.getBlockPunkt()}</td>
+                <td contenteditable="true" id="angriffBlock">${angriffs.getBlock()}</td>
+                <td contenteditable="true" id="angriffAss">${angriffs.getAss()}</td>
               </tr>
-              <td><button class="updateAngriffBtn">Update</button></td>`;        
+              <td><button id="updateAngriffBtn">Update</button></td>`;        
       });
 
       if (tableContentAngriffPerMatchPerPlayer) {
         tableContentAngriffPerMatchPerPlayer.innerHTML = txtAngriffsPerMatchAndPlayer;
-        
         console.log("tableContentAngriffPerMatchPerPlayer found: " + txtAngriffsPerMatchAndPlayer);
       }else{
         console.log("tableContentAngriffPerMatchPerPlayer not found");
@@ -307,24 +309,42 @@ class IndexCtrl {
       alert("Erreur lors de la lecture des angriff: " + error);
     }
 
+    updateAngriffSuccess(data) {
 
-    updateAngriff(angriffData) {
-      this.http.updateAngriff(
-          angriffData,
-          this.updateAngriffsSuccess,
-          this.updateAngriffsError
-      );
+      let pk_angriff = localStorage.getItem("selectedPkAngriff");
+      let matchPk = JSON.parse($("#cmbAfterSelectionMatches").val()).pk;
+      let playerPk = localStorage.getItem("selectedPlayerFK");
+  
+      // Extract values from the row's editable cells
+      let balleErhalten = document.getElementById("angriffBalleErhalten").textContent;
+      let punkte = document.getElementById("angriffPunkte").textContent;
+      let druckvoll = document.getElementById("angriffDruckvoll").textContent;
+      let zuEasy =document.getElementById("angriffZuEasy").textContent; 
+      let fehler = document.getElementById("angriffFehler").textContent;
+      let blockPunkt = document.getElementById("angriffBlockPunkt").textContent;
+      let block = document.getElementById("angriffBlock").textContent;
+      let ass = document.getElementById("angriffAss").textContent;
+  
+      // Prepare the data for the request
+      data = {
+          pk_angriff: pk_angriff,
+          matchPk: matchPk,
+          playerPk: playerPk,
+          balleErhalten: balleErhalten,
+          punkte: punkte,
+          druckvoll: druckvoll,
+          zuEasy: zuEasy,
+          fehler: fehler,
+          blockPunkt: blockPunkt,
+          block: block,
+          ass: ass
+      };
   }
 
-    updateAngriffsSuccess(response) {
-      console.log("Angriffs updated successfully:", response);
-
-    }
+  updateAngriffError(error) {
+    console.error("Error updating Angriff:", error);
+  }
   
-    updateAngriffsError(error) {
-      console.error("Error updating Angriffs:", error);
-    }
-
 }
 
 
@@ -339,6 +359,11 @@ class IndexCtrl {
       window.ctrl.http.getPlayers(window.ctrl.chargerPlayersSuccess, window.ctrl.chargerPlayersError);
       window.ctrl.http.getMatchs(window.ctrl.chargerMatchsForSelectionSuccess, window.ctrl.chargerMatchsForSelectionError);
 
+      $(document).on("click", "#updateAngriffBtn", function (event) {
+        event.preventDefault();
+        window.ctrl.http.updateAngriff(window.ctrl.updateAngriffSuccess, window.ctrl.updateAngriffError);
+      });
+
       cmbmatchs.change(function(event) {
         //let selectedMatch = JSON.parse(this.options[this.selectedIndex].value);
         matchPk = JSON.parse(this.options[this.selectedIndex].value).pk;
@@ -351,6 +376,7 @@ class IndexCtrl {
 
         window.ctrl.http.getReces(matchPk, playerPk, window.ctrl.chargerRecesSuccess, window.ctrl.chargerRecesError);
         window.ctrl.http.getAngriffs(matchPk, playerPk, window.ctrl.chargerAngriffsSuccess, window.ctrl.chargerAngriffsError);
+
       });
 
 
@@ -373,6 +399,7 @@ class IndexCtrl {
         localStorage.setItem("selectedPlayerImage", playerImage);
         localStorage.setItem("selectedPlayerFK", playerFK);
 
+
         window.location.href = "../html/playersStatsafterSelection.html";
     });
     
@@ -393,23 +420,8 @@ class IndexCtrl {
     }
 
 
-    $(document).on("click", ".updateAngriffBtn", function (event) {
-    let row = $(this).closest("tr");
-    let angriffData = {
-        pk_angriff: row.data("id"),
-        balleErhalten: row.find("td:eq(0)").text(),
-        punkte: row.find("td:eq(1)").text(),
-        druckvoll: row.find("td:eq(2)").text(),
-        zuEasy: row.find("td:eq(3)").text(),
-        fehler: row.find("td:eq(4)").text(),
-        blockPunkt: row.find("td:eq(5)").text(),
-        block: row.find("td:eq(6)").text(),
-        ass: row.find("td:eq(7)").text()
-    };
-
-    window.ctrl.updateAngriff(angriffData);
-});
 
 
-    });
+
+  });
 

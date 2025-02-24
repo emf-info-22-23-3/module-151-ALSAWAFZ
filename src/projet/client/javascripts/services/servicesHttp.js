@@ -87,20 +87,6 @@ class servicesHttp {
         });
     }
 
-    /*updateRece(data, successCallback, errorCallback) {
-        $.ajax({
-            type: "PUT",
-            dataType: "xml",
-            url: this.BASE_URL,
-            data: { 
-                action: 'updateRece',
-                data: data
-            },
-            success: successCallback,
-            error: errorCallback
-        });
-    } */ 
-
 
      updateAngriff(data, successCallback, errorCallback) {
         $.ajax({
@@ -115,5 +101,19 @@ class servicesHttp {
             error: errorCallback
         });
     }   
+
+        /*updateRece(data, successCallback, errorCallback) {
+        $.ajax({
+            type: "PUT",
+            dataType: "xml",
+            url: this.BASE_URL,
+            data: { 
+                action: 'updateRece',
+                data: data
+            },
+            success: successCallback,
+            error: errorCallback
+        });
+    } */ 
 }
   

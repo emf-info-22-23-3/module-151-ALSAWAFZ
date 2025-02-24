@@ -14,7 +14,6 @@ require_once 'playerManager.php';
 require_once 'receManager.php';
 require_once 'AngriffManager.php';
 
-//require_once 'beans/Angriff.php';
 require_once 'beans/Login.php';
 require_once 'beans/Match.php';
 require_once 'beans/Player.php';
@@ -215,9 +214,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $block = $_POST['block']  ?? '';
         $ass = $_POST['ass'] ?? '';
     
-        // Ensure pk_angriff is provided
-    
-        // Call update method
         $result = $angriffManager->updateAngriffs( 
             new Angriff(
                 $pk_angriff, $matchPk, $playerPk, 

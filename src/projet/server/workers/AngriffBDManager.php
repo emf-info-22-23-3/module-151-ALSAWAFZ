@@ -44,7 +44,7 @@
     public function updateAngriffs($data)
 {
     $connection = DBConnection::getInstance();
-
+    $connection->startTransaction();
 
     $query = $connection->executeQuery("
         UPDATE DB_finalTVMurten.t_Angriff 
@@ -72,7 +72,13 @@
         'block' => $data->getBlock(),
         'ass' => $data->getAss()
     ));
+    if ($query === false) {
+        $connection->rollbackTransaction();
+        error_log("Failed to update Angriff for ID: " . $data->getPKAngriff());
+        return false;
+    }
 
+    $connection->commitTransaction(); 
    return $query;
 }
 

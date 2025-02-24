@@ -36,9 +36,13 @@ class DBConnection {
             die();
         }
     }
-    
 
-    public function SelectQuery($query, $params) {
+
+    public function __destruct() {
+        $this->pdo = null;
+    }
+
+    public function selectQuery($query, $params) {
         try {
             $queryPrepared = $this->pdo->prepare($query);
             $queryPrepared->execute($params);
@@ -50,7 +54,19 @@ class DBConnection {
     }
 
 
-    public function ExecuteQuery($query, $params) {
+    public function selectSingleQuery($query, $params) {
+        try {
+            $queryPrepared = $this->pdo->prepare($query);
+            $queryPrepared->execute($params);
+            return $queryPrepared->fetch();
+        } catch (PDOException $e) {
+            print "Erreur !: " . $e->getMessage() . "<br/>";
+            die();
+        }
+    }
+
+
+    public function executeQuery($query, $params) {
         try {
             $queryPrepared = $this->pdo->prepare($query);
             $queryRes = $queryPrepared->execute($params);
@@ -70,6 +86,51 @@ class DBConnection {
             die();
         }
     }
+
+    public function startTransaction() {
+        return $this->pdo->beginTransaction();
+    }
+
+    /**
+     * Méthode permettant d'ajouter une requête à la transaction en cours
+     * 
+     * @return bool: true si la requête est fonctionnelle et qu'une transaction est bien en cours
+     */
+    public function addQueryToTransaction($query, $params) {
+        $res = false;
+        if ($this->pdo->inTransaction()) {
+            $maQuery = $this->pdo->prepare($query);
+            $res = $maQuery->execute($params);
+        }
+        return $res;
+    }
+
+    /**
+     * Méthode permettant de valider la transaction
+     * 
+     * @return bool: true si la validation s'est correctement déroulée et qu'une transaction était bien en cours
+     */
+    public function commitTransaction() {
+        $res = false;
+        if ($this->pdo->inTransaction()) {
+            $res = $this->pdo->commit();
+        }
+        return $res;
+    }
+
+    /**
+     * Méthode permettant d'annuler la transaction
+     * 
+     * @return bool: true si la validation s'est correctement annulée et qu'une transaction était bien en cours
+     */
+    public function rollbackTransaction() {
+        $res = false;
+        if ($this->pdo->inTransaction()) {
+            $res = $this->pdo->rollBack();
+        }
+        return $res;
+    }
+
 }
 
 ?>
