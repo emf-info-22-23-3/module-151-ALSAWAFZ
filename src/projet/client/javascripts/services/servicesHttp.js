@@ -87,45 +87,33 @@ class servicesHttp {
         });
     }
 
-
-    /*updateAngriffs(
-        fk_match_angriff,
-        fk_player_angriff, 
-        balleErhalten, 
-        punkte, 
-        druckvoll, 
-        zuEasy, 
-        fehler, 
-        blockPunkt, 
-        block, 
-        ass, 
-        pk_angriff, 
-        successCallback, 
-        errorCallback) {
+    /*updateRece(data, successCallback, errorCallback) {
         $.ajax({
             type: "PUT",
             dataType: "xml",
             url: this.BASE_URL,
-            data: {
-                action: 'updateAngriffs',
-                pk_joueur: pk_joueur,
-                fk_match_angriff: fk_match_angriff,
-                fk_player_angriff: fk_player_angriff,
-                balleErhalten:balleErhalten, 
-                punkte: punkte,
-                druckvoll: druckvoll,
-                zuEasy: zuEasy,
-                fehler: fehler,
-                blockPunkt: blockPunkt,
-                block: block,
-                ass: ass,
-                pk_angriff: pk_angriff,
+            data: { 
+                action: 'updateRece',
+                data: data
             },
             success: successCallback,
             error: errorCallback
         });
-    }*/
-    
-    
-  }
+    } */ 
+
+
+     updateAngriff(data, successCallback, errorCallback) {
+        $.ajax({
+            type: "PUT",
+            dataType: "xml",
+            url: this.BASE_URL,
+            data: { 
+                action: 'updateAngriff',
+                data: data
+            },
+            success: successCallback,
+            error: errorCallback
+        });
+    }   
+}
   

@@ -41,39 +41,42 @@
     }
 
 
-    /*public function updateAngriffs($pk_angriff, $fk_match_angriff, $fk_player_angriff, $balleerhalten, $punkte,
-	$druckvoll, $zueasy, $fehler, $blockpunkt, $block, $ass)
-    {
-		$connection = DBConnection::getInstance();
+    public function updateAngriffs($data)
+{
+    $connection = DBConnection::getInstance();
 
-        $query = $connection->executeQuery("
-			UPDATE DB_finalTVMurten.t_Angriff 
-			SET FK_Match_Angriff = :fk_match_angriff,
-			FK_Player_Angriff = :fk_player_angriff,
-			BälleErhalten = :balleerhalten,
-			Punkte = :punkte,
-			Druckvoll = :druckvoll, 
-			Zu easy = :zueasy, 
-			Fehler = :fehler,
-			Block Punkt = :blockpunkt,
-			Block = :block, 
-			Ass = :ass 
-			WHERE PK_Angriff = :pk_angriff;
-			", array(
-				'pk_angriff' => $angriffset,
-				'fk_match_angriff' => $angriffset,
-				'fk_player_angriff' => $angriffset,
-				'balleerhalten' => $angriffset,
-				'punkte' => $angriffset,
-				'druckvoll' => $angriffset,
-				'zueasy' => $angriffset,
-				'fehler' => $angriffset,
-				'blockpunkt' => $angriffset,
-				'block' => $angriffset,
-				'ass' => $angriffset
-			));
-			return ($query > 0) ? '<result>True</result>' : '<result>False</result>';
-    }*/
+
+    $query = $connection->executeQuery("
+        UPDATE DB_finalTVMurten.t_Angriff 
+        SET FK_Match_Angriff = :fk_match_angriff,
+            FK_Player_Angriff = :fk_player_angriff,
+            BälleErhalten = :balleerhalten,
+            Punkte = :punkte,
+            Druckvoll = :druckvoll, 
+            `Zu easy` = :zueasy, 
+            Fehler = :fehler,
+            `Block Punkt` = :blockpunkt,
+            Block = :block, 
+            Ass = :ass 
+        WHERE PK_Angriff = :pk_angriff;
+    ", array(
+        'pk_angriff' => $data->getPKAngriff(),
+        'fk_match_angriff' => $data->getFKMatchAngriff(),
+        'fk_player_angriff' => $data->getFKPlayerAngriff(),
+        'balleerhalten' => $data->getBalleErhalten(),
+        'punkte' => $data->getPunkte(),
+        'druckvoll' => $data->getDruckvoll(),
+        'zueasy' => $data->getZuEasy(),
+        'fehler' => $data->getFehler(),
+        'blockpunkt' => $data->getBlockPunkt(),
+        'block' => $data->getBlock(),
+        'ass' => $data->getAss()
+    ));
+
+   return $query;
+}
+
+
 
 
 

@@ -203,32 +203,60 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
 
 
-        /*parse_str(file_get_contents("php://input"), $data);
-        if (
-            isset($data['pk_angriff']) && isset($data['fk_match_angriff']) && isset($data['fk_player_angriff']) &&
-            isset($data['balleerhalten']) && isset($data['punkte']) && isset($data['druckvoll']) &&
-            isset($data['zueasy']) && isset($data['fehler']) && isset($data['blockpunkt']) &&
-            isset($data['block']) && isset($data['ass'])
-        ) {
-            $result = $angriffManager->updateAngriffs(
-                $data['pk_angriff'],
-                $data['fk_match_angriff'],
-                $data['fk_player_angriff'],
-                $data['balleerhalten'],
-                $data['punkte'],
-                $data['druckvoll'],
-                $data['zueasy'],
-                $data['fehler'],
-                $data['blockpunkt'],
-                $data['block'],
-                $data['ass']
-            );
-            echo $result;
-        } else {
-            sendXMLResponse(false, 'Missing required parameters');
-        }
-        break;*/
+        $pk_angriff = $_POST['pk_angriff'] ?? '';
+        $matchPk = $_POST['matchPk'] ?? '';
+        $playerPk = $_POST['playerPk'] ?? '';
+        $balleErhalten = $_POST['balleErhalten']  ?? '';
+        $punkte = $_POST['punkte']  ?? '';
+        $druckvoll = $_POST['druckvoll']  ?? '';
+        $zuEasy = $_POST['zuEasy']  ?? '';
+        $fehler = $_POST['fehler']  ?? '';
+        $blockPunkt = $_POST['blockPunkt']  ?? '';
+        $block = $_POST['block']  ?? '';
+        $ass = $_POST['ass'] ?? '';
+    
+        // Ensure pk_angriff is provided
+    
+        // Call update method
+        $result = $angriffManager->updateAngriffs( 
+            new Angriff(
+                $pk_angriff, $matchPk, $playerPk, 
+                $balleErhalten, $punkte, 
+                $druckvoll, $zuEasy, $fehler, 
+                $blockPunkt, $block, $ass
+            )
+        );
+        sendXMLResponse($result, $result ? "angriff updated successfully" : "angriff failed to update");
+        break;
 
+
+        /*parse_str(file_get_contents("php://input"), $data);
+
+    if (
+        isset($data['pk_rece']) && isset($data['perfekt']) && isset($data['superInZone']) &&
+        isset($data['neutral']) && isset($data['schlecht']) &&
+        isset($data['direktFehler']) && isset($data['falscheEntscheidung'])
+    ) {
+        $result = $receManager->modifyReces(
+            $data['pk_rece'],
+            $data['perfekt'],
+            $data['superInZone'],
+            $data['neutral'],
+            $data['schlecht'],
+            $data['direktFehler'],
+            $data['falscheEntscheidung']
+        );
+
+        if ($result) {
+            sendXMLResponse(true, 'Rece updated successfully');
+        } else {
+            sendXMLResponse(false, 'Failed to update rece');
+        }
+    } else {
+        sendXMLResponse(false, 'Missing required parameters');
+    }
+    break;
+*/
 
     case 'DELETE':
         if (!isLoggedIn()) {

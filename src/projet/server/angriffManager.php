@@ -15,10 +15,10 @@ class AngriffManager
         return $this->dbAngriffManager->getAngriffs($fkMatch, $fkPlayer);
     }
 
-    /*public function updateAngriffs($angriffset)
+    public function updateAngriffs($data)
     {
-        return $this->dbAngriffManager->updateAngriffs($angriffset);
-    }*/
+        return $this->dbAngriffManager->updateAngriffs($data);
+    }
 
 }
 ?>

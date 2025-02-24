@@ -39,6 +39,36 @@
     }
 
 
+    /*public function modifyReces($pkRece, $perfekt, $superInZone, $neutral, $schlecht, $direktFehler, $falscheEntscheidung){
+    $connection = DBConnection::getInstance();
+    
+    $query = "
+        UPDATE t_Rece 
+        SET 
+            Perfekt = :perfekt, 
+            `Super(Zone)` = :superInZone, 
+            Neutral = :neutral, 
+            Schlecht = :schlecht, 
+            DirektFehler = :direktFehler, 
+            FalscheEntscheidung = :falscheEntscheidung
+        WHERE PK_Rece = :pkRece
+    ";
+
+    $params = [
+        'perfekt' => $perfekt,
+        'superInZone' => $superInZone,
+        'neutral' => $neutral,
+        'schlecht' => $schlecht,
+        'direktFehler' => $direktFehler,
+        'falscheEntscheidung' => $falscheEntscheidung,
+        'pkRece' => $pkRece
+    ];
+
+    return $connection->executeQuery($query, $params);
+}*/
+
+
+
     public function getInXML($fkMatch, $fkPlayer)
     {
         $listReces = $this->getRece($fkMatch, $fkPlayer);
