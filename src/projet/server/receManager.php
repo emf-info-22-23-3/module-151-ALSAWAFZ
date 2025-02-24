@@ -15,9 +15,9 @@ class ReceManager
         return $this->dbReceManager->getRece($fkMatch, $fkPlayer);
     }
 
-    /*public function modifyReces($pkRece, $perfekt, $superInZone, $neutral, $schlecht, $direktFehler, $falscheEntscheidung)
+    public function updateReces($data)
     {
-        return $this->dbReceManager->modifyReces($pkRece, $perfekt, $superInZone, $neutral, $schlecht, $direktFehler, $falscheEntscheidung);
-    }*/
+        return $this->dbReceManager->updateReces($data);
+    }
 }
 ?>

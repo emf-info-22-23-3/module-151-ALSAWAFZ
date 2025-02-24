@@ -39,33 +39,43 @@
     }
 
 
-    /*public function modifyReces($pkRece, $perfekt, $superInZone, $neutral, $schlecht, $direktFehler, $falscheEntscheidung){
+    public function updateReces($data){
     $connection = DBConnection::getInstance();
-    
-    $query = "
-        UPDATE t_Rece 
+    $connection->startTransaction();
+
+   $query = $connection->executeQuery("
+        UPDATE DB_finalTVMurten.t_Rece 
         SET 
+            FK_Match_Rece = :fk_match_rece,
+            FK_Player_Rece = :fk_player_rece,
             Perfekt = :perfekt, 
             `Super(Zone)` = :superInZone, 
             Neutral = :neutral, 
             Schlecht = :schlecht, 
             DirektFehler = :direktFehler, 
             FalscheEntscheidung = :falscheEntscheidung
-        WHERE PK_Rece = :pkRece
-    ";
+        WHERE PK_Rece = :pk_Rece
+    ", array(
+        'pk_Rece' => $data->getPKRece(),
+        'fk_match_rece' => $data->getFKMatchRece(),
+        'fk_player_rece' => $data->getFKPlayerRece(),
+        'perfekt' => $data->getPerfekt(),
+        'superInZone' => $data->getSuperZone(),
+        'neutral' => $data->getNeutral(),
+        'schlecht' => $data->getSchlecht(),
+        'direktFehler' => $data->getDirektFehler(),
+        'falscheEntscheidung' => $data->getFalscheEntscheidung(),
+    ));
 
-    $params = [
-        'perfekt' => $perfekt,
-        'superInZone' => $superInZone,
-        'neutral' => $neutral,
-        'schlecht' => $schlecht,
-        'direktFehler' => $direktFehler,
-        'falscheEntscheidung' => $falscheEntscheidung,
-        'pkRece' => $pkRece
-    ];
+    if ($query === false) {
+        $connection->rollbackTransaction();
+        error_log("Failed to update Rece for ID: " . $data->getPKRece());
+        return false;
+    }
 
-    return $connection->executeQuery($query, $params);
-}*/
+    $connection->commitTransaction(); 
+   return $query;
+}
 
 
 

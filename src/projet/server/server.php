@@ -50,6 +50,7 @@ function sendXMLResponse($success, $message = '', $data = null) {
 // Consistent session handling functions
 function isLoggedIn() {
     return isset($_SESSION['login_id']);
+
 }
 
 function isAdmin() {
@@ -93,6 +94,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         'username' => $login->getUsername(),
                         'role' => $login->getRole()
                     ]);
+                    /*setcookie(
+                        'LOGGED_USER'
+                        $username,
+                        [
+                            'expires' => time() + 365*24*3600,
+                            'secure' => true,
+                            'httponly' => true,
+                        ]
+
+                    )*/
                 } else {
                     sendXMLResponse(false, 'Invalid credentials');
                 }
@@ -201,58 +212,82 @@ switch ($_SERVER['REQUEST_METHOD']) {
             break;
         }
 
-
-        $pk_angriff = $_POST['pk_angriff'] ?? '';
-        $matchPk = $_POST['matchPk'] ?? '';
-        $playerPk = $_POST['playerPk'] ?? '';
-        $balleErhalten = $_POST['balleErhalten']  ?? '';
-        $punkte = $_POST['punkte']  ?? '';
-        $druckvoll = $_POST['druckvoll']  ?? '';
-        $zuEasy = $_POST['zuEasy']  ?? '';
-        $fehler = $_POST['fehler']  ?? '';
-        $blockPunkt = $_POST['blockPunkt']  ?? '';
-        $block = $_POST['block']  ?? '';
-        $ass = $_POST['ass'] ?? '';
+        //=====================================ANGRIFF
+        $putangriffData = file_get_contents("php://input");
+        parse_str($putangriffData, $dataAngriff);
     
-        $result = $angriffManager->updateAngriffs( 
+        if (empty($dataAngriff)) {
+            sendXMLResponse(false, 'No data for Angriff received to update');
+            break;
+        }
+    
+        $pk_angriff = $dataAngriff['pk_angriff'] ?? '';
+        $matchPkangriff = $dataAngriff['matchPk'] ?? '';
+        $playerPkangriff = $dataAngriff['playerPk'] ?? '';
+        $balleErhalten = $dataAngriff['balleErhalten'] ?? '';
+        $punkte = $dataAngriff['punkte'] ?? '';
+        $druckvoll = $dataAngriff['druckvoll'] ?? '';
+        $zuEasy = $dataAngriff['zuEasy'] ?? '';
+        $fehler = $dataAngriff['fehler'] ?? '';
+        $blockPunkt = $dataAngriff['blockPunkt'] ?? '';
+        $block = $dataAngriff['block'] ?? '';
+        $ass = $dataAngriff['ass'] ?? '';
+    
+        if (empty($pk_angriff) || empty($matchPkangriff) || empty($playerPkangriff)) {
+            sendXMLResponse(false, "Missing required parameters");
+            break;
+        }
+    
+        $resultangriff = $angriffManager->updateAngriffs(
             new Angriff(
-                $pk_angriff, $matchPk, $playerPk, 
-                $balleErhalten, $punkte, 
-                $druckvoll, $zuEasy, $fehler, 
+                $pk_angriff, $matchPkangriff, $playerPkangriff,
+                $balleErhalten, $punkte,
+                $druckvoll, $zuEasy, $fehler,
                 $blockPunkt, $block, $ass
             )
         );
-        sendXMLResponse($result, $result ? "angriff updated successfully" : "angriff failed to update");
+    
+        sendXMLResponse($resultangriff, $resultangriff ? "Angriff updated successfully" : "Failed to update Angriff");
+        break;
+
+        //=====================================RECE
+
+        $putreceData = file_get_contents("php://input");
+        parse_str($putreceData, $datarece);
+    
+        if (empty($datarece)) {
+            sendXMLResponse(false, 'No data for rece received to update');
+            break;
+        }
+
+        $pk_rece = $datarece['pk_rece'] ?? '';
+        $matchPkrece = $datarece['matchPk'] ?? '';
+        $playerPkrece = $datarece['playerPk'] ?? '';
+        $perfekt = $datarece['perfekt'] ?? '';
+        $superInZone = $datarece['superInZone'] ?? '';
+        $neutral = $datarece['neutral'] ?? '';
+        $schlecht = $datarece['schlecht'] ?? '';
+        $direktFehler = $datarece['direktFehler'] ?? '';
+        $falscheEntscheidung = $datarece['falscheEntscheidung'] ?? '';
+    
+        if (empty($pk_rece) || empty($matchPkrece) || empty($playerPkrece)) {
+            sendXMLResponse(false, "Missing required parameters");
+            break;
+        }
+    
+        $resultrece = $receManager->updateReces(
+            new Rece(
+                $pk_rece, $matchPkrece, $playerPkrece,
+                $perfekt, $superInZone,
+                $neutral, $schlecht, $direktFehler,
+                $falscheEntscheidung
+            )
+        );
+    
+        sendXMLResponse($resultrece, $resultrece ? "Rece updated successfully" : "Failed to update Rece");
         break;
 
 
-        /*parse_str(file_get_contents("php://input"), $data);
-
-    if (
-        isset($data['pk_rece']) && isset($data['perfekt']) && isset($data['superInZone']) &&
-        isset($data['neutral']) && isset($data['schlecht']) &&
-        isset($data['direktFehler']) && isset($data['falscheEntscheidung'])
-    ) {
-        $result = $receManager->modifyReces(
-            $data['pk_rece'],
-            $data['perfekt'],
-            $data['superInZone'],
-            $data['neutral'],
-            $data['schlecht'],
-            $data['direktFehler'],
-            $data['falscheEntscheidung']
-        );
-
-        if ($result) {
-            sendXMLResponse(true, 'Rece updated successfully');
-        } else {
-            sendXMLResponse(false, 'Failed to update rece');
-        }
-    } else {
-        sendXMLResponse(false, 'Missing required parameters');
-    }
-    break;
-*/
 
     case 'DELETE':
         if (!isLoggedIn()) {

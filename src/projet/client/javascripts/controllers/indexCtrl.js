@@ -22,6 +22,11 @@ class IndexCtrl {
     
         this.updateAngriffSuccess = this.updateAngriffSuccess.bind(this);
         this.updateAngriffError = this.updateAngriffError.bind(this);
+        this.updateAngriffdata = this.updateAngriffdata.bind(this);
+
+        this.updateReceSuccess = this.updateReceSuccess.bind(this);
+        this.updateReceError = this.updateReceError.bind(this);
+        this.updateRecedata = this.updateRecedata.bind(this);
 
       }
 
@@ -243,7 +248,18 @@ class IndexCtrl {
           reces.setDirektFehler($(this).find("direktFehler").text());
           reces.setFalscheEntscheidung($(this).find("falscheEntscheidung").text());
 
-          txtRecesPerMatchAndPlayer += "<tr><td>" + reces.getPerfekt() + "</td><td>" + reces.getSuperInZone() + "</td><td>" + reces.getNeutral() + "</td><td>" + reces.getSchlecht() + "</td><td>" + reces.getDirektFehler() + "</td><td>" + reces.getFalscheEntscheidung() + "</td></tr>";
+          localStorage.setItem("selectedPkRece", reces.getPk());
+
+          txtRecesPerMatchAndPlayer += `
+              <tr>
+                <td contenteditable="true" id="recePerfekt">${reces.getPerfekt()}</td>
+                <td contenteditable="true" id="receSuperInZone">${reces.getSuperInZone()}</td>
+                <td contenteditable="true" id="receNeutral">${reces.getNeutral()}</td>
+                <td contenteditable="true" id="receSchlecht">${reces.getSchlecht()}</td>
+                <td contenteditable="true" id="receDirektFehler">${reces.getDirektFehler()}</td>
+                <td contenteditable="true" id="receFalscheEntscheidung">${reces.getFalscheEntscheidung()}</td>
+              </tr>
+              <td><button id="updateReceBtn">Update</button></td>`; 
         });
 
       if (tableContentRecePerMatchPerPlayer) {
@@ -309,8 +325,8 @@ class IndexCtrl {
       alert("Erreur lors de la lecture des angriff: " + error);
     }
 
-    updateAngriffSuccess(data) {
-
+    updateAngriffdata() {
+      let data = '';
       let pk_angriff = localStorage.getItem("selectedPkAngriff");
       let matchPk = JSON.parse($("#cmbAfterSelectionMatches").val()).pk;
       let playerPk = localStorage.getItem("selectedPlayerFK");
@@ -339,11 +355,55 @@ class IndexCtrl {
           block: block,
           ass: ass
       };
+      return data;
   }
 
-  updateAngriffError(error) {
-    console.error("Error updating Angriff:", error);
+
+  updateAngriffSuccess(res){
+    alert("wooooo reaussir lors de la lecture des angriff updates: " + res);
   }
+  updateAngriffError(error) {
+    alert("Erreur lors de la lecture des angriff updates: " + error);
+  }
+
+
+
+  updateRecedata() {
+    let data = '';
+    let pk_rece = localStorage.getItem("selectedPkRece");
+    let matchPk = JSON.parse($("#cmbAfterSelectionMatches").val()).pk;
+    let playerPk = localStorage.getItem("selectedPlayerFK");
+
+    // Extract values from the row's editable cells
+    let perfekt = document.getElementById("recePerfekt").textContent;
+    let superInZone = document.getElementById("receSuperInZone").textContent;
+    let neutral = document.getElementById("receNeutral").textContent;
+    let schlecht =document.getElementById("receSchlecht").textContent; 
+    let direktFehler = document.getElementById("receDirektFehler").textContent;
+    let falscheEntscheidung = document.getElementById("receFalscheEntscheidung").textContent;
+
+    // Prepare the data for the request
+    data = {
+      pk_rece: pk_rece,
+      matchPk: matchPk,
+      playerPk: playerPk,
+      perfekt: perfekt,
+      superInZone: superInZone,
+      neutral: neutral,
+      schlecht: schlecht,
+      direktFehler: direktFehler,
+      falscheEntscheidung: falscheEntscheidung
+    };
+    return data;
+}
+
+
+updateReceSuccess(res){
+  alert("wooooo reaussir lors de la lecture des rece updates: " + res);
+}
+updateReceError(error) {
+  alert("Erreur lors de la lecture des rece updates: " + error);
+}
   
 }
 
@@ -361,7 +421,12 @@ class IndexCtrl {
 
       $(document).on("click", "#updateAngriffBtn", function (event) {
         event.preventDefault();
-        window.ctrl.http.updateAngriff(window.ctrl.updateAngriffSuccess, window.ctrl.updateAngriffError);
+        window.ctrl.http.updateAngriffs(window.ctrl.updateAngriffdata(), window.ctrl.updateAngriffSuccess, window.ctrl.updateAngriffError);
+      });
+
+      $(document).on("click", "#updateReceBtn", function (event) {
+        event.preventDefault();
+        window.ctrl.http.updateReces(window.ctrl.updateRecedata(), window.ctrl.updateReceSuccess, window.ctrl.updateReceError);
       });
 
       cmbmatchs.change(function(event) {

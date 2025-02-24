@@ -88,32 +88,32 @@ class servicesHttp {
     }
 
 
-     updateAngriff(data, successCallback, errorCallback) {
+     updateAngriffs(data, successCallback, errorCallback) {
         $.ajax({
             type: "PUT",
             dataType: "xml",
             url: this.BASE_URL,
             data: { 
                 action: 'updateAngriff',
-                data: data
             },
+            data: data,
             success: successCallback,
             error: errorCallback
-        });
+        });   
     }   
 
-        /*updateRece(data, successCallback, errorCallback) {
+    updateReces(data, successCallback, errorCallback) {
         $.ajax({
             type: "PUT",
             dataType: "xml",
             url: this.BASE_URL,
             data: { 
-                action: 'updateRece',
-                data: data
+                action: 'updateReces',
             },
+            data: data,
             success: successCallback,
             error: errorCallback
-        });
-    } */ 
+        });   
+    }   
 }
   

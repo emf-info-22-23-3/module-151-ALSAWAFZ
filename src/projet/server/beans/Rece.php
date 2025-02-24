@@ -62,7 +62,7 @@
         return $this->direktFehler;
     }
 
-    public function getFalscheentscheidung(){
+    public function getFalscheEntscheidung(){
         return $this->falscheEntscheidung;
     }
 
