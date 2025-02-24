@@ -10,9 +10,16 @@ class IndexCtrl {
       this.chargerMatchsSuccess = this.chargerMatchsSuccess.bind(this);
       this.chargerMatchsError = this.chargerMatchsError.bind(this);
 
+      this.chargerMatchsForSelectionSuccess = this.chargerMatchsForSelectionSuccess.bind(this);
+this.chargerMatchsForSelectionError = this.chargerMatchsForSelectionError.bind(this);
+
+
+
       this.chargerRecesSuccess = this.chargerRecesSuccess.bind(this);
       this.chargerRecesError = this.chargerRecesError.bind(this);
 
+      this.chargerAngriffsSuccess = this.chargerAngriffsSuccess.bind(this);
+      this.chargerAngriffsError = this.chargerAngriffsError.bind(this);
   }
 
   connectSuccess(data) {
@@ -65,8 +72,8 @@ CallbackError(request, status, error) {
 
 chargerPlayersSuccess(data){   
   var txtplayer = '';
-  var receRows = '';
-  var angriffRows = '';
+  //var receRows = '';
+  //var angriffRows = '';
   
 
   $(data).find("players").each(function() {
@@ -91,8 +98,9 @@ chargerPlayersSuccess(data){
 
 
     txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td><td>" + players.getEmail() +"</td><td>" + players.getGeburstag() + "</td><td>" + players.getLizenz() + "</td><td>" + players.getSchreiber() +"</td><td>" + players.getSchiri() +"</td><td>" + players.getJS() +"</td></tr>";
-    receRows += "<tr><td>" +players.getName() + " " + players.getFamilyName() +"</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-    angriffRows += "<tr><td>" +players.getName() + " " + players.getFamilyName() + "</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+    //For playersStatsToAddOrModify
+    //receRows += "<tr><td>" +players.getName() + " " + players.getFamilyName() +"</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+    //angriffRows += "<tr><td>" +players.getName() + " " + players.getFamilyName() + "</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 
     // Generate the HTML for each player card dynamically
     var playerImage = "../images/Team_individual_image/" + players.getSpielerKarte() + ".jpg";
@@ -121,6 +129,8 @@ $(".players-grid").append(playerCardHTML);
     console.log("Player Data Received:", data);
   }
 
+  /*
+  For playersStatsToAddOrModify
   var receTableModify = document.getElementById("tableContentReceModify");
   if (receTableModify) {
     receTableModify.innerHTML = receRows;
@@ -130,6 +140,7 @@ $(".players-grid").append(playerCardHTML);
   if (angriffTableModify) {
     angriffTableModify.innerHTML = angriffRows;
   }
+    */
 }
 
 
@@ -184,23 +195,24 @@ chargerMatchsForSelectionSuccess(data){
         fk_enemy_team: matchs.getFK_Enemy_Team()
       }));*/
   
-      if (!cmbAfterSelectionMatches) {
-        console.error("Element with ID 'cmbAfterSelectionMatches' not found in the DOM.");
-        return;
+      if (cmbAfterSelectionMatches) {
+        let option = new Option(matchs.getSpiel(), JSON.stringify(matchs));
+        cmbAfterSelectionMatches.appendChild(option);
+    } else {
+        console.error("ComboBox not found in the DOM.");
     }
-
-      cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
-
     });  
 
+    /*
+    For playersStatsToAddOrModify
     cmbAfterSelectionMatches.addEventListener("change", function () {
       let selectedMatch = JSON.parse(this.value);
   
       if (selectedMatch) {
-        //dateMatchAfterSelection.value = selectedMatch.datum;
-        //teamMatchAfterSelection.value = selectedMatch.fk_enemy_team;
+        dateMatchAfterSelection.value = selectedMatch.datum;
+        teamMatchAfterSelection.value = selectedMatch.fk_enemy_team;
       }
-    });
+    });*/
 }
 
 chargerMatchsForSelectionError(error) {
@@ -306,7 +318,7 @@ chargerAngriffsError(request, status, error) {
 
 
       cmbmatchs.change(function(event) {
-        let selectedMatch = JSON.parse(this.options[this.selectedIndex].value);
+        //let selectedMatch = JSON.parse(this.options[this.selectedIndex].value);
         matchPk = JSON.parse(this.options[this.selectedIndex].value).pk;
         playerPk = localStorage.getItem("selectedPlayerFK");
         //$("#dateMatchAfterSelection").val(selectedMatch.datum);
