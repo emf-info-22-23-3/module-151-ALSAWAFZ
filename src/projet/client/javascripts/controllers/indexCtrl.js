@@ -63,8 +63,10 @@ CallbackError(request, status, error) {
 }
 
 
-chargerPlayersSuccess(data, text, jqXHR){   
+chargerPlayersSuccess(data){   
   var txtplayer = '';
+  var receRows = '';
+  var angriffRows = '';
   
 
   $(data).find("players").each(function() {
@@ -89,7 +91,8 @@ chargerPlayersSuccess(data, text, jqXHR){
 
 
     txtplayer += "<tr><td>" + players.getSpielerNr() + "</td><td>" + players.getName() + "</td><td>" + players.getFamilyName() + "</td><td>" + players.getAdresse() + "</td><td>" + players.getFk_place() + "</td><td>" + players.getNatel() + "</td><td>" + players.getEmail() +"</td><td>" + players.getGeburstag() + "</td><td>" + players.getLizenz() + "</td><td>" + players.getSchreiber() +"</td><td>" + players.getSchiri() +"</td><td>" + players.getJS() +"</td></tr>";
-    
+    receRows += "<tr><td>" +players.getName() + " " + players.getFamilyName() +"</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+    angriffRows += "<tr><td>" +players.getName() + " " + players.getFamilyName() + "</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
 
     // Generate the HTML for each player card dynamically
     var playerImage = "../images/Team_individual_image/" + players.getSpielerKarte() + ".jpg";
@@ -108,15 +111,6 @@ chargerPlayersSuccess(data, text, jqXHR){
 `;
 $(".players-grid").append(playerCardHTML);
 
-
-
-
-
-
-
-
-    //===================================================
-
   
   });
 
@@ -125,6 +119,16 @@ $(".players-grid").append(playerCardHTML);
   if (tableContentPlayers) {
     tableContentPlayers.innerHTML = txtplayer;
     console.log("Player Data Received:", data);
+  }
+
+  var receTableModify = document.getElementById("tableContentReceModify");
+  if (receTableModify) {
+    receTableModify.innerHTML = receRows;
+  }
+
+  var angriffTableModify = document.getElementById("tableContentAngriffModify");
+  if (angriffTableModify) {
+    angriffTableModify.innerHTML = angriffRows;
   }
 }
 
@@ -163,8 +167,8 @@ alert("Erreur lors de la lecture des matchs: " + error);
 
 chargerMatchsForSelectionSuccess(data){   
   var cmbAfterSelectionMatches = document.getElementById("cmbAfterSelectionMatches");
-  var dateMatchAfterSelection = document.getElementById("dateMatchAfterSelection");
-  var teamMatchAfterSelection = document.getElementById("teamMatchAfterSelection");
+  //var dateMatchAfterSelection = document.getElementById("dateMatchAfterSelection");
+  //var teamMatchAfterSelection = document.getElementById("teamMatchAfterSelection");
 
   
   
@@ -172,14 +176,19 @@ chargerMatchsForSelectionSuccess(data){
       var matchs = new Matchs();
       matchs.setPk($(this).find("pk_matchs").text());
       matchs.setSpiel($(this).find("spiel").text());
-      matchs.setDatum($(this).find("datum").text());
-      matchs.setFK_Enemy_Team($(this).find("fk_enemy_team").text());
+      //matchs.setDatum($(this).find("datum").text());
+      //matchs.setFK_Enemy_Team($(this).find("fk_Enemy_Team").text());
      
-      let matchOption = new Option(matchs.getSpiel(), JSON.stringify({
+      /*let matchOption = new Option(matchs.getSpiel(), JSON.stringify({
         datum: matchs.getDatum(),
-        enemyTeam: matchs.getFK_Enemy_Team()
-      }));
+        fk_enemy_team: matchs.getFK_Enemy_Team()
+      }));*/
   
+      if (!cmbAfterSelectionMatches) {
+        console.error("Element with ID 'cmbAfterSelectionMatches' not found in the DOM.");
+        return;
+    }
+
       cmbAfterSelectionMatches.options[cmbAfterSelectionMatches.options.length] = new Option(matchs.getSpiel(), JSON.stringify(matchs));
 
     });  
@@ -188,8 +197,8 @@ chargerMatchsForSelectionSuccess(data){
       let selectedMatch = JSON.parse(this.value);
   
       if (selectedMatch) {
-        dateMatchAfterSelection.value = selectedMatch.datum;
-        teamMatchAfterSelection.value = selectedMatch.enemyTeam;
+        //dateMatchAfterSelection.value = selectedMatch.datum;
+        //teamMatchAfterSelection.value = selectedMatch.fk_enemy_team;
       }
     });
 }
@@ -274,14 +283,6 @@ chargerAngriffsError(request, status, error) {
 
 
 
-
-
-
-
-
-
-
-
 }
 
 
@@ -305,10 +306,11 @@ chargerAngriffsError(request, status, error) {
 
 
       cmbmatchs.change(function(event) {
+        let selectedMatch = JSON.parse(this.options[this.selectedIndex].value);
         matchPk = JSON.parse(this.options[this.selectedIndex].value).pk;
         playerPk = localStorage.getItem("selectedPlayerFK");
-        $("#dateMatchAfterSelection").val(JSON.parse(this.options[this.selectedIndex].value).date);
-        $("#enemyTeamMatchAfterSelection").val(JSON.parse(this.options[this.selectedIndex].value).fk_enemy_team);
+        //$("#dateMatchAfterSelection").val(selectedMatch.datum);
+        //$("#enemyTeamMatchAfterSelection").val(selectedMatch.fk_Enemy_Team);
 
         console.log("Selected Match PK:", matchPk);
         console.log("Retrieved Player PK from localStorage:", playerPk);
