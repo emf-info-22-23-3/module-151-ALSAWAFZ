@@ -493,7 +493,17 @@ class IndexCtrl {
    * @param {string} res - Response message from the server.
    */
   updateAngriffSuccess(res) {
-    alert("The Angriff table has been updated! " + res);
+    console.log("Response received:", res); // Debugging line
+
+    let success = $(res).find("success").text().trim() === "true";
+    let message = $(res).find("message").text().trim();
+
+    if (success) {
+      return;
+    } else {
+      console.error("Update failed: " + message); // Log the error
+      alert("Update failed: " + message);
+    }
   }
 
   /**
@@ -501,6 +511,7 @@ class IndexCtrl {
    * @param {string} error - Error message.
    */
   updateAngriffError(error) {
+    console.error("Request failed: ", error);
     alert("The Angriff table failed to update :( " + error);
   }
 
@@ -544,7 +555,14 @@ class IndexCtrl {
    * @param {string} res - Response message from the server.
    */
   updateReceSuccess(res) {
-    alert("The Rece table has been updated! " + res);
+    let success = $(res).find("success").text().trim() === "true";
+    let message = $(res).find("message").text().trim();
+
+    if (success) {
+      return;
+    } else {
+      alert("Update failed: " + message);
+    }
   }
 
   /**
@@ -552,7 +570,8 @@ class IndexCtrl {
    * @param {string} error - Error message.
    */
   updateReceError(error) {
-    alert("The Rece table failed to update :( " + error);
+    console.error("Request failed: ", error);
+    alert("The Angriff table failed to update :( " + error);
   }
 }
 
