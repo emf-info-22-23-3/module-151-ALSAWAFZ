@@ -1,63 +1,67 @@
 class Matchs {
-    constructor() {
-        this.pk = null;
-        this.spiel = null;
-        this.wochentag = null;
-        this.datum = null;
-        this.matchZeit = null;
-        this.fk_Enemy_Team = null;
-        this.halle = null;
-    }
+  constructor() {
+    this.pk = null;
+    this.spiel = null;
+    this.wochentag = null;
+    this.datum = null;
+    this.matchZeit = null;
+    this.fk_Enemy_Team = null;
+    this.halle = null;
+  }
 
-    setPk(pk) {
-        this.pk = pk;
-    }
+  setPk(pk) {
+    this.pk = pk;
+  }
 
-    setSpiel(spiel) {
-        this.spiel = spiel;
-    }
+  getPk() {
+    return this.pk;
+  }
 
-    getSpiel() {
-        return this.spiel;
-    }
+  setSpiel(spiel) {
+    this.spiel = spiel;
+  }
 
-    setWochentag(wochentag) {
-        this.wochentag = wochentag;
-    }
+  getSpiel() {
+    return this.spiel;
+  }
 
-    getWochentag() {
-        return this.wochentag;
-    }
+  setWochentag(wochentag) {
+    this.wochentag = wochentag;
+  }
 
-    setDatum(datum) {
-        this.datum = datum;
-    }
+  getWochentag() {
+    return this.wochentag;
+  }
 
-    getDatum() {
-        return this.datum;
-    }
+  setDatum(datum) {
+    this.datum = datum;
+  }
 
-    setMatchZeit(matchZeit) {
-        this.matchZeit = matchZeit;
-    }
+  getDatum() {
+    return this.datum;
+  }
 
-    getMatchZeit() {
-        return this.matchZeit;
-    }
+  setMatchZeit(matchZeit) {
+    this.matchZeit = matchZeit;
+  }
 
-    setFK_Enemy_Team(fk_Enemy_Team) {
-        this.fk_Enemy_Team = fk_Enemy_Team;
-    }
+  getMatchZeit() {
+    return this.matchZeit;
+  }
 
-    getFK_Enemy_Team() {
-        return this.fk_Enemy_Team;
-    }
+  setFK_Enemy_Team(fk_Enemy_Team) {
+    this.fk_Enemy_Team = fk_Enemy_Team;
+  }
 
-    setHalle(halle) {
-        this.halle = halle;
-    }
+  getFK_Enemy_Team() {
+    return this.fk_Enemy_Team;
+  }
 
-    getHalle() {
-        return this.halle;
-    }
+  setHalle(halle) {
+    this.halle = halle;
+  }
+
+  getHalle() {
+    return this.halle;
+  }
 }

@@ -38,60 +38,21 @@
       $this->spielerKarte = $spielerKarte;
     }
     
-    public function getPkPlayer()
-    {
-      return $this->pk_player;
-    }
-    public function getSpielerNr()
-    {
-      return $this->spielerNr;
-    }
-
-    public function getName()
-    {
-      return $this->name;
-    }
-
-    public function getFamilyName()
-    {
-        return $this->familyName;
-    }
-    public function getAdresse()
-    {
-        return $this->adresse;
-    }
-    public function getFKPlace(){
-        return $this->fk_place;
-    }
-    public function getNatel(){
-        return $this->natel;
-    }
-
-    public function getEmail(){
-        return $this->email;
-    }
-
-    public function getGeburstag(){
-      return $this->geburstag;
-    }
-    public function getLIZENZ(){
-      return $this->lizenz;
-    }
-    public function getSchreiber(){
-      return $this->schreiber;
-    }
-    public function getSchiri(){
-      return $this->schiri;
-    }
-    public function getJS(){
-      return $this->js;
-    }
-    public function getFKLogin(){
-      return $this->fk_login;
-    }
-    public function getSpielerKarte(){
-      return $this->spielerKarte;
-    }
+    public function getPkPlayer(){return $this->pk_player;}
+    public function getSpielerNr(){return $this->spielerNr;}
+    public function getName(){return $this->name;}
+    public function getFamilyName(){return $this->familyName;}
+    public function getAdresse(){return $this->adresse;}
+    public function getFKPlace(){return $this->fk_place;}
+    public function getNatel(){return $this->natel;}
+    public function getEmail(){return $this->email;}
+    public function getGeburstag(){return $this->geburstag;}
+    public function getLIZENZ(){return $this->lizenz;}
+    public function getSchreiber(){return $this->schreiber;}
+    public function getSchiri(){return $this->schiri;}
+    public function getJS(){return $this->js;}
+    public function getFKLogin(){return $this->fk_login;}
+    public function getSpielerKarte(){return $this->spielerKarte;}
 
 
 

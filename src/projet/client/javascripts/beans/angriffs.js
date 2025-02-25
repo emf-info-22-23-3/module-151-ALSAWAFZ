@@ -1,103 +1,103 @@
 class Angriffs {
-    constructor() {
-        this.pk = null;
-        this.fk_match_angriff = null;
-        this.fk_player_angriff = null;
-        this.balleErhalten = null;
-        this.punkte = null;
-        this.druckvoll = null;
-        this.zuEasy = null;
-        this.fehler = null;
-        this.blockPunkt = null;
-        this.block = null;
-        this.ass = null;
-    }
+  constructor() {
+    this.pk = null;
+    this.fk_match_angriff = null;
+    this.fk_player_angriff = null;
+    this.balleErhalten = null;
+    this.punkte = null;
+    this.druckvoll = null;
+    this.zuEasy = null;
+    this.fehler = null;
+    this.blockPunkt = null;
+    this.block = null;
+    this.ass = null;
+  }
 
-    setPk(pk) {
-        this.pk = pk;
-    }
+  setPk(pk) {
+    this.pk = pk;
+  }
 
-    getPk() {
-        return this.pk;
-    }
+  getPk() {
+    return this.pk;
+  }
 
-    setFK_Match_Angriff(fk_match_angriff) {
-        this.fk_match_angriff = fk_match_angriff;
-    }
+  setFK_Match_Angriff(fk_match_angriff) {
+    this.fk_match_angriff = fk_match_angriff;
+  }
 
-    getFK_Match_Angriff() {
-        return this.fk_match_angriff;
-    }
+  getFK_Match_Angriff() {
+    return this.fk_match_angriff;
+  }
 
-    setFK_Player_Angriff(fk_player_angriff) {
-        this.fk_player_angriff = fk_player_angriff;
-    }
+  setFK_Player_Angriff(fk_player_angriff) {
+    this.fk_player_angriff = fk_player_angriff;
+  }
 
-    getFK_Player_Angriff() {
-        return this.fk_player_angriff;
-    }
+  getFK_Player_Angriff() {
+    return this.fk_player_angriff;
+  }
 
-    setBalleErhalten(balleErhalten) {
-        this.balleErhalten = balleErhalten;
-    }
+  setBalleErhalten(balleErhalten) {
+    this.balleErhalten = balleErhalten;
+  }
 
-    getBalleErhalten() {
-        return this.balleErhalten;
-    }
+  getBalleErhalten() {
+    return this.balleErhalten;
+  }
 
-    setPunkte(punkte) {
-        this.punkte = punkte;
-    }
+  setPunkte(punkte) {
+    this.punkte = punkte;
+  }
 
-    getPunkte() {
-        return this.punkte;
-    }
+  getPunkte() {
+    return this.punkte;
+  }
 
-    setDruckvoll(druckvoll) {
-        this.druckvoll = druckvoll;
-    }
+  setDruckvoll(druckvoll) {
+    this.druckvoll = druckvoll;
+  }
 
-    getDruckvoll() {
-        return this.druckvoll;
-    }
+  getDruckvoll() {
+    return this.druckvoll;
+  }
 
-    setZuEasy(zuEasy) {
-        this.zuEasy = zuEasy;
-    }
+  setZuEasy(zuEasy) {
+    this.zuEasy = zuEasy;
+  }
 
-    getZuEasy() {
-        return this.zuEasy;
-    }
+  getZuEasy() {
+    return this.zuEasy;
+  }
 
-    setFehler(fehler) {
-        this.fehler = fehler;
-    }
+  setFehler(fehler) {
+    this.fehler = fehler;
+  }
 
-    getFehler() {
-        return this.fehler;
-    }
+  getFehler() {
+    return this.fehler;
+  }
 
-    setBlockPunkt(blockPunkt) {
-        this.blockPunkt = blockPunkt;
-    }
+  setBlockPunkt(blockPunkt) {
+    this.blockPunkt = blockPunkt;
+  }
 
-    getBlockPunkt() {
-        return this.blockPunkt;
-    }
+  getBlockPunkt() {
+    return this.blockPunkt;
+  }
 
-    setBlock(block) {
-        this.block = block;
-    }
+  setBlock(block) {
+    this.block = block;
+  }
 
-    getBlock() {
-        return this.block;
-    }
+  getBlock() {
+    return this.block;
+  }
 
-    setAss(ass) {
-        this.ass = ass;
-    }
+  setAss(ass) {
+    this.ass = ass;
+  }
 
-    getAss() {
-        return this.ass;
-    }
+  getAss() {
+    return this.ass;
+  }
 }

@@ -682,8 +682,11 @@ nav a::after {
 
 /* Player card style after Selection */
 .chosen-player-card-image {
-  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 200px;
+  margin: 0 auto; /* Centers the element horizontally */
   text-align: center;
 }
 

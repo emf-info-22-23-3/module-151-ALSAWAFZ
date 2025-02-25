@@ -49,7 +49,7 @@
             FK_Player_Rece = :fk_player_rece,
             FK_Match_Rece = :fk_match_rece,
             Perfekt = :perfekt, 
-            `Super_Zone` = :superInZone, 
+            `Super(Zone)` = :superInZone, 
             Neutral = :neutral, 
             Schlecht = :schlecht, 
             DirektFehler = :direktFehler, 

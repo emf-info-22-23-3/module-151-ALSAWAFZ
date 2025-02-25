@@ -10,6 +10,8 @@
 		$liste = array();
 		$connection = DBConnection::getInstance();
 
+
+
         $query = $connection->selectQuery("
 			SELECT * 
 			FROM t_Angriff a

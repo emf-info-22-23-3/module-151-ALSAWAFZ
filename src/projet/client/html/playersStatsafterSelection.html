@@ -51,48 +51,12 @@
                 <div class="chosen-player-card-image" >
                     <!-- Player card will be dynamically displayed here -->
                 </div>
-                <h2>Rece</h2>
-                <section class="schedule-section-AfterSelection">
-                    <table class="schedule-table-AfterSelection">
-                        <thead>
-                            <tr>
-                                <th>Perfekt</th>
-                                <th>Super(Zone)</th>
-                                <th>Neutral</th>
-                                <th>Schlecht</th>
-                                <th>Direkt Fehler</th>
-                                <th>Falsche Entscheidung</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableContentReceTotal"></tbody>
-                    </table>
-                </section>
-
-
-                <h2>Angriff</h2>
-                <section class="schedule-section-AfterSelection">
-                    <table class="schedule-table-AfterSelection">
-                        <thead>
-                            <tr>
-                                <th>Bälle Erhalten</th>
-                                <th>Punkte</th>
-                                <th>Druckvoll</th>
-                                <th>Zu Easy</th>
-                                <th>Fehler</th>
-                                <th>Block Punkt</th>
-                                <th>Block</th>
-                                <th>Ass</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableContentAngriffTotal"></tbody>
-                    </table>
-                </section>
 
 
                 <h3>Statistik Pro Match:</h3>
                 <select id="cmbAfterSelectionMatches"></select>
-                <input type="date" id="dateMatchAfterSelection" value="2025-01-28">
-                <input type="text" id="teamMatchAfterSelection" placeholder="Team 1">
+                <input type="date" id="dateMatchAfterSelection"  readonly>
+                <input type="text" id="teamMatchAfterSelection" placeholder="GegnerTeam" readonly>
 
                 <h2>Rece</h2>
                 <section class="schedule-section-team">
@@ -128,7 +92,7 @@
                         <tbody id="tableContentAngriff"></tbody>
                     </table>
                 </section>
-                <button class="back-button">Zurück zu Spielerstatistik</button>
+                <button class="save-Stats-button" id="saveStats">Speichern</button>
             </div>
         </div>
 

@@ -16,13 +16,10 @@ class Login
     }
 
     public function getPkLogin(){return $this->pk_login;}
-
     public function getUsername(){return $this->username;}
-
     public function getPassword(){return $this->password;}
-
     public function getRole(){return $this->role;}
-
+    
     public function toArray() {
         return [
             'pk_login' => $this->pk_login,
