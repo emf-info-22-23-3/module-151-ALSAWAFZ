@@ -1,6 +1,16 @@
 <?php
+/**
+ * Class LoginBDManager
+ * Manages login-related database operations.
+ */
 class LoginBDManager
 {
+    /**
+     * Checks login credentials by retrieving user data from the database.
+     *
+     * @param string $username The username to check.
+     * @return Login|false Returns a Login object if found, otherwise false.
+     */
     public function checkLogin($username)
     {
         $db = DBConnection::getInstance();
@@ -23,6 +33,14 @@ class LoginBDManager
         return false;
     }
 
+    /**
+     * Verifies the provided password against the stored password.
+     * If the stored password is not hashed, it hashes and updates it in the database.
+     *
+     * @param string $username The username to check.
+     * @param string $inputPassword The password to verify.
+     * @return Login|false Returns the Login object if the password is correct, otherwise false.
+     */
     public function verifyPassword($username, $inputPassword)
     {
         $user = $this->checkLogin($username);

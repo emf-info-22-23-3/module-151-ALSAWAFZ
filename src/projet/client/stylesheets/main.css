@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #87CEEB;
+  --primary-color: #87ceeb;
   --secondary-color: #f5f5f5;
   --border-color: #e0e0e0;
   --text-color: #333;
-  --shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   --circle-size: 300px;
   --animation-duration: 20s;
 }
@@ -28,7 +28,7 @@ body {
 
 body::before,
 body::after {
-  content: '';
+  content: "";
   position: fixed;
   width: var(--circle-size);
   height: var(--circle-size);
@@ -39,31 +39,47 @@ body::after {
 }
 
 body::before {
-  background: #87CEEB;
+  background: #87ceeb;
   top: -100px;
   left: -100px;
   animation: moveBlob1 var(--animation-duration) infinite alternate;
 }
 
 body::after {
-  background: #B0E0E6;
+  background: #b0e0e6;
   bottom: -100px;
   right: -100px;
   animation: moveBlob2 var(--animation-duration) infinite alternate;
 }
 
 @keyframes moveBlob1 {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(100px, 100px) scale(1.5); }
-  66% { transform: translate(-50px, 200px) scale(0.8); }
-  100% { transform: translate(150px, 50px) scale(1.2); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(100px, 100px) scale(1.5);
+  }
+  66% {
+    transform: translate(-50px, 200px) scale(0.8);
+  }
+  100% {
+    transform: translate(150px, 50px) scale(1.2);
+  }
 }
 
 @keyframes moveBlob2 {
-  0% { transform: translate(0, 0) scale(1.2); }
-  33% { transform: translate(-100px, -100px) scale(0.8); }
-  66% { transform: translate(50px, -200px) scale(1.5); }
-  100% { transform: translate(-150px, -50px) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1.2);
+  }
+  33% {
+    transform: translate(-100px, -100px) scale(0.8);
+  }
+  66% {
+    transform: translate(50px, -200px) scale(1.5);
+  }
+  100% {
+    transform: translate(-150px, -50px) scale(1);
+  }
 }
 
 /* Container */
@@ -101,7 +117,6 @@ body::after {
   margin-top: 20px;
 }
 
-
 /* Home */
 .welcome-image {
   width: 100%;
@@ -113,15 +128,15 @@ body::after {
 
 @media (max-width: 768px) {
   .content-box {
-      padding: 15px;
+    padding: 15px;
   }
 
   .content-box h2 {
-      font-size: 20px;
+    font-size: 20px;
   }
 
   .content-box p {
-      font-size: 14px;
+    font-size: 14px;
   }
 }
 
@@ -132,11 +147,10 @@ body::after {
   background: var(--secondary-color);
 }
 
-.logo-container-Login{
+.logo-container-Login {
   width: 80px;
   height: 80px;
   background: var(--secondary-color);
-  
 }
 
 .logo {
@@ -167,7 +181,7 @@ nav {
 }
 
 .nav-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -208,7 +222,7 @@ nav a {
 }
 
 nav a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -249,7 +263,7 @@ nav a::after {
 }
 
 .match-selection select::after {
-  content: '\25BC';
+  content: "\25BC";
   font-size: 16px;
   color: var(--text-color);
   position: absolute;
@@ -308,7 +322,7 @@ nav a::after {
 }
 
 .login-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -334,7 +348,7 @@ nav a::after {
 }
 
 .login-btn a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -347,7 +361,6 @@ nav a::after {
 .login-btn:hover a::after {
   width: 100%;
 }
-
 
 /* Login Form Styles */
 .login-container {
@@ -363,7 +376,7 @@ nav a::after {
   width: 100%;
   max-width: 400px;
   padding: 30px;
-  background: #87CEEB;
+  background: #87ceeb;
   border-radius: 10px;
   box-shadow: var(--shadow);
   box-sizing: border-box;
@@ -387,7 +400,6 @@ nav a::after {
   border-radius: 6px;
   box-sizing: border-box;
 }
-
 
 /* Button Styles */
 .btn-primary {
@@ -456,7 +468,8 @@ nav a::after {
   table-layout: fixed;
 }
 
-.schedule-table-matches th, .schedule-table-matches td {
+.schedule-table-matches th,
+.schedule-table-matches td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
@@ -487,7 +500,8 @@ nav a::after {
 }
 
 @media (max-width: 768px) {
-  .schedule-table-matches th, .schedule-table td {
+  .schedule-table-matches th,
+  .schedule-table td {
     font-size: 14px;
     padding: 10px;
   }
@@ -589,7 +603,6 @@ nav a::after {
   background-color: #888;
 }
 
-
 /* After Selection Table container styling */
 
 .schedule-table-AfterSelection {
@@ -614,8 +627,6 @@ nav a::after {
   width: 100%;
 }
 
-
-
 .schedule-table-AfterSelection tbody td,
 .schedule-table-AfterSelection tbody th {
   width: 200px;
@@ -627,14 +638,15 @@ nav a::after {
   table-layout: fixed;
 }
 
-.schedule-table-AfterSelection th, .schedule-table-AfterSelection td {
+.schedule-table-AfterSelection th,
+.schedule-table-AfterSelection td {
   border: 1px solid var(--border-color);
-    padding: 10px;
-    text-align: center;
-    word-wrap: break-word; /* Prevents overflow */
-    white-space: nowrap; /* Keeps content on one line */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Adds "..." for overflowed text */
+  padding: 10px;
+  text-align: center;
+  word-wrap: break-word; /* Prevents overflow */
+  white-space: nowrap; /* Keeps content on one line */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds "..." for overflowed text */
 }
 
 .schedule-table-AfterSelection th {
@@ -656,7 +668,8 @@ nav a::after {
 }
 
 @media (max-width: 768px) {
-  .schedule-table-AfterSelection th, .schedule-table td {
+  .schedule-table-AfterSelection th,
+  .schedule-table td {
     font-size: 14px;
     padding: 10px;
   }
@@ -678,7 +691,6 @@ nav a::after {
 .schedule-table-AfterSelection tbody::-webkit-scrollbar-thumb:hover {
   background-color: #888;
 }
-
 
 /* Player card style after Selection */
 .chosen-player-card-image {
@@ -738,7 +750,6 @@ nav a::after {
   }
 }
 
-
 /* statistics btn */
 .btn-stats {
   padding: 10px 20px;
@@ -751,11 +762,10 @@ nav a::after {
 }
 
 .btn-stats:hover {
-  background-color: #00BFFF;
+  background-color: #00bfff;
 }
 
 .btn-selection {
-
   gap: 5px;
   padding: 8px 16px;
   background: var(--primary-color);
@@ -769,7 +779,7 @@ nav a::after {
 }
 
 .btn-selection::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -795,7 +805,7 @@ nav a::after {
 }
 
 .btn-selection a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -808,7 +818,6 @@ nav a::after {
 .btn-selection:hover a::after {
   width: 100%;
 }
-
 
 /* Stats Form Styles */
 .stats-form {

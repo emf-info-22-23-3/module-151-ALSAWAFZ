@@ -1,3 +1,9 @@
+/**
+ * Class indexCtgrl
+ *
+ * handles everything between the views and the Server(servicehttps.js)
+ * the Client's main Controller
+ */
 class IndexCtrl {
   constructor() {
     this.http = new servicesHttp();
@@ -33,7 +39,9 @@ class IndexCtrl {
   connectSuccess(data) {
     console.log("connectSuccess called");
     if ($(data).find("success").text() === "true") {
-      console.log($(data));
+      // Store user data in localStorage
+      const username = $(data).find("username").text();
+      localStorage.setItem("username", username);
 
       Toastify({
         text: "Login successful",
@@ -44,6 +52,8 @@ class IndexCtrl {
       }).showToast();
 
       window.location.href = "../html/home.html";
+
+      console.log($(data));
     } else {
       Toastify({
         text: "Login failed. Incorrect username or password.",
@@ -56,6 +66,7 @@ class IndexCtrl {
   }
 
   disconnectSuccess() {
+    localStorage.removeItem("username");
     Toastify({
       text: "User disconnected",
       duration: 3000,
@@ -63,10 +74,10 @@ class IndexCtrl {
       position: "right",
       backgroundColor: "#33cc33",
     }).showToast();
-    window.location.href = "../login.html";
+    window.location.href = "../html/login.html";
   }
 
-  CallbackError(error) {
+  callbackError(error) {
     console.error("Error:", error);
     Toastify({
       text: "Error: " + error,
@@ -209,8 +220,13 @@ class IndexCtrl {
     var teamMatchAfterSelection = document.getElementById(
       "teamMatchAfterSelection"
     );
-    var option = "";
 
+    if (!cmbAfterSelectionMatches) {
+      return;
+    }
+
+    var option = "";
+    cmbAfterSelectionMatches.innerHTML = "";
     $(data)
       .find("matchs")
       .each(function () {
@@ -383,10 +399,10 @@ class IndexCtrl {
   }
 
   updateAngriffSuccess(res) {
-    alert("wooooo reaussir lors de la lecture des angriff updates: " + res);
+    alert("the angriff Table has been updated! " + res);
   }
   updateAngriffError(error) {
-    alert("Erreur lors de la lecture des angriff updates: " + error);
+    alert("the angriff Table failed to updated :(" + error);
   }
 
   updateRecedata() {
@@ -421,10 +437,10 @@ class IndexCtrl {
   }
 
   updateReceSuccess(res) {
-    alert("wooooo reaussir lors de la lecture des rece updates: " + res);
+    alert("the angriff Table has been updated!" + res);
   }
   updateReceError(error) {
-    alert("Erreur lors de la lecture des rece updates: " + error);
+    alert("the rece Table failed to updated :( " + error);
   }
 }
 
@@ -489,7 +505,7 @@ $(document).ready(function () {
       username,
       password,
       window.ctrl.connectSuccess,
-      window.ctrl.CallbackError
+      window.ctrl.callbackError
     );
   });
 

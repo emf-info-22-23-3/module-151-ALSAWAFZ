@@ -1,44 +1,75 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV-Murten 1.Liga / D1 - Login</title>
-    <link rel="stylesheet" href="../stylesheets/main.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../stylesheets/main.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.12.0/toastify.js"></script>
-    <script type="text/javascript" src="../javascripts/helpers/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../javascripts/services/servicesHttp.js"></script>
-    <script type="text/javascript" src="../javascripts/controllers/indexCtrl.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Matchs.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Players.js"></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/helpers/jquery-1.10.2.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/services/servicesHttp.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/controllers/indexCtrl.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Matchs.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Players.js"
+    ></script>
     <script type="text/javascript" src="../javascripts/beans/Reces.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Angriffs.js"></script>
-</head>
-<body>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Angriffs.js"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <div class="logo-container-Login">
+        <img src="../images/TVMurten_Black.png" alt="Logo" class="logo" />
+      </div>
+    </header>
 
-        <header>
-            <div class="logo-container-Login">
-                <img src="../images/TVMurten_Black.png" alt="Logo" class="logo">
-            </div>
-        </header>
-        
-        <main class="login-container">
-            <form class="login-form" id="loginForm" autocomplete="on">
-                <div class="form-group">
-                    <label for="username">Benutzername</label>
-                    <input type="username" id="username" name="username" required autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required autocomplete="password">
-                </div>
-                <button class="login-btn" type="submit" id="submitLogin">
-                    <img src="../images/login_icon.png" alt="Login" class="nav-icon">
-                    Anmelden
-                </button> 
-            </form>
-        </main>
-
-</body>
+    <main class="login-container">
+      <form class="login-form" id="loginForm" autocomplete="on">
+        <div class="form-group">
+          <label for="username">Benutzername</label>
+          <input
+            type="username"
+            id="username"
+            name="username"
+            required
+            autocomplete="username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            autocomplete="password"
+          />
+        </div>
+        <button class="login-btn" type="submit" id="submitLogin">
+          <img src="../images/login_icon.png" alt="Login" class="nav-icon" />
+          Anmelden
+        </button>
+      </form>
+    </main>
+  </body>
 </html>

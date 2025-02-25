@@ -1,9 +1,18 @@
 <?php 
 	include_once('DBConnection.php');
 	include_once('beans/Rece.php');
-        
+    /**
+     * ReceBDManager is responsible for database operations related to reception (Rece) data.
+    */        
 	class ReceBDManager
 {
+    /**
+     * Retrieves reception (Rece) data for a specific match and player.
+     *
+     * @param int $fkMatch  The foreign key (ID) of the match.
+     * @param int $fkPlayer The foreign key (ID) of the player.
+     * @return array        An array of Rece objects.
+     */
     public function getRece($fkMatch, $fkPlayer)
     {
         $count = 0;
@@ -39,6 +48,12 @@
     }
 
 
+    /**
+     * Updates reception (Rece) records in the database.
+     *
+     * @param Rece $data The Rece object containing updated data.
+     * @return bool      True if the update was successful, False otherwise.
+     */
     public function updateReces($data){
     $connection = DBConnection::getInstance();
     $connection->startTransaction();
@@ -78,7 +93,13 @@
 }
 
 
-
+    /**
+     * Converts reception (Rece) data to XML format.
+     *
+     * @param int $fkMatch  The foreign key (ID) of the match.
+     * @param int $fkPlayer The foreign key (ID) of the player.
+     * @return string       XML representation of the reception data.
+     */
     public function getInXML($fkMatch, $fkPlayer)
     {
         $listReces = $this->getRece($fkMatch, $fkPlayer);

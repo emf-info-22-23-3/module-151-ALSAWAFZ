@@ -1,11 +1,20 @@
 <?php
 
-
+/**
+ * Class DBConnection
+ * This class implements a singleton pattern for managing a database connection using PDO.
+ */
 class DBConnection {
-    private static $_instance = null;
-    private $pdo;
-    private $config;
+    private static $_instance = null; // Singleton instance
+    private $pdo; // PDO instance
+    private $config; // Configuration object
 
+    /**
+     * Returns the singleton instance of DBConnection.
+     * If it does not exist, it creates a new instance.
+     * 
+     * @return DBConnection The singleton instance.
+     */
     public static function getInstance()
     {
         if (is_null(self::$_instance)) {
@@ -14,13 +23,15 @@ class DBConnection {
         return self::$_instance;
     }
 
- 
+    /**
+     * Private constructor to initialize the PDO connection using configuration settings.
+     * Uses a persistent connection and sets UTF-8 encoding.
+     */
     private function __construct()
     {
         $this->config = new connectionConfig();
 
         try {
-
             $type = $this->config->getType();
             $host = $this->config->getHost();
             $name = $this->config->getName();
@@ -37,11 +48,20 @@ class DBConnection {
         }
     }
 
-
+    /**
+     * Destructor that closes the PDO connection.
+     */
     public function __destruct() {
         $this->pdo = null;
     }
 
+    /**
+     * Executes a SELECT query and returns multiple results.
+     * 
+     * @param string $query The SQL query string.
+     * @param array $params The parameters for the query.
+     * @return array The fetched results as an associative array.
+     */
     public function selectQuery($query, $params) {
         try {
             $queryPrepared = $this->pdo->prepare($query);
@@ -53,7 +73,13 @@ class DBConnection {
         }
     }
 
-
+    /**
+     * Executes a SELECT query and returns a single result.
+     * 
+     * @param string $query The SQL query string.
+     * @param array $params The parameters for the query.
+     * @return mixed The fetched row as an associative array or false if no result is found.
+     */
     public function selectSingleQuery($query, $params) {
         try {
             $queryPrepared = $this->pdo->prepare($query);
@@ -65,7 +91,13 @@ class DBConnection {
         }
     }
 
-
+    /**
+     * Executes an INSERT, UPDATE, or DELETE query.
+     * 
+     * @param string $query The SQL query string.
+     * @param array $params The parameters for the query.
+     * @return bool True if the query executed successfully, false otherwise.
+     */
     public function executeQuery($query, $params) {
         try {
             $queryPrepared = $this->pdo->prepare($query);
@@ -77,6 +109,12 @@ class DBConnection {
         }
     }
 
+    /**
+     * Retrieves the last inserted ID in a specific table.
+     * 
+     * @param string $table The table name.
+     * @return int|string The last inserted ID.
+     */
     public function getLastId($table) {
         try {
             $lastId = $this->pdo->lastInsertId($table);
@@ -87,14 +125,21 @@ class DBConnection {
         }
     }
 
+    /**
+     * Starts a database transaction.
+     * 
+     * @return bool True if the transaction starts successfully, false otherwise.
+     */
     public function startTransaction() {
         return $this->pdo->beginTransaction();
     }
 
     /**
-     * Méthode permettant d'ajouter une requête à la transaction en cours
+     * Adds a query to the current transaction.
      * 
-     * @return bool: true si la requête est fonctionnelle et qu'une transaction est bien en cours
+     * @param string $query The SQL query string.
+     * @param array $params The parameters for the query.
+     * @return bool True if the query executed successfully and a transaction is active, false otherwise.
      */
     public function addQueryToTransaction($query, $params) {
         $res = false;
@@ -106,9 +151,9 @@ class DBConnection {
     }
 
     /**
-     * Méthode permettant de valider la transaction
+     * Commits the current transaction, making changes permanent.
      * 
-     * @return bool: true si la validation s'est correctement déroulée et qu'une transaction était bien en cours
+     * @return bool True if the transaction was successfully committed, false otherwise.
      */
     public function commitTransaction() {
         $res = false;
@@ -119,9 +164,9 @@ class DBConnection {
     }
 
     /**
-     * Méthode permettant d'annuler la transaction
+     * Rolls back the current transaction, undoing all changes.
      * 
-     * @return bool: true si la validation s'est correctement annulée et qu'une transaction était bien en cours
+     * @return bool True if the transaction was successfully rolled back, false otherwise.
      */
     public function rollbackTransaction() {
         $res = false;
@@ -130,7 +175,6 @@ class DBConnection {
         }
         return $res;
     }
-
 }
 
 ?>

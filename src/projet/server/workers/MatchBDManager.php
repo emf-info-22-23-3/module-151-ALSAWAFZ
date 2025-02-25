@@ -2,8 +2,17 @@
 include_once('DBConnection.php');
 include_once('beans/Match.php');
 
+/**
+ * Class MatchBDManager
+ * Handles database operations related to matches.
+ */
 class MatchBDManager
 {
+    /**
+     * Retrieves all matches from the database.
+     *
+     * @return array An array of Match objects.
+     */
     public function getMatchs()
     {
         $db = DBConnection::getInstance();
@@ -32,6 +41,11 @@ class MatchBDManager
         return $matches;
     }
 
+    /**
+     * Converts the list of matches to an XML format.
+     *
+     * @return string The XML representation of matches.
+     */
     public function getInXML()
     {
         $matches = $this->getMatchs();

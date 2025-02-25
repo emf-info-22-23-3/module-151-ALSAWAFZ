@@ -1,17 +1,25 @@
+/**
+ * Class representing HTTP services for interacting with the server.
+ */
 class servicesHttp {
+  /**
+   * Creates an instance of servicesHttp and sets the base server URL.
+   */
   constructor() {
-    // Base URL of the server API
     this.BASE_URL = "http://localhost:8080/projet/server/server.php";
   }
 
   /**
-   * Logs in a user.
-   * @param {string} username - The user's username.
-   * @param {string} password - The user's password.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Sends a login request to the server.
+   *
+   * @param {string} username - The username of the user.
+   * @param {string} password - The password of the user.
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   connect(username, password, successCallback, errorCallback) {
+    console.log("Sending data to server:", { username, password });
+
     $.ajax({
       type: "POST",
       dataType: "xml",
@@ -27,9 +35,10 @@ class servicesHttp {
   }
 
   /**
-   * Logs out the current user.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Sends a logout request to the server.
+   *
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   disconnect(successCallback, errorCallback) {
     $.ajax({
@@ -43,9 +52,10 @@ class servicesHttp {
   }
 
   /**
-   * Retrieves all matches.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Fetches a list of matches from the server.
+   *
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   getMatchs(successCallback, errorCallback) {
     $.ajax({
@@ -59,9 +69,10 @@ class servicesHttp {
   }
 
   /**
-   * Retrieves all players.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Fetches a list of players from the server.
+   *
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   getPlayers(successCallback, errorCallback) {
     $.ajax({
@@ -75,13 +86,16 @@ class servicesHttp {
   }
 
   /**
-   * Retrieves reception statistics for a player in a match.
-   * @param {number} matchPk - Match ID.
-   * @param {number} playerPk - Player ID.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Fetches reception data for a specific match and player from the server.
+   *
+   * @param {string} matchPk - The primary key of the match.
+   * @param {string} playerPk - The primary key of the player.
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   getReces(matchPk, playerPk, successCallback, errorCallback) {
+    console.log("Sending getReces request with:", { matchPk, playerPk });
+
     $.ajax({
       type: "GET",
       dataType: "xml",
@@ -97,13 +111,16 @@ class servicesHttp {
   }
 
   /**
-   * Retrieves attack statistics for a player in a match.
-   * @param {number} matchPk - Match ID.
-   * @param {number} playerPk - Player ID.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Fetches attack data for a specific match and player from the server.
+   *
+   * @param {string} matchPk - The primary key of the match.
+   * @param {string} playerPk - The primary key of the player.
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   getAngriffs(matchPk, playerPk, successCallback, errorCallback) {
+    console.log("Sending getAngriffs request with:", { matchPk, playerPk });
+
     $.ajax({
       type: "GET",
       dataType: "xml",
@@ -119,34 +136,42 @@ class servicesHttp {
   }
 
   /**
-   * Updates an Angriff (attack) record.
-   * @param {Object} data - Angriff data object.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Sends an update request for attack data to the server.
+   *
+   * @param {Object} data - The data object containing attack details.
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   updateAngriffs(data, successCallback, errorCallback) {
     $.ajax({
       type: "PUT",
       dataType: "xml",
       url: this.BASE_URL,
-      data: data, // Sending data directly
+      data: {
+        action: "updateAngriff",
+      },
+      data: data,
       success: successCallback,
       error: errorCallback,
     });
   }
 
   /**
-   * Updates a Rece (reception) record.
-   * @param {Object} data - Rece data object.
-   * @param {function} successCallback - Function to call on success.
-   * @param {function} errorCallback - Function to call on error.
+   * Sends an update request for reception data to the server.
+   *
+   * @param {Object} data - The data object containing reception details.
+   * @param {Function} successCallback - The callback function executed on success.
+   * @param {Function} errorCallback - The callback function executed on error.
    */
   updateReces(data, successCallback, errorCallback) {
     $.ajax({
       type: "PUT",
       dataType: "xml",
       url: this.BASE_URL,
-      data: data, // Sending data directly
+      data: {
+        action: "updateReces",
+      },
+      data: data,
       success: successCallback,
       error: errorCallback,
     });
