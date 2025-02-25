@@ -1,12 +1,20 @@
 /**
- * Class indexCtgrl
+ * Class IndexCtrl
  *
- * handles everything between the views and the Server(servicehttps.js)
- * the Client's main Controller
+ * This class acts as the main controller for the client-side of the application.
+ * It manages interactions between the views and the server, handling communication
+ * via HTTP requests through the `servicesHttp` service.
  */
 class IndexCtrl {
+  /**
+   * Constructor for IndexCtrl
+   *
+   * Initializes the HTTP service and binds methods to ensure proper `this` context.
+   */
   constructor() {
-    this.http = new servicesHttp();
+    this.http = new servicesHttp(); // Instance of servicesHttp for server communication
+
+    // Binding methods to ensure the correct context
     this.connectSuccess = this.connectSuccess.bind(this);
     this.disconnectSuccess = this.disconnectSuccess.bind(this);
 
@@ -36,13 +44,20 @@ class IndexCtrl {
     this.updateRecedata = this.updateRecedata.bind(this);
   }
 
+  /**
+   * Handles successful user connection
+   *
+   * @param {Object} data - The response data received from the server
+   */
   connectSuccess(data) {
     console.log("connectSuccess called");
-    if ($(data).find("success").text() === "true") {
-      // Store user data in localStorage
-      const username = $(data).find("username").text();
-      localStorage.setItem("username", username);
 
+    // Check if login was successful
+    if ($(data).find("success").text() === "true") {
+      const username = $(data).find("username").text();
+      localStorage.setItem("username", username); // Store username in local storage
+
+      // Display success notification
       Toastify({
         text: "Login successful",
         duration: 3000,
@@ -51,10 +66,12 @@ class IndexCtrl {
         backgroundColor: "#33cc33",
       }).showToast();
 
+      // Redirect to the home page
       window.location.href = "../html/home.html";
 
       console.log($(data));
     } else {
+      // Display failure notification
       Toastify({
         text: "Login failed. Incorrect username or password.",
         duration: 3000,
@@ -65,8 +82,13 @@ class IndexCtrl {
     }
   }
 
+  /**
+   * Handles user disconnection
+   */
   disconnectSuccess() {
-    localStorage.removeItem("username");
+    localStorage.removeItem("username"); // Remove username from local storage
+
+    // Display disconnection notification
     Toastify({
       text: "User disconnected",
       duration: 3000,
@@ -74,11 +96,20 @@ class IndexCtrl {
       position: "right",
       backgroundColor: "#33cc33",
     }).showToast();
+
+    // Redirect to login page
     window.location.href = "../html/login.html";
   }
 
+  /**
+   * Handles generic error responses
+   *
+   * @param {Object} error - The error message or object
+   */
   callbackError(error) {
     console.error("Error:", error);
+
+    // Display error notification
     Toastify({
       text: "Error: " + error,
       duration: 3000,
@@ -88,6 +119,11 @@ class IndexCtrl {
     }).showToast();
   }
 
+  /**
+   * Handles the successful retrieval of player data
+   *
+   * @param {Object} data - XML data containing player information
+   */
   chargerPlayersSuccess(data) {
     var txtplayer = "";
 
@@ -96,6 +132,7 @@ class IndexCtrl {
       .each(function () {
         var players = new Players();
 
+        // Extracting and setting player attributes from XML
         players.setPk($(this).find("pk_player").text());
         players.setSpielerNr($(this).find("spielerNr").text());
         players.setName($(this).find("name").text());
@@ -112,6 +149,7 @@ class IndexCtrl {
         players.setFk_login($(this).find("fk_login").text());
         players.setSpielerKarte($(this).find("spielerKarte").text());
 
+        // Generating HTML table row for player data
         txtplayer +=
           "<tr><td>" +
           players.getSpielerNr() +
@@ -139,7 +177,7 @@ class IndexCtrl {
           players.getJS() +
           "</td></tr>";
 
-        // Generate the HTML for each player card dynamically
+        // Creating player cards dynamically
         var playerImage =
           "../images/Team_individual_image/" +
           players.getSpielerKarte() +
@@ -157,9 +195,12 @@ class IndexCtrl {
             </button>
         </div>
     `;
+
+        // Append player card to the grid
         $(".players-grid").append(playerCardHTML);
       });
 
+    // Inject generated HTML into the players table
     var tableContentPlayers = document.getElementById("tableContentPlayers");
     if (tableContentPlayers) {
       tableContentPlayers.innerHTML = txtplayer;
@@ -167,10 +208,21 @@ class IndexCtrl {
     }
   }
 
+  /**
+   * Handles errors while retrieving player data
+   *
+   * @param {Object} error - Error message or object
+   */
   chargerPlayersError(error) {
     alert("Erreur lors de la lecture des players: " + error);
   }
 
+  /**
+   * Handles the successful retrieval of match data.
+   * Populates the matches table with the retrieved data.
+   *
+   * @param {XMLDocument} data - The XML data containing match information.
+   */
   chargerMatchsSuccess(data) {
     var tableContentMatches = document.getElementById("tableContentMatches");
 
@@ -187,6 +239,7 @@ class IndexCtrl {
         matchs.setFK_Enemy_Team($(this).find("fk_enemy_team").text());
         matchs.setHalle($(this).find("halle").text());
 
+        // Construct table row with match details
         txtmatches +=
           "<tr><td>" +
           matchs.getWochentag() +
@@ -206,10 +259,21 @@ class IndexCtrl {
     }
   }
 
+  /**
+   * Handles errors occurring while retrieving match data.
+   *
+   * @param {string} error - The error message.
+   */
   chargerMatchsError(error) {
     alert("Erreur lors de la lecture des matchs: " + error);
   }
 
+  /**
+   * Handles the successful retrieval of match data for selection.
+   * Populates the match selection dropdown and updates related fields.
+   *
+   * @param {XMLDocument} data - The XML data containing match information.
+   */
   chargerMatchsForSelectionSuccess(data) {
     var cmbAfterSelectionMatches = document.getElementById(
       "cmbAfterSelectionMatches"
@@ -236,10 +300,12 @@ class IndexCtrl {
         matchs.setDatum($(this).find("datum").text());
         matchs.setFK_Enemy_Team($(this).find("fk_enemy_team").text());
 
+        // Create new option for match selection
         option = new Option(matchs.getSpiel(), JSON.stringify(matchs));
         cmbAfterSelectionMatches.appendChild(option);
       });
 
+    // Event listener to update fields when a match is selected
     cmbAfterSelectionMatches.addEventListener("change", function () {
       let selectedMatch = JSON.parse(this.value);
       console.log("Selected Match:", selectedMatch); // Debugging
@@ -258,10 +324,21 @@ class IndexCtrl {
     });
   }
 
+  /**
+   * Handles errors occurring while retrieving match data for selection.
+   *
+   * @param {string} error - The error message.
+   */
   chargerMatchsForSelectionError(error) {
     alert("Erreur lors de la lecture des matchs: " + error);
   }
 
+  /**
+   * Handles the successful retrieval of reception statistics.
+   * Populates the table with reception data for each match and player.
+   *
+   * @param {XMLDocument} data - The XML data containing reception statistics.
+   */
   chargerRecesSuccess(data) {
     var tableContentRecePerMatchPerPlayer =
       document.getElementById("tableContentRece");
@@ -285,31 +362,40 @@ class IndexCtrl {
 
         localStorage.setItem("selectedPkRece", reces.getPk());
 
+        // Construct table row with reception statistics
         txtRecesPerMatchAndPlayer += `
-              <tr>
-                <td contenteditable="true" id="recePerfekt">${reces.getPerfekt()}</td>
-                <td contenteditable="true" id="receSuperInZone">${reces.getSuperInZone()}</td>
-                <td contenteditable="true" id="receNeutral">${reces.getNeutral()}</td>
-                <td contenteditable="true" id="receSchlecht">${reces.getSchlecht()}</td>
-                <td contenteditable="true" id="receDirektFehler">${reces.getDirektFehler()}</td>
-                <td contenteditable="true" id="receFalscheEntscheidung">${reces.getFalscheEntscheidung()}</td>
-              </tr>`;
+            <tr>
+              <td contenteditable="true" id="recePerfekt">${reces.getPerfekt()}</td>
+              <td contenteditable="true" id="receSuperInZone">${reces.getSuperInZone()}</td>
+              <td contenteditable="true" id="receNeutral">${reces.getNeutral()}</td>
+              <td contenteditable="true" id="receSchlecht">${reces.getSchlecht()}</td>
+              <td contenteditable="true" id="receDirektFehler">${reces.getDirektFehler()}</td>
+              <td contenteditable="true" id="receFalscheEntscheidung">${reces.getFalscheEntscheidung()}</td>
+            </tr>`;
       });
 
     if (tableContentRecePerMatchPerPlayer) {
       tableContentRecePerMatchPerPlayer.innerHTML = txtRecesPerMatchAndPlayer;
-      console.log(
-        "tableContentRecePerMatchPerPlayer found: " + txtRecesPerMatchAndPlayer
-      );
     } else {
       console.log("tableContentRecePerMatchPerPlayer not found");
     }
   }
 
+  /**
+   * Handles errors occurring while retrieving reception statistics.
+   *
+   * @param {string} error - The error message.
+   */
   chargerRecesError(error) {
     alert("Erreur lors de la lecture des reces: " + error);
   }
 
+  /**
+   * Handles the successful retrieval of attack statistics.
+   * Populates the table with attack data for each match and player.
+   *
+   * @param {XMLDocument} data - The XML data containing attack statistics.
+   */
   chargerAngriffsSuccess(data) {
     var tableContentAngriffPerMatchPerPlayer = document.getElementById(
       "tableContentAngriff"
@@ -334,35 +420,39 @@ class IndexCtrl {
 
         localStorage.setItem("selectedPkAngriff", angriffs.getPk());
 
+        // Construct table row with attack statistics
         txtAngriffsPerMatchAndPlayer += `
-              <tr>
-                <td contenteditable="true" id="angriffBalleErhalten">${angriffs.getBalleErhalten()}</td>
-                <td contenteditable="true" id="angriffPunkte">${angriffs.getPunkte()}</td>
-                <td contenteditable="true" id="angriffDruckvoll">${angriffs.getDruckvoll()}</td>
-                <td contenteditable="true" id="angriffZuEasy">${angriffs.getZuEasy()}</td>
-                <td contenteditable="true" id="angriffFehler">${angriffs.getFehler()}</td>
-                <td contenteditable="true" id="angriffBlockPunkt">${angriffs.getBlockPunkt()}</td>
-                <td contenteditable="true" id="angriffBlock">${angriffs.getBlock()}</td>
-                <td contenteditable="true" id="angriffAss">${angriffs.getAss()}</td>
-              </tr>`;
+            <tr>
+              <td contenteditable="true" id="angriffBalleErhalten">${angriffs.getBalleErhalten()}</td>
+              <td contenteditable="true" id="angriffPunkte">${angriffs.getPunkte()}</td>
+              <td contenteditable="true" id="angriffDruckvoll">${angriffs.getDruckvoll()}</td>
+              <td contenteditable="true" id="angriffZuEasy">${angriffs.getZuEasy()}</td>
+              <td contenteditable="true" id="angriffFehler">${angriffs.getFehler()}</td>
+              <td contenteditable="true" id="angriffBlockPunkt">${angriffs.getBlockPunkt()}</td>
+              <td contenteditable="true" id="angriffBlock">${angriffs.getBlock()}</td>
+              <td contenteditable="true" id="angriffAss">${angriffs.getAss()}</td>
+            </tr>`;
       });
 
     if (tableContentAngriffPerMatchPerPlayer) {
       tableContentAngriffPerMatchPerPlayer.innerHTML =
         txtAngriffsPerMatchAndPlayer;
-      console.log(
-        "tableContentAngriffPerMatchPerPlayer found: " +
-          txtAngriffsPerMatchAndPlayer
-      );
-    } else {
-      console.log("tableContentAngriffPerMatchPerPlayer not found");
     }
   }
 
+  /**
+   * Handles errors occurring while retrieving attack statistics.
+   *
+   * @param {string} error - The error message.
+   */
   chargerAngriffsError(error) {
     alert("Erreur lors de la lecture des angriff: " + error);
   }
 
+  /**
+   * Gathers and returns Angriff (attack) statistics data from the editable table cells.
+   * @returns {Object} An object containing the Angriff statistics for the selected player and match.
+   */
   updateAngriffdata() {
     let data = "";
     let pk_angriff = localStorage.getItem("selectedPkAngriff");
@@ -398,13 +488,26 @@ class IndexCtrl {
     return data;
   }
 
+  /**
+   * Displays a success message when the Angriff table is updated.
+   * @param {string} res - Response message from the server.
+   */
   updateAngriffSuccess(res) {
-    alert("the angriff Table has been updated! " + res);
-  }
-  updateAngriffError(error) {
-    alert("the angriff Table failed to updated :(" + error);
+    alert("The Angriff table has been updated! " + res);
   }
 
+  /**
+   * Displays an error message if updating the Angriff table fails.
+   * @param {string} error - Error message.
+   */
+  updateAngriffError(error) {
+    alert("The Angriff table failed to update :( " + error);
+  }
+
+  /**
+   * Gathers and returns Rece (reception) statistics data from the editable table cells.
+   * @returns {Object} An object containing the Rece statistics for the selected player and match.
+   */
   updateRecedata() {
     let data = "";
     let pk_rece = localStorage.getItem("selectedPkRece");
@@ -436,20 +539,31 @@ class IndexCtrl {
     return data;
   }
 
+  /**
+   * Displays a success message when the Rece table is updated.
+   * @param {string} res - Response message from the server.
+   */
   updateReceSuccess(res) {
-    alert("the angriff Table has been updated!" + res);
+    alert("The Rece table has been updated! " + res);
   }
+
+  /**
+   * Displays an error message if updating the Rece table fails.
+   * @param {string} error - Error message.
+   */
   updateReceError(error) {
-    alert("the rece Table failed to updated :( " + error);
+    alert("The Rece table failed to update :( " + error);
   }
 }
 
 $(document).ready(function () {
+  // Initialize the Index Controller
   window.ctrl = new IndexCtrl();
   var cmbmatchs = $("#cmbAfterSelectionMatches");
   var matchPk = "";
   var playerPk = "";
 
+  // Load matches and players data
   window.ctrl.http.getMatchs(
     window.ctrl.chargerMatchsSuccess,
     window.ctrl.chargerMatchsError
@@ -463,6 +577,10 @@ $(document).ready(function () {
     window.ctrl.chargerMatchsForSelectionError
   );
 
+  /**
+   * Handles the click event for saving statistics.
+   * Updates Angriff and Rece statistics by sending data to the server.
+   */
   $(document).on("click", "#saveStats", function (event) {
     event.preventDefault();
     window.ctrl.http.updateAngriffs(
@@ -477,6 +595,10 @@ $(document).ready(function () {
     );
   });
 
+  /**
+   * Handles the match selection change event.
+   * Fetches Rece and Angriff statistics for the selected match and player.
+   */
   cmbmatchs.change(function (event) {
     matchPk = JSON.parse(this.options[this.selectedIndex].value).pk;
     playerPk = localStorage.getItem("selectedPlayerFK");
@@ -495,6 +617,10 @@ $(document).ready(function () {
     );
   });
 
+  /**
+   * Handles the login form submission.
+   * Authenticates the user with the provided username and password.
+   */
   $("#loginForm").on("submit", function (event) {
     event.preventDefault();
     var username = $("#username").val();
@@ -509,6 +635,10 @@ $(document).ready(function () {
     );
   });
 
+  /**
+   * Handles player selection.
+   * Saves the selected player's image and ID to localStorage and redirects to player stats page.
+   */
   $(document).on("click", ".btnChosePlayer", function (event) {
     event.preventDefault();
 
@@ -521,7 +651,7 @@ $(document).ready(function () {
     window.location.href = "../html/playersStatsafterSelection.html";
   });
 
-  // Retrieve playerPK correctly when needed
+  // Retrieve and log the stored player ID
   $(document).ready(function () {
     var storedPlayerPk = localStorage.getItem("selectedPlayerFK");
     if (storedPlayerPk) {
@@ -529,6 +659,7 @@ $(document).ready(function () {
     }
   });
 
+  // Load the selected player’s image if available
   if ($(".chosen-player-card-image").length > 0) {
     var storedImage = localStorage.getItem("selectedPlayerImage");
     if (storedImage) {
