@@ -35,13 +35,13 @@ class IndexCtrl {
     this.chargerAngriffsSuccess = this.chargerAngriffsSuccess.bind(this);
     this.chargerAngriffsError = this.chargerAngriffsError.bind(this);
 
+    this.updateAngriffdata = this.updateAngriffdata.bind(this);
     this.updateAngriffSuccess = this.updateAngriffSuccess.bind(this);
     this.updateAngriffError = this.updateAngriffError.bind(this);
-    this.updateAngriffdata = this.updateAngriffdata.bind(this);
 
+    this.updateRecedata = this.updateRecedata.bind(this);
     this.updateReceSuccess = this.updateReceSuccess.bind(this);
     this.updateReceError = this.updateReceError.bind(this);
-    this.updateRecedata = this.updateRecedata.bind(this);
   }
 
   /**
@@ -499,10 +499,16 @@ class IndexCtrl {
     let message = $(res).find("message").text().trim();
 
     if (success) {
-      return;
+      console.log("Update successful");
     } else {
       console.error("Update failed: " + message); // Log the error
-      alert("Update failed: " + message);
+
+      // Check if the error is related to an invalid number
+      if (message.includes("Failed to update Rece")) {
+        alert("Please add a valid number");
+      } else {
+        alert("Update failed: " + message);
+      }
     }
   }
 
@@ -559,9 +565,16 @@ class IndexCtrl {
     let message = $(res).find("message").text().trim();
 
     if (success) {
-      return;
+      console.log("Update successful");
     } else {
-      alert("Update failed: " + message);
+      console.error("Update failed: " + message); // Log the error
+
+      // Check if the error is related to an invalid number
+      if (message.includes("Failed to update Angriff")) {
+        alert("Please add a valid number");
+      } else {
+        alert("Update failed: " + message);
+      }
     }
   }
 

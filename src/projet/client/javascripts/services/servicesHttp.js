@@ -6,7 +6,8 @@ class servicesHttp {
    * Creates an instance of servicesHttp and sets the base server URL.
    */
   constructor() {
-    this.BASE_URL = "http://localhost:8080/projet/server/server.php";
+    this.BASE_URL =
+      "https://alsawafz.emf-informatique.ch/module-151-ALSAWAFZ/src/projet/server/server.php";
   }
 
   /**
@@ -147,10 +148,7 @@ class servicesHttp {
       type: "PUT",
       dataType: "xml",
       url: this.BASE_URL,
-      data: {
-        action: "updateAngriff",
-      },
-      data: data,
+      data: $.param(data),
       success: successCallback,
       error: errorCallback,
     });
@@ -168,10 +166,7 @@ class servicesHttp {
       type: "PUT",
       dataType: "xml",
       url: this.BASE_URL,
-      data: {
-        action: "updateReces",
-      },
-      data: data,
+      data: $.param(data),
       success: successCallback,
       error: errorCallback,
     });

@@ -10,10 +10,10 @@ require_once 'workers/ReceBDManager.php'; // Handles reception statistics in the
 require_once 'workers/AngriffBDManager.php'; // Handles attack (Angriff) statistics in the database
 
 // Including business logic files
-require_once 'loginManager.php'; // Manages user authentication logic
-require_once 'matchManager.php'; // Manages match logic
-require_once 'playerManager.php'; // Manages player logic
-require_once 'receManager.php'; // Manages reception statistics logic
+require_once 'LoginManager.php'; // Manages user authentication logic
+require_once 'MatchManager.php'; // Manages match logic
+require_once 'PlayerManager.php'; // Manages player logic
+require_once 'ReceManager.php'; // Manages reception statistics logic
 require_once 'AngriffManager.php'; // Manages attack statistics logic
 
 // Including data models
@@ -208,8 +208,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             break;
         }
 
-        $putData = file_get_contents("php://input");
-        $data = json_decode($putData, true) ?? parse_str($putData, $data);
+        parse_str(file_get_contents("php://input"), $data);
 
         if (empty($data)) {
             sendXMLResponse(false, 'No data received for update');
@@ -218,17 +217,41 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
         // Update Angriff entity
         if (isset($data['pk_angriff'])) {
-            $result = $angriffManager->updateAngriffs(new Angriff(...$data));
+            $result = $angriffManager->updateAngriffs(new Angriff(
+              $data['pk_angriff'] ?? '',
+              $data['matchPk'] ?? '',
+              $data['playerPk'] ?? '',
+              $data['balleErhalten'] ?? '',
+              $data['punkte'] ?? '',
+              $data['druckvoll'] ?? '',
+              $data['zuEasy'] ?? '',
+              $data['fehler'] ?? '',
+              $data['blockPunkt'] ?? '',
+              $data['block'] ?? '',
+              $data['ass'] ?? ''
+            ));
+
             sendXMLResponse($result, $result ? "Angriff updated successfully" : "Failed to update Angriff");
             break;
         }
 
         // Update Rece entity
         if (isset($data['pk_rece'])) {
-            $result = $receManager->updateReces(new Rece(...$data));
+            $result = $receManager->updateReces(new Rece(
+              $data['pk_rece'] ?? '',
+              $data['playerPk'] ?? '',
+              $data['matchPk'] ?? '',
+              $data['perfekt'] ?? '',
+              $data['superInZone'] ?? '',
+              $data['neutral'] ?? '',
+              $data['schlecht'] ?? '',
+              $data['direktFehler'] ?? '',
+              $data['falscheEntscheidung'] ?? ''
+            ));
             sendXMLResponse($result, $result ? "Rece updated successfully" : "Failed to update Rece");
             break;
         }
+
 
         sendXMLResponse(false, "Invalid PUT data: Missing required parameters");
         break;
