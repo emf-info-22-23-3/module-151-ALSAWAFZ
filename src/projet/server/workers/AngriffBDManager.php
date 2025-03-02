@@ -101,6 +101,43 @@ class AngriffBDManager
         return $query;
     }
 
+
+    public function addAngriffs($data)
+    {
+        $connection = DBConnection::getInstance();
+        $connection->startTransaction();
+
+        $query = $connection->executeQuery("
+            INSERT INTO DB_finalTVMurten.t_Angriff 
+            (FK_Match_Angriff, FK_Player_Angriff, BälleErhalten, Punkte, Druckvoll, `Zu easy`, Fehler, `Block Punkt`, Block, Ass) 
+            VALUES (:fk_match_angriff, :fk_player_angriff, :balleerhalten, :punkte, :druckvoll, :zueasy, :fehler, :blockpunkt, :block, :ass)
+        ", array(
+            'fk_match_angriff' => $data->getFKMatchAngriff(),
+            'fk_player_angriff' => $data->getFKPlayerAngriff(),
+            'balleerhalten' => $data->getBalleErhalten(),
+            'punkte' => $data->getPunkte(),
+            'druckvoll' => $data->getDruckvoll(),
+            'zueasy' => $data->getZuEasy(),
+            'fehler' => $data->getFehler(),
+            'blockpunkt' => $data->getBlockPunkt(),
+            'block' => $data->getBlock(),
+            'ass' => $data->getAss()
+        ));
+
+        if ($query === false) {
+            $connection->rollbackTransaction();
+            error_log("Failed to insert Angriff for Match ID: " . $data->getFKMatchAngriff() . ", Player ID: " . $data->getFKPlayerAngriff());
+            return false;
+        }
+
+        $connection->commitTransaction();
+        return $query;
+    }
+
+
+
+
+
     /**
      * Returns Angriff records as an XML string.
      *

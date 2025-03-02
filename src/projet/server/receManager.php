@@ -34,5 +34,10 @@ class ReceManager
     {
         return $this->dbReceManager->updateReces($data);
     }
+
+    public function addReces($data)
+    {
+        return $this->dbReceManager->addReces($data);
+    }
 }
 ?>

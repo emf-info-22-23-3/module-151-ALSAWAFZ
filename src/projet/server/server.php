@@ -135,9 +135,71 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 sendXMLResponse(true, 'Logout successful');
                 break;
 
-            default:
-                sendXMLResponse(false, 'Invalid action');
+            case 'addRece':
+                if (!isLoggedIn()) {
+                    sendXMLResponse(false, 'Please log in first');
+                    break;
+                }
+                
+                if (!isAdmin()) {
+                    sendXMLResponse(false, 'Administrator access required');
+                    break;
+                }
+                
+                $playerPk = $_POST['playerPk'] ?? '';
+                $matchPk = $_POST['matchPk'] ?? '';
+                $perfekt = $_POST['perfekt'] ?? '';
+                $superInZone = $_POST['superInZone'] ?? '';
+                $neutral = $_POST['neutral'] ?? '';
+                $schlecht = $_POST['schlecht'] ?? '';
+                $direktFehler = $_POST['direktFehler'] ?? '';
+                $falscheEntscheidung = $_POST['falscheEntscheidung'] ?? '';
+                
+                if ($playerPk == '' || $matchPk == '') {
+                    sendXMLResponse(false, 'Player ID and Match ID are required');
+                    break;
+                }
+                
+                $rece = new Rece(null, $playerPk, $matchPk, $perfekt, $superInZone, $neutral, $schlecht, $direktFehler, $falscheEntscheidung);
+                $result = $receManager->addReces($rece);
+                sendXMLResponse($result, $result ? 'Rece added successfully' : 'Failed to add Rece');
                 break;
+    
+            case 'addAngriff':
+                if (!isLoggedIn()) {
+                    sendXMLResponse(false, 'Please log in first');
+                    break;
+                }
+                
+                if (!isAdmin()) {
+                    sendXMLResponse(false, 'Administrator access required');
+                    break;
+                }
+                
+                $matchPk = $_POST['matchPk'] ?? '';
+                $playerPk = $_POST['playerPk'] ?? '';
+                $balleErhalten = $_POST['balleErhalten'] ?? '';
+                $punkte = $_POST['punkte'] ?? '';
+                $druckvoll = $_POST['druckvoll'] ?? '';
+                $zuEasy = $_POST['zuEasy'] ?? '';
+                $fehler = $_POST['fehler'] ?? '';
+                $blockPunkt = $_POST['blockPunkt'] ?? '';
+                $block = $_POST['block'] ?? '';
+                $ass = $_POST['ass'] ?? '';
+                
+                if ($playerPk == '' || $matchPk == '') {
+                    sendXMLResponse(false, 'Player ID and Match ID are required');
+                    break;
+                }
+                
+                $angriff = new Angriff(null, $matchPk, $playerPk, $balleErhalten, $punkte, $druckvoll, $zuEasy, $fehler, $blockPunkt, $block, $ass);
+                $result = $angriffManager->addAngriffs($angriff);
+                sendXMLResponse($result, $result ? 'Angriff added successfully' : 'Failed to add Angriff');
+                break;
+
+            default:
+            sendXMLResponse(false, 'Invalid action');
+            break;
         }
         break;
 

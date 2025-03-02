@@ -1,105 +1,125 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV-Murten 1.Liga / D1 - Login</title>
-    <link rel="stylesheet" href="../stylesheets/main.css">
-    <script type="text/javascript" src="../javascripts/helpers/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../javascripts/services/servicesHttp.js"></script>
-    <script type="text/javascript" src="../javascripts/controllers/indexCtrl.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Matchs.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Players.js"></script>
+    <link rel="stylesheet" href="../stylesheets/main.css" />
+    <script
+      type="text/javascript"
+      src="../javascripts/helpers/jquery-1.10.2.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/services/servicesHttp.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/controllers/indexCtrl.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Matchs.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Players.js"
+    ></script>
     <script type="text/javascript" src="../javascripts/beans/Reces.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Angriffs.js"></script>
-</head>
-<body>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Angriffs.js"
+    ></script>
+  </head>
+  <body>
     <div class="wrapper">
-        <header>
-            <div class="logo-container">
-                <img src="../images/TVMurten_Black.png" alt="Logo" class="logo">
-            </div>
-            <h1>TV-Murten 1.Liga / D1</h1>
-            <button class="login-btn">
-                <img src="../images/login_icon.png" alt="Login" class="nav-icon">
-                <a href="login.html">Aus loggen</a>
-            </button> 
-        </header>
-        
-        <nav>
-            <div class="nav-item">
-                <img src="../images/home_icon.png" alt="?" class="nav-icon">
-                <a href="home.html">Home</a>
-            </div>
-            <div class="nav-item">
-                <img src="../images/match_icon.png" alt="?" class="nav-icon">
-                <a href="matches.html">Matche Plan</a>
-            </div>
-            <div class="nav-item">
-                <img src="../images/team_icon.png" alt="?" class="nav-icon">
-                <a href="team.html">Team Info</a>
-            </div>
-            <div class="nav-item">
-                <img src="../images/statistics_icon.png" alt="?" class="nav-icon">
-                <a href="playersStats.html">Spielerstatistik</a>
-            </div>
-        </nav>
-
-
-        <div class="centered-container">
-            <div class="content-box">
-
-                
-                <div class="match-selection">
-                    <label for="match-selection">Match: </label>
-                    <select id="cmbAfterSelectionMatches" name="match-selection">
-   
-                    </select>
-                </div>
-
-
-                <h2>Rece</h2>
-                <section class="schedule-section-team">
-                    <table class="schedule-table-team">
-                        <thead>
-                            <tr>
-                                <th>Spieler/Punkt</th>
-                                <th>Perfekt</th>
-                                <th>Super(Zone)</th>
-                                <th>Neutral</th>
-                                <th>Schlecht</th>
-                                <th>Direkt Fehler</th>
-                                <th>Falsche Entscheidung</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableContentReceModify"></tbody>
-                    </table>
-                </section>
-
-
-                <h2>Angriff</h2>
-                <section class="schedule-section-team">
-                    <table class="schedule-table-team">
-                        <thead>
-                            <tr>
-                                <th>Spieler/Punkt</th>
-                                <th>Bälle Erhalten</th>
-                                <th>Punkte</th>
-                                <th>Druckvoll</th>
-                                <th>Zu Easy</th>
-                                <th>Fehler</th>
-                                <th>Block Punkt</th>
-                                <th>Block</th>
-                                <th>Ass</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableContentAngriffModify"></tbody>
-                    </table>
-                </section>
-                <button id="modifierstats">Speichern</button>
-
-            </div>
+      <header>
+        <div class="logo-container">
+          <img src="../images/TVMurten_Black.png" alt="Logo" class="logo" />
         </div>
+        <h1>TV-Murten 1.Liga / D1</h1>
+        <button class="login-btn">
+          <img src="../images/login_icon.png" alt="Login" class="nav-icon" />
+          <a href="login.html">Aus loggen</a>
+        </button>
+      </header>
+
+      <nav>
+        <div class="nav-item">
+          <img src="../images/home_icon.png" alt="?" class="nav-icon" />
+          <a href="home.html">Home</a>
+        </div>
+        <div class="nav-item">
+          <img src="../images/match_icon.png" alt="?" class="nav-icon" />
+          <a href="matches.html">Matche Plan</a>
+        </div>
+        <div class="nav-item">
+          <img src="../images/team_icon.png" alt="?" class="nav-icon" />
+          <a href="team.html">Team Info</a>
+        </div>
+        <div class="nav-item">
+          <img src="../images/statistics_icon.png" alt="?" class="nav-icon" />
+          <a href="playersStats.html">Spielerstatistik</a>
+        </div>
+      </nav>
+
+      <div class="centered-container">
+        <div class="content-box">
+          <div class="match-selection">
+            <label for="match-selection">Match: </label>
+            <select
+              id="cmbAfterSelectionMatches"
+              name="match-selection"
+            ></select>
+            <input type="date" id="dateMatchAfterSelection" readonly />
+            <input
+              type="text"
+              id="teamMatchAfterSelection"
+              placeholder="GegnerTeam"
+              readonly
+            />
+          </div>
+
+          <h2>Rece</h2>
+          <section class="schedule-section-team">
+            <table class="schedule-table-team">
+              <thead>
+                <tr>
+                  <th>Spieler/Punkt</th>
+                  <th>Perfekt</th>
+                  <th>Super(Zone)</th>
+                  <th>Neutral</th>
+                  <th>Schlecht</th>
+                  <th>Direkt Fehler</th>
+                  <th>Falsche Entscheidung</th>
+                </tr>
+              </thead>
+              <tbody id="tableContentReceAdd"></tbody>
+            </table>
+          </section>
+
+          <h2>Angriff</h2>
+          <section class="schedule-section-team">
+            <table class="schedule-table-team">
+              <thead>
+                <tr>
+                  <th>Spieler/Punkt</th>
+                  <th>Bälle Erhalten</th>
+                  <th>Punkte</th>
+                  <th>Druckvoll</th>
+                  <th>Zu Easy</th>
+                  <th>Fehler</th>
+                  <th>Block Punkt</th>
+                  <th>Block</th>
+                  <th>Ass</th>
+                </tr>
+              </thead>
+              <tbody id="tableContentAngriffAdd"></tbody>
+            </table>
+          </section>
+          <button id="modifierstats">Speichern</button>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

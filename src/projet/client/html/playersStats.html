@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV-Murten 1.Liga / D1 - Login</title>
-    <link rel="stylesheet" href="../stylesheets/main.css">
-    <script type="text/javascript" src="../javascripts/helpers/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="../javascripts/services/servicesHttp.js"></script>
-    <script type="text/javascript" src="../javascripts/controllers/indexCtrl.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Matchs.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Players.js"></script>
+    <link rel="stylesheet" href="../stylesheets/main.css" />
+    <script
+      type="text/javascript"
+      src="../javascripts/helpers/jquery-1.10.2.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/services/servicesHttp.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/controllers/indexCtrl.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Matchs.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Players.js"
+    ></script>
     <script type="text/javascript" src="../javascripts/beans/Reces.js"></script>
-    <script type="text/javascript" src="../javascripts/beans/Angriffs.js"></script>
-</head>
-<body>
+    <script
+      type="text/javascript"
+      src="../javascripts/beans/Angriffs.js"
+    ></script>
+  </head>
+  <body>
     <div class="wrapper">
-        <header>
-            <div class="logo-container">
-                <img src="../images/TVMurten_Black.png" alt="Logo" class="logo">
-            </div>
-            <h1>TV-Murten 1.Liga / D1</h1>
-            <button class="login-btn">
-                <img src="../images/login_icon.png" alt="Login" class="nav-icon">
-                <a href="login.html">Aus loggen</a>
-            </button> 
-        </header>
-        
-        <nav>
-            <div class="nav-item">
-                <img src="../images/home_icon.png" alt="?" class="nav-icon">
-                <a href="home.html">Home</a>
-            </div>
-            <div class="nav-item">
-                <img src="../images/match_icon.png" alt="?" class="nav-icon">
-                <a href="matches.html">Matche Plan</a>
-            </div>
-            <div class="nav-item">
-                <img src="../images/team_icon.png" alt="?" class="nav-icon">
-                <a href="team.html">Team Info</a>
-            </div>
-            <div class="nav-item">
-                <img src="../images/statistics_icon.png" alt="?" class="nav-icon">
-                <a href="playersStats.html">Spielerstatistik</a>
-            </div>
-        </nav>
-
-
-        <div class="centered-container">
-            <div class="content-box">
-
-                <div class="player-selection">
-                    <p >Bitte wählen Sie einen Spieler:</p>
-                    <hr>
-                   <!--  <button class="btn-selection"><a href="playersStatsToAddOrModify.html">Statistiks modifizieren / einfügen</a></button>  --> 
-                </div>
-
-                <div class="players-grid">
-                    <!-- Player cards will be dynamically added here -->
-                </div>
-
-
-
-            </div>
+      <header>
+        <div class="logo-container">
+          <img src="../images/TVMurten_Black.png" alt="Logo" class="logo" />
         </div>
-         
+        <h1>TV-Murten 1.Liga / D1</h1>
+        <button class="login-btn">
+          <img src="../images/login_icon.png" alt="Login" class="nav-icon" />
+          <a href="login.html">Aus loggen</a>
+        </button>
+      </header>
 
-        
+      <nav>
+        <div class="nav-item">
+          <img src="../images/home_icon.png" alt="?" class="nav-icon" />
+          <a href="home.html">Home</a>
+        </div>
+        <div class="nav-item">
+          <img src="../images/match_icon.png" alt="?" class="nav-icon" />
+          <a href="matches.html">Matche Plan</a>
+        </div>
+        <div class="nav-item">
+          <img src="../images/team_icon.png" alt="?" class="nav-icon" />
+          <a href="team.html">Team Info</a>
+        </div>
+        <div class="nav-item">
+          <img src="../images/statistics_icon.png" alt="?" class="nav-icon" />
+          <a href="playersStats.html">Spielerstatistik</a>
+        </div>
+      </nav>
+
+      <div class="centered-container">
+        <div class="content-box">
+          <div class="player-selection">
+            <p>Bitte wählen Sie einen Spieler:</p>
+            <hr />
+            <button class="btn-selection">
+              <a href="playersStatsToAddOrModify.html">Statistiks einfügen</a>
+            </button>
+          </div>
+
+          <div class="players-grid">
+            <!-- Player cards will be dynamically added here -->
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

@@ -47,7 +47,36 @@
         return $liste;
     }
 
-
+    public function addRece($data)
+    {
+        $connection = DBConnection::getInstance();
+        $connection->startTransaction();
+    
+        $query = $connection->executeQuery("
+            INSERT INTO DB_finalTVMurten.t_Rece 
+            (FK_Player_Rece, FK_Match_Rece, Perfekt, `Super(Zone)`, Neutral, Schlecht, DirektFehler, FalscheEntscheidung) 
+            VALUES (:fk_player_rece, :fk_match_rece, :perfekt, :superInZone, :neutral, :schlecht, :direktFehler, :falscheEntscheidung)
+        ", array(
+            'fk_player_rece' => $data->getFKPlayerRece(),
+            'fk_match_rece' => $data->getFKMatchRece(),
+            'perfekt' => $data->getPerfekt(),
+            'superInZone' => $data->getSuperZone(),
+            'neutral' => $data->getNeutral(),
+            'schlecht' => $data->getSchlecht(),
+            'direktFehler' => $data->getDirektFehler(),
+            'falscheEntscheidung' => $data->getFalscheEntscheidung()
+        ));
+    
+        if ($query === false) {
+            $connection->rollbackTransaction();
+            error_log("Failed to insert Rece for Match ID: " . $data->getFKMatchRece() . ", Player ID: " . $data->getFKPlayerRece());
+            return false;
+        }
+    
+        $connection->commitTransaction();
+        return $query;
+    }
+    
     /**
      * Updates reception (Rece) records in the database.
      *

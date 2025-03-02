@@ -39,6 +39,11 @@ class AngriffManager
     {
         return $this->dbAngriffManager->updateAngriffs($data);
     }
+
+    public function addAngriffs($data)
+    {
+        return $this->dbAngriffManager->addAngriffs($data);
+    }
 }
 
 ?>

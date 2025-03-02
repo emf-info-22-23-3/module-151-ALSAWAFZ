@@ -6,8 +6,7 @@ class servicesHttp {
    * Creates an instance of servicesHttp and sets the base server URL.
    */
   constructor() {
-    this.BASE_URL =
-      "https://alsawafz.emf-informatique.ch/module-151-ALSAWAFZ/src/projet/server/server.php";
+    this.BASE_URL = "../../server/server.php";
   }
 
   /**
@@ -164,6 +163,34 @@ class servicesHttp {
   updateReces(data, successCallback, errorCallback) {
     $.ajax({
       type: "PUT",
+      dataType: "xml",
+      url: this.BASE_URL,
+      data: $.param(data),
+      success: successCallback,
+      error: errorCallback,
+    });
+  }
+
+  /**
+   * Adds new reception data to the server.
+   */
+  addReces(data, successCallback, errorCallback) {
+    $.ajax({
+      type: "POST",
+      dataType: "xml",
+      url: this.BASE_URL,
+      data: $.param(data),
+      success: successCallback,
+      error: errorCallback,
+    });
+  }
+
+  /**
+   * Adds new attack data to the server.
+   */
+  addAngriffs(data, successCallback, errorCallback) {
+    $.ajax({
+      type: "POST",
       dataType: "xml",
       url: this.BASE_URL,
       data: $.param(data),

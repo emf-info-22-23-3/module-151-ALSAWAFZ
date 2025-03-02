@@ -29,6 +29,10 @@ class IndexCtrl {
     this.chargerMatchsForSelectionError =
       this.chargerMatchsForSelectionError.bind(this);
 
+    this.chargerPlayersToAddSuccess =
+      this.chargerPlayersToAddSuccess.bind(this);
+    this.chargerPlayersToAddError = this.chargerPlayersToAddError.bind(this);
+
     this.chargerRecesSuccess = this.chargerRecesSuccess.bind(this);
     this.chargerRecesError = this.chargerRecesError.bind(this);
 
@@ -42,6 +46,14 @@ class IndexCtrl {
     this.updateRecedata = this.updateRecedata.bind(this);
     this.updateReceSuccess = this.updateReceSuccess.bind(this);
     this.updateReceError = this.updateReceError.bind(this);
+
+    this.addReceData = this.addReceData.bind(this);
+    this.addReceSuccess = this.addReceSuccess.bind(this);
+    this.addReceError = this.addReceError.bind(this);
+
+    this.addAngriffData = this.addAngriffData.bind(this);
+    this.addAngriffSuccess = this.addAngriffSuccess.bind(this);
+    this.addAngriffError = this.addAngriffError.bind(this);
   }
 
   /**
@@ -586,6 +598,92 @@ class IndexCtrl {
     console.error("Request failed: ", error);
     alert("The Angriff table failed to update :( " + error);
   }
+
+  /**
+   * Collects Rece data from the table and sends it to the server.
+   */
+  addReceData() {
+    let data = "";
+    let pkMatch = JSON.parse($("#cmbAfterSelectionMatches").val()).pk;
+    var pkPlayer = localStorage.getItem("selectedPlayerFKForAdd");
+
+    let perfekt = document.getElementById("recePerfektAdd").textContent;
+    let superInZone = document.getElementById("receSuperInZoneAdd").textContent;
+    let neutral = document.getElementById("receNeutralAdd").textContent;
+    let schlecht = document.getElementById("receSchlechtAdd").textContent;
+    let direktFehler = document.getElementById(
+      "receDirektFehlerAdd"
+    ).textContent;
+    let falscheEntscheidung = document.getElementById(
+      "receFalscheEntscheidungAdd"
+    ).textContent;
+
+    data = {
+      playerPk: pkPlayer,
+      matchPk: pkMatch,
+      perfekt: perfekt,
+      superInZone: superInZone,
+      neutral: neutral,
+      schlecht: schlecht,
+      direktFehler: direktFehler,
+      falscheEntscheidung: falscheEntscheidung,
+    };
+
+    return data;
+  }
+
+  /**
+   * Collects Angriff data from the table and sends it to the server.
+   */
+  addAngriffData() {
+    let data = "";
+    var pkMatch = $("#cmbAfterSelectionMatches").val();
+    var pkPlayer = localStorage.getItem("selectedPlayerFKForAdd");
+
+    let balleErhalten = document.getElementById(
+      "angriffBalleErhaltenAdd"
+    ).textContent;
+    let punkte = document.getElementById("angriffPunkteAdd").textContent;
+    let druckvoll = document.getElementById("angriffDruckvollAdd").textContent;
+    let zuEasy = document.getElementById("angriffZuEasyAdd").textContent;
+    let fehler = document.getElementById("angriffFehlerAdd").textContent;
+    let blockPunkt = document.getElementById(
+      "angriffBlockPunktAdd"
+    ).textContent;
+    let block = document.getElementById("angriffBlockAdd").textContent;
+    let ass = document.getElementById("angriffAssAdd").textContent;
+
+    // Prepare the data for the request
+    data = {
+      matchPk: pkMatch,
+      playerPk: pkPlayer,
+      balleErhalten: balleErhalten,
+      punkte: punkte,
+      druckvoll: druckvoll,
+      zuEasy: zuEasy,
+      fehler: fehler,
+      blockPunkt: blockPunkt,
+      block: block,
+      ass: ass,
+    };
+    return data;
+  }
+
+  addReceSuccess(response) {
+    alert("Rece data added successfully!");
+  }
+
+  addReceError(error) {
+    alert("Error adding Rece data: " + error);
+  }
+
+  addAngriffSuccess(response) {
+    alert("Angriff data added successfully!");
+  }
+
+  addAngriffError(error) {
+    alert("Error adding Angriff data: " + error);
+  }
 }
 
 $(document).ready(function () {
@@ -627,6 +725,20 @@ $(document).ready(function () {
     );
   });
 
+  $(document).on("click", "#modifierstats", function (event) {
+    event.preventDefault();
+    window.ctrl.http.addAngriffs(
+      window.ctrl.addAngriffData(),
+      window.ctrl.addAngriffSuccess,
+      window.ctrl.addAngriffError
+    );
+    window.ctrl.http.addReces(
+      window.ctrl.addReceData(),
+      window.ctrl.addReceSuccess,
+      window.ctrl.addReceError
+    );
+  });
+
   /**
    * Handles the match selection change event.
    * Fetches Rece and Angriff statistics for the selected match and player.
@@ -646,6 +758,70 @@ $(document).ready(function () {
       playerPk,
       window.ctrl.chargerAngriffsSuccess,
       window.ctrl.chargerAngriffsError
+    );
+
+    window.ctrl.http.getPlayers(
+      function (data) {
+        var tableBodyRece = $("#tableContentReceAdd");
+        var tableBodyAngriff = $("#tableContentAngriffAdd");
+        tableBodyRece.empty(); // Clear existing content
+        tableBodyAngriff.empty();
+
+        var playerOptions = ""; // Store player options for the dropdown
+
+        $(data)
+          .find("players")
+          .each(function () {
+            var playerName =
+              $(this).find("name").text() +
+              " " +
+              $(this).find("familyName").text();
+            var playerId = $(this).find("id").text();
+
+            playerOptions += `<option value="${playerId}">${playerName}</option>`;
+          });
+
+        var rowAngriff = `<tr>
+                    <td>
+                      <select class="player-select" id="cmbToAddStats">
+                        ${playerOptions}
+                      </select>
+                    </td>
+                    <td contenteditable="true" id="angriffBalleErhaltenAdd"></td>
+                    <td contenteditable="true" id="angriffPunkteAdd"></td>
+                    <td contenteditable="true" id="angriffDruckvollAdd"></td>
+                    <td contenteditable="true" id="angriffZuEasyAdd"></td>
+                    <td contenteditable="true" id="angriffFehlerAdd"></td>
+                    <td contenteditable="true" id="angriffBlockPunktAdd"></td>
+                    <td contenteditable="true" id="angriffBlockAdd"></td>
+                    <td contenteditable="true" id="angriffAssAdd"></td>
+                  </tr>`;
+        var rowRece = `<tr>
+                    <td>
+                      <select class="player-select" id="cmbToAddStats">
+                        ${playerOptions}
+                      </select>
+                    </td>
+                    <td contenteditable="true" id="recePerfektAdd"></td>
+                    <td contenteditable="true" id="receSuperInZoneAdd"></td>
+                    <td contenteditable="true" id="receNeutralAdd"></td>
+                    <td contenteditable="true" id="receSchlechtAdd"></td>
+                    <td contenteditable="true" id="receDirektFehlerAdd"></td>
+                    <td contenteditable="true" id="receFalscheEntscheidungAdd"></td>
+                  </tr>`;
+
+        tableBodyRece.append(rowRece);
+        tableBodyAngriff.append(rowAngriff);
+
+        $(".cmbToAddStats").change(function () {
+          let selectedPlayerPk = $(this).val();
+          console.log("Selected Player PK:", selectedPlayerPk);
+          localStorage.setItem("selectedPlayerFKForAdd", selectedPlayerPk);
+        });
+      },
+      function (error) {
+        console.error("Error loading players:", error);
+      }
     );
   });
 
